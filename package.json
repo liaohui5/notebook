@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vitepress dev docs --port 3001",
     "build": "vitepress build docs",
-    "preview": "vitepress preview docs"
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "keywords": [],
   "author": "",
