@@ -1,0 +1,76 @@
+## 相关文档
+
+- [vite](https://cn.vitejs.dev/guide/)
+- [Vite 配置](https://cn.vitejs.dev/config/)
+- [Vite 插件](https://cn.vitejs.dev/plugins/)
+- [vite 项目模板](https://cn.vitejs.dev/guide/#scaffolding-your-first-vite-project)
+- [vite 插件(非官方插件)](https://github.com/vitejs/awesome-vite#plugins)
+
+## 安装 vite
+
+```sh
+# 推荐直接全局安装
+npm i -g vite
+
+# 直接用官方模板插件项目: https://vitejs.dev/guide/#trying-vite-online
+# 或者也可以实用社区模板: https://github.com/vitejs/awesome-vite#templates
+npm create vite@latest my-vue-app --template vue
+
+# vue 就是模板的名字, 如果想插件 react 项目
+npm create vite@latest my-react-app --template react
+```
+
+## 手动配置环境
+
+### 安装依赖
+
+```sh
+# vue2 项目依赖
+npm i @vitejs/plugin-vue2 -D
+npm i vue@2 vue-router@3 vuex@3
+
+# vue3 项目依赖, vuex 可以替换为 pinia 使用哪个包都可以
+npm i @vitejs/plugin-vue -D
+npm i vue@3 vue-router@4 vuex@4
+
+# react 项目依赖
+npm i @vitejs/plugin-react -D
+npm i react@18 react-dom@18 react-router@6 react-router-middleware-plus
+# react-router-middleware-plus: 路由中间件
+```
+
+### vue2 项目配置
+
+```js
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue2';
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [vue()],
+});
+```
+
+### vue3 项目配置
+
+```js
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [vue()],
+});
+```
+
+### raect 项目配置
+
+```js
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
+});
+```

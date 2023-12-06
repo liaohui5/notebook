@@ -1,0 +1,70 @@
+## 介绍
+
+什么是 [Rust desk](https://rustdesk.com/)?
+
+一款开源的远程桌面控制软件, 类似 `teamviewer` `向日葵远程桌面` 等
+
+- [下载客户端](https://github.com/rustdesk/rustdesk/releases)
+- [官方文档](https://rustdesk.com/docs/en/)
+
+## 部署中继服务器
+
+1. 部署之前请确保安装了 `docker` 和 `docker-compose`
+2. 创建对应的目录和文件
+
+```sh
+mkdir -p ./rust-desk-server/data
+vim docker-compose.yaml
+```
+
+3. 将以下内容写入到 `docker-compose.yaml` 文件中
+
+```yaml
+version: '3'
+
+networks:
+  rustdesk-net:
+    external: false
+
+services:
+  hbbs:
+    container_name: hbbs
+    ports:
+      - 21115:21115
+      - 21116:21116
+      - 21116:21116/udp
+      - 21118:21118
+    image: rustdesk/rustdesk-server:latest
+    command: hbbs -r 此处填写你的服务器公网IP:21117 --key 你的密码
+    volumes:
+      - ./data:/root
+    networks:
+      - rustdesk-net
+    depends_on:
+      - hbbr
+    restart: unless-stopped
+
+  hbbr:
+    container_name: hbbr
+    ports:
+      - 21117:21117
+      - 21119:21119
+    image: rustdesk/rustdesk-server:latest
+    command: hbbr --key 你的密码
+    volumes:
+      - ./data:/root
+    networks:
+      - rustdesk-net
+    restart: unless-stopped
+```
+
+4. 启动服务
+
+```sh
+docker-compose up -d
+```
+
+## 注意事项
+
+1. 如果使用阿里云/腾讯云/华为云等云服务器, 需要在安全组中开放这些端口, 并且是 `udp` 和 `tcp` 都放开: `21115` `21116` `21117` `21118` `21119`
+2. 配置客户端, 只需要配置服务器的公网ip/域名到 `id server` 和 `key`, 这里的`key` 就是文件中 `你的密码`

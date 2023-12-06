@@ -1,0 +1,190 @@
+---
+outline: deep
+---
+
+## 打包部署 VueJS 项目
+
+- Dockerfile
+
+::: code-group
+
+```Dockerfile [Dockerfile]
+### 1. 用 node:lts-alpine 镜像来打包项目文件
+FROM node:lts-alpine AS build-app
+
+# 设置工作目录 & 将项目文件复制到容器中
+WORKDIR /app
+COPY . /app
+
+# 设置 npm 源(加速)
+RUN npm config set registry https://registry.npm.taobao.org
+
+# 安装pnpm 安装项目依赖 打包(怕出现幻影依赖的bug,所以用pnpm)
+RUN npm install pnpm -g && \
+  pnpm install --frozen-lockfile && \
+  pnpm run build
+
+RUN echo "🎉 build completed"
+
+### 2. 用 nginx 部署打包好的文件
+FROM nginx:stable AS deploy-app
+
+# 将需要文件从上一个打包步骤的容器中复制到本容器
+# dist       : 项目打包后的文件
+# nginx.conf : nginx 配置文件(放在项目根目录下)
+# ssl_keys   : 配置 https 需要的证书文件
+COPY --from=build-app /app/dist       /usr/share/nginx/html/dist
+COPY --from=build-app /app/nginx.conf /etc/nginx/nginx.conf
+
+RUN echo "🎉 deploy completed"
+```
+
+``` [nginx.conf]
+user  nginx;
+worker_processes auto;
+
+#error_log  /var/log/nginx/error.log;
+#pid        /run/nginx.pid;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+    access_log off;
+
+    server {
+        # set server name and listen port
+        listen 80 default_server;
+        server_name note.liaohui5.cn;
+
+        # web root directory
+        root /usr/share/nginx/html/dist;
+        index index.html;
+
+        # for vue-router history mode
+        location / {
+          try_files $uri $uri/ /index.html;
+        }
+    }
+}
+```
+
+:::
+
+- 打包部署命令
+
+```sh
+# 0.查看 images
+docker images
+
+# 1.根据当前目录下的 Dockerfile 打包
+docker build -t my-vuejs-app .
+
+# 2.再次查看 images
+docker images
+
+# 3.查看运行所有的容器
+docker ps
+
+# 4.运行
+docker run --name my-vuejs-app -p 80:80 443:443 -d my-vuejs-app
+
+# 5.再次查看运行所有的容器
+docker ps
+
+# 6.停止容器
+docker container stop my-vuejs-app
+
+# 7.查看所有容器(包括已停止的)
+docker ps -a
+
+# 8.删除容器
+docker constainer rm  my-vuejs-app
+
+# 9.再次查看所有容器(包括已停止的)
+docker ps -a
+
+# 10.删除镜像
+docker container rmi my-vuejs-app:latest
+
+# 11.再次查看所有镜像
+docker images
+```
+
+## 运行一个 mysql 容器
+
+1. 将配置文件和数据卷挂载到容器中
+2. 允许远程访问
+
+### 获得默认的配置文件和数据
+
+```sh
+# 运行
+docker run -d \
+--name mysql57 \
+-p 3306:3306 \
+-e MYSQL_ROOT_PASSWORD=root123456\
+mysql:5.7
+
+# 复制容器中的默认配置文件和数据
+docker cp mysql57:/etc/mysql     ./mysql_conf
+docker cp mysql57:/var/lib/mysql ./mysql_data
+
+# 停止并删除容器
+docker stop mysql57
+docker rm mysql57
+```
+
+### 再次运行
+
+```sh
+docker run -d  \
+--name mysql57 \
+-p 3306:3306 \
+-v $(pwd)/mysql_conf:/etc/mysql \
+-v $(pwd)/mysql_data:/var/lib/mysql \
+-e MYSQL_ROOT_PASSWORD=root123456 \
+mysql:5.7
+
+# 注意 MYSQL_ROOT_PASSWORD 是 root 用户的密码
+```
+
+### 进入容器允许远程访问
+
+```sh
+docker exec -it mysql57 /bin/bash
+
+# 链接数据库
+mysql -u root -p root123456
+
+# 允许 root 远程访问, 注意密码, mysql5能这样设置, mysql8无法这样设置
+# %表示允许任何ip地址的电脑用admin帐户和密码(123456)来访问, 也可以指定ip 'root'@'39.156.66.10'
+grant all privileges on *.* to 'root'@'%' identified by 'root123456' with grant option;
+
+# 允许其他新建用户远程访问
+grant all on *.* to dev_user@'%' identified by '123456' with grant option;
+
+# 刷新权限, 这个步骤一定要做, 否则不生效
+flush privileges;
+
+# 退出 mysql 客户端 ctrl+d, 但是注意不要推出容器
+
+# 在容器中重启 mysql 服务
+systemctl restart mysql
+
+# 退出容器
+exit
+```
+
+## 最后
+
+其他的容器也可以这样操作, 比如 redis, nginx, mariadb, mysql:8 等等, 具体可以查看[dockerhub](https://hub.docker.com/search?q=mysql)的文档
+
+1. 看文档获取默认配置文件的位置
+2. 运行容器
+3. 使用 `docker cp` 命令复制默认的配置文件和数据(不一定是数据库数据,也有可能是日志等其他数据)
+4. 停止并删除容器
+5. 修改配置文件, 然后重启容器

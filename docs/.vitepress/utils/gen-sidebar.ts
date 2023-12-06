@@ -1,0 +1,41 @@
+// @ts-ignore
+import fs from 'fs';
+
+interface SidebarLinkItem {
+  link: string;
+  text: string;
+  sort?: number;
+}
+
+// 根据文件生成侧边栏
+export function autoGenSidebars(filePath: string, linkPrefix: string, ...excludes: string[]) {
+  excludes.push('.DS_Store');
+  const targetPath = `docs/${filePath}`.replace(new RegExp('//', 'g'), '/');
+  const fileNames = fs.readdirSync(targetPath).filter((fileName: string) => !excludes.includes(fileName));
+  const result: Array<SidebarLinkItem> = [];
+  for (let i = 0; i < fileNames.length; i++) {
+    const fileName = fileNames[i];
+    const text = removeFileNameExt(fileName);
+    result.push({
+      text,
+      link: `${linkPrefix}/${text}`,
+      sort: genOrderNumber(text),
+    });
+  }
+
+  return result.sort((a: SidebarLinkItem, b: SidebarLinkItem) => a.sort! - b.sort!);
+
+  function removeFileNameExt(fileName: string) {
+    const lastIndexOfDot = fileName.lastIndexOf('.');
+    return fileName.substring(0, lastIndexOfDot);
+  }
+
+  function genOrderNumber(fileName: string): number {
+    const arr: string[] = fileName.split('.');
+    if (arr.length === 1) {
+      return 0;
+    }
+    // @ts-ignore: force convert to number
+    return arr[0] >> 0;
+  }
+}
