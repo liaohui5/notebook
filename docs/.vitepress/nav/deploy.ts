@@ -19,12 +19,8 @@ export default {
       link: '/deploy/docker/',
     },
     {
-      text: 'Github Actions',
-      link: '/deploy/github-actions',
-    },
-    {
-      text: 'GitLab CI/CD',
-      link: '/deploy/gitlab-cicd',
+      text: 'CI & CD',
+      link: '/deploy/cicd/',
     },
   ],
 };
