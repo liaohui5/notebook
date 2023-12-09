@@ -6,10 +6,16 @@ export default {
       link: '/deploy/cicd/index',
       text: '介绍',
     },
-    ...autoGenSidebars('/deploy/cicd', '/deploy/cicd', 'index.md'),
+    ...autoGenSidebars('/deploy/cicd'),
   ],
 
-  '/deploy/server/': autoGenSidebars('/deploy/server', '/deploy/server/', 'index.md'),
+  '/deploy/server/': [
+    {
+      text: '介绍',
+      link: '/',
+    },
+    ...autoGenSidebars('/deploy/server')
+  ],
 
   '/deploy/docker/': [
     {

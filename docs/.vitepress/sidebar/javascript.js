@@ -26,7 +26,7 @@ export default {
 
   '/js/dom/': [
     { text: 'DOM 介绍', link: '/js/dom/index' },
-    ...autoGenSidebars('/js/dom', '/js/dom', 'index.md'),
+    ...autoGenSidebars('/js/dom'),
   ],
 
   '/js/oop/': [

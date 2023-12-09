@@ -1,16 +1,23 @@
 import { defineConfig } from 'vitepress';
 import nav from './nav';
 import sidebar from './sidebar';
-import head from './utils/head';
+
+// head 标签中的内容
+const head = [
+  ['link', { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+  ['link', { rel: 'icon', type: 'image/png', href: '/logo.png' }],
+  ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
+  ['meta', { name: 'og:type', content: 'website' }],
+  ['meta', { name: 'og:locale', content: 'zh-CN' }],
+  ['meta', { name: 'og:site_name', content: 'study-notes' }],
+];
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  /* @ts-ignore */
   head,
-  /* @ts-ignore */
   base: '/study-notes/',
-
   title: 'study-notes',
+  titleTemplate: 'Custom Suffix',
   description: 'study notes for my self',
   themeConfig: {
     nav,
