@@ -15,7 +15,7 @@ const head = [
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   head,
-  base: '/study-notes/',
+  base: '/',
   title: 'study-notes',
   titleTemplate: 'Custom Suffix',
   description: 'study notes for my self',
