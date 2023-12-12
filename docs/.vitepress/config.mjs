@@ -17,7 +17,7 @@ export default defineConfig({
   head,
   base: '/',
   title: 'study-notes',
-  titleTemplate: 'Custom Suffix',
+  titleTemplate: '个人学习笔记',
   description: 'study notes for my self',
   themeConfig: {
     nav,

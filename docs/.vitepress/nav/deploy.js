@@ -3,12 +3,17 @@ export default {
   text: 'Deploy',
   items: [
     {
-      text: 'webpack 打包器',
-      link: '/deploy/webpack/',
-    },
-    {
-      text: 'vite 打包器',
-      link: '/deploy/vite',
+      text: '前端构建工具',
+      items: [
+        {
+          text: 'webpack',
+          link: '/deploy/webpack/',
+        },
+        {
+          text: 'vite',
+          link: '/deploy/vite/',
+        }
+      ],
     },
     {
       text: '服务器部署',
