@@ -38,9 +38,9 @@ jobs:
         run: pnpm install
 
       - name: biuld with VitePress
-        run:
-          - pnpm docs:build
-          - touch docs/.vitepress/dist/.nojekyll
+        run: |
+          pnpm docs:build
+          touch docs/.vitepress/dist/.nojekyll
 
       - name: upload artifacts
         uses: actions/upload-pages-artifact@v2
