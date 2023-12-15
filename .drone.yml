@@ -32,7 +32,6 @@ steps:
     image: node:18
     pull: if-not-exists
     commands:
-      - npm config set registry https://registry.npm.taobao.org
       - npm install -g pnpm
       - pnpm install --no-frozen-lockfile
       - pnpm docs:build
@@ -94,5 +93,6 @@ steps:
         - cd ~/gitea/study_notes
         - rm -rf ./dist/*
         - tar -xjvf ./dist.bz2
+        - rm -rf ./dist.bz2
         - ls -al
         - echo "===== deploy completed ====="
