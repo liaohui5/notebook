@@ -29,7 +29,7 @@ steps:
 
   # 安装依赖 编译源码 压缩打包
   - name: build-and-compress-source-code
-    image: node:lts-alpine
+    image: node:18
     pull: if-not-exists
     commands:
       - npm config set registry https://registry.npm.taobao.org
@@ -63,13 +63,13 @@ steps:
     settings:
     settings:
       host:
-        from_secret: ssh_host
+        from_secret: SSH_HOST
       username:
-        from_secret: ssh_user
+        from_secret: SSH_USER
       password:
-        from_secret: ssh_pass
+        from_secret: SSH_PASS
       port:
-        from_secret: ssh_port
+        from_secret: SSH_PORT
       command_timeout: 2m
       source: ./dist.bz2
       target: ~/gitea/study_notes
@@ -82,13 +82,13 @@ steps:
       branch: main # 只有在push 到 main 分支的时候才执行
     settings:
       host:
-        from_secret: ssh_host
+        from_secret: SSH_HOST
       username:
-        from_secret: ssh_user
+        from_secret: SSH_USER
       password:
-        from_secret: ssh_pass
+        from_secret: SSH_PASS
       port:
-        from_secret: ssh_port
+        from_secret: SSH_PORT
       command_timeout: 2m
       script:
         - cd ~/gitea/study_notes
