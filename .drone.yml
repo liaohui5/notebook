@@ -13,9 +13,6 @@ volumes:
   - name: cache
     host:
       path: /tmp/drone_cache
-  - name: deploy_target
-    host:
-      path: /root/gitea/study_notes
 
 steps:
   # 使用缓存(如果有的话)
@@ -40,10 +37,8 @@ steps:
       - pnpm install --no-frozen-lockfile
       - pnpm docs:build
       - ls -al
-      - rm -rf /deploy_target/dist
-      - cp -r ./dist/ /deploy_target/
       - mv ./docs/.vitepress/dist ./dist
-      - ls /deploy_target/
+      - tar -cjvf dist.bz2 ./dist
       - echo "===== build completed ====="
 
   # 制作缓存(需要指定缓存目录, 不要每次去下载 node_modules)
@@ -58,3 +53,46 @@ steps:
       restore: false
       mount:
         - ./node_modules
+
+  # 将文件上传到服务器
+  - name: upload-file-to-server
+    image: appleboy/drone-scp
+    pull: if-not-exists
+    when:
+      branch: main # 只有在 push 到 main 分支才执行
+    settings:
+    settings:
+      host:
+        from_secret: SSH_HOST
+      username:
+        from_secret: SSH_USER
+      password:
+        from_secret: SSH_PASS
+      port:
+        from_secret: SSH_PORT
+      command_timeout: 2m
+      source: ./dist.bz2
+      target: ~/gitea/study_notes
+
+  # 连接上服务器然后执行一些脚本
+  - name: deploy-to-server
+    image: appleboy/drone-ssh
+    pull: if-not-exists
+    when:
+      branch: main # 只有在push 到 main 分支的时候才执行
+    settings:
+      host:
+        from_secret: SSH_HOST
+      username:
+        from_secret: SSH_USER
+      password:
+        from_secret: SSH_PASS
+      port:
+        from_secret: SSH_PORT
+      command_timeout: 2m
+      script:
+        - cd ~/gitea/study_notes
+        - rm -rf ./dist/*
+        - tar -xjvf ./dist.bz2
+        - ls -al
+        - echo "===== deploy completed ====="
