@@ -27,10 +27,10 @@ jobs:
         run: pnpm install
 
       - name: biuld with VitePress
-        run:
-          - pnpm docs:build
-          - mv ./docs/.vitepress/dist ./dist
-          - echo "===== build completed ====="
+        run: |
+          pnpm docs:build
+          mv ./docs/.vitepress/dist ./dist
+          echo "===== build completed ====="
 
       - name: upload artifacts to server
         uses: cross-the-world/ssh-scp-ssh-pipelines@master
