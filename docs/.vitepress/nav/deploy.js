@@ -12,11 +12,11 @@ export default {
         {
           text: 'vite',
           link: '/deploy/vite/',
-        }
+        },
       ],
     },
     {
-      text: '服务器部署',
+      text: 'linux 服务器部署',
       link: '/deploy/server/',
     },
     {
@@ -24,7 +24,7 @@ export default {
       link: '/deploy/docker/',
     },
     {
-      text: 'CI & CD',
+      text: 'CICD 持续集成',
       link: '/deploy/cicd/',
     },
   ],
