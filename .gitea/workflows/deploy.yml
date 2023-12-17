@@ -1,0 +1,48 @@
+name: deploy vitepress site to server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deoloy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: install pnpm
+        uses: pnpm/action-setup@master
+        with:
+          version: 8
+
+      - name: install node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: pnpm
+
+      - name: install dependencies
+        run: pnpm install
+
+      - name: biuld with VitePress
+        run:
+          - pnpm docs:build
+          - mv ./docs/.vitepress/dist ./dist
+          - echo "===== build completed ====="
+
+      - name: upload artifacts to server
+        uses: cross-the-world/ssh-scp-ssh-pipelines@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          user: ${{ secrets.SSH_USER }}
+          pass: ${{ secrets.SSH_PASS }}
+          port: ${{ secrets.SSH_PORT }}
+          connect_timeout: 30s
+          first_ssh: |
+            rm -rf ~/gitea/study_notes/dist
+          scp: |
+            './dist' => '~/gitea/study_notes/'
+          last_ssh: |
+            ls -al ~/gitea/study_notes/dist
