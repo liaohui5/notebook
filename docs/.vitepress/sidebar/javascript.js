@@ -24,10 +24,7 @@ export default {
     },
   ],
 
-  '/js/dom/': [
-    { text: 'DOM 介绍', link: '/js/dom/index' },
-    ...autoGenSidebars('/js/dom'),
-  ],
+  '/js/dom/': [{ text: 'DOM 介绍', link: '/js/dom/index' }, ...autoGenSidebars('/js/dom')],
 
   '/js/oop/': [
     { text: '面向对象介绍', link: '/js/oop/index' },
@@ -38,6 +35,7 @@ export default {
     { text: '遍历对象', link: '/js/oop/traverse' },
     { text: '克隆对性', link: '/js/oop/clone' },
   ],
+  '/js/magic/': [{ text: '介绍', link: '/js/magic/index' }, ...autoGenSidebars('/js/magic')],
 
   // '/js/builtin/': [
   //   {

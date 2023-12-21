@@ -1,14 +1,3 @@
-## 自增id
+## 介绍
 
-::: code-group
-
-```js [js]
-let __id = 0;
-const $id = () => ++__id;
-```
-
-```ts [ts]
-let __id: number = 0;
-const $id = (): number => ++__id;
-```
-:::
+总结一些常用的函数,工具库使用方法
