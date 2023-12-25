@@ -37,153 +37,153 @@ export default {
   ],
   '/js/magic/': [{ text: '介绍', link: '/js/magic/index' }, ...autoGenSidebars('/js/magic')],
 
-  // '/js/builtin/': [
-  //   {
-  //     text: '前置知识',
-  //     link: '/js/builtin/index',
-  //   },
-  //   {
-  //     text: '值属性',
-  //     items: [
-  //       {
-  //         text: 'globalThis',
-  //         link: '',
-  //       },
-  //       {
-  //         text: 'Infinity',
-  //         link: '',
-  //       },
-  //       {
-  //         text: 'NaN',
-  //         link: '',
-  //       },
-  //       {
-  //         text: 'undefined',
-  //         link: '',
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     text: '函数属性',
-  //     items: [
-  //       { text: 'eval', link: '' },
-  //       { text: 'isFinite', link: '' },
-  //       { text: 'isNaN', link: '' },
-  //       { text: 'parseFloat', link: '' },
-  //       { text: 'parseInt', link: '' },
-  //       { text: 'decodeURI', link: '' },
-  //       { text: 'decodeURIComponent', link: '' },
-  //       { text: 'encodeURI', link: '' },
-  //       { text: 'encodeURIComponent', link: '' },
-  //     ],
-  //   },
-  //   {
-  //     text: '基本对象',
-  //     items: [
-  //       {
-  //         text: 'Object 对象',
-  //         link: '/js/builtin/object',
-  //       },
-  //       {
-  //         text: 'Function 函数',
-  //         link: '/js/builtin/function',
-  //       },
-  //       {
-  //         text: 'Boolean 布尔值',
-  //         link: '/js/builtin/boolean',
-  //       },
-  //       {
-  //         text: 'Symbol',
-  //         link: '/js/builtin/symbol',
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     text: '错误对象',
-  //     items: [
-  //       { text: 'Error', link: '' },
-  //       { text: 'RangeError', link: '' },
-  //       { text: 'TypeError', link: '' },
-  //       { text: 'EvalError', link: '' },
-  //       { text: 'SyntaxError', link: '' },
-  //       { text: 'ReferenceError', link: '' },
-  //       { text: 'URIError', link: '' },
-  //     ],
-  //   },
-  //
-  //   {
-  //     text: '数值和日期对象',
-  //     items: [
-  //       {
-  //         text: 'Number 数值',
-  //         link: '/js/builtin/number',
-  //       },
-  //       {
-  //         text: 'Math 数学',
-  //         link: '/js/builtin/math',
-  //       },
-  //       {
-  //         text: 'Date 日期',
-  //         link: '/js/builtin/date',
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     text: '字符串',
-  //     items: [
-  //       {
-  //         text: 'String 字符串',
-  //         link: '/js/builtin/string',
-  //       },
-  //       {
-  //         text: 'RegExp 正则表达式',
-  //         link: '/js/builtin/regexp',
-  //       },
-  //     ],
-  //   },
-  //
-  //   {
-  //     text: '可索引的集合对象',
-  //     items: [
-  //       {
-  //         text: 'Array 数组',
-  //         link: '/js/builtin/array',
-  //       },
-  //     ],
-  //   },
-  //
-  //   {
-  //     text: '使用键的集合对象',
-  //     items: [
-  //       {
-  //         text: 'Map',
-  //         link: '',
-  //       },
-  //       {
-  //         text: 'Set',
-  //         link: '',
-  //       },
-  //       {
-  //         text: 'WeakMap',
-  //         link: '',
-  //       },
-  //       {
-  //         text: 'WeakSet',
-  //         link: '',
-  //       },
-  //     ],
-  //   },
-  //
-  //   {
-  //     text: '结构化数据',
-  //     items: [
-  //       {
-  //         text: 'JSON',
-  //         link: '',
-  //       },
-  //     ],
-  //   },
-  // ],
+  '/js/builtin/': [
+    {
+      text: '前置知识',
+      link: '/js/builtin/index',
+    },
+    {
+      text: '值属性',
+      items: [
+        {
+          text: 'globalThis',
+          link: '',
+        },
+        {
+          text: 'Infinity',
+          link: '',
+        },
+        {
+          text: 'NaN',
+          link: '',
+        },
+        {
+          text: 'undefined',
+          link: '',
+        },
+      ],
+    },
+    {
+      text: '函数属性',
+      items: [
+        { text: 'eval', link: '' },
+        { text: 'isFinite', link: '' },
+        { text: 'isNaN', link: '' },
+        { text: 'parseFloat', link: '' },
+        { text: 'parseInt', link: '' },
+        { text: 'decodeURI', link: '' },
+        { text: 'decodeURIComponent', link: '' },
+        { text: 'encodeURI', link: '' },
+        { text: 'encodeURIComponent', link: '' },
+      ],
+    },
+    {
+      text: '基本对象',
+      items: [
+        {
+          text: 'Object 对象',
+          link: '/js/builtin/object',
+        },
+        {
+          text: 'Function 函数',
+          link: '/js/builtin/function',
+        },
+        {
+          text: 'Boolean 布尔值',
+          link: '/js/builtin/boolean',
+        },
+        {
+          text: 'Symbol',
+          link: '/js/builtin/symbol',
+        },
+      ],
+    },
+    {
+      text: '错误对象',
+      items: [
+        { text: 'Error', link: '' },
+        { text: 'RangeError', link: '' },
+        { text: 'TypeError', link: '' },
+        { text: 'EvalError', link: '' },
+        { text: 'SyntaxError', link: '' },
+        { text: 'ReferenceError', link: '' },
+        { text: 'URIError', link: '' },
+      ],
+    },
+
+    {
+      text: '数值和日期对象',
+      items: [
+        {
+          text: 'Number 数值',
+          link: '/js/builtin/number',
+        },
+        {
+          text: 'Math 数学',
+          link: '/js/builtin/math',
+        },
+        {
+          text: 'Date 日期',
+          link: '/js/builtin/date',
+        },
+      ],
+    },
+    {
+      text: '字符串',
+      items: [
+        {
+          text: 'String 字符串',
+          link: '/js/builtin/string',
+        },
+        {
+          text: 'RegExp 正则表达式',
+          link: '/js/builtin/regexp',
+        },
+      ],
+    },
+
+    {
+      text: '可索引的集合对象',
+      items: [
+        {
+          text: 'Array 数组',
+          link: '/js/builtin/array',
+        },
+      ],
+    },
+
+    {
+      text: '使用键的集合对象',
+      items: [
+        {
+          text: 'Map',
+          link: '',
+        },
+        {
+          text: 'Set',
+          link: '',
+        },
+        {
+          text: 'WeakMap',
+          link: '',
+        },
+        {
+          text: 'WeakSet',
+          link: '',
+        },
+      ],
+    },
+
+    {
+      text: '结构化数据',
+      items: [
+        {
+          text: 'JSON',
+          link: '',
+        },
+      ],
+    },
+  ],
 
   // '/js/webapi/': [
   //   {

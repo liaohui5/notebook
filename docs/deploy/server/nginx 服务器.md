@@ -2,6 +2,15 @@
 
 Nginx 是一个高性能的 web 服务器软件, 类似的还有 [candy](https://caddyserver.com/) [Apache](https://httpd.apache.org/) 等
 
+## 发行版本
+
+- nginx(推荐)、nginx plus、Tengine、openresty
+
+- nginx: 官方开源版本, 适用人数多, 推荐
+- nginx plus: 付费商业版本, 整合许多第三方模块
+- tengine: 淘宝发行的版本, 源码改动较大
+- openresty: 支持 lua 脚本, 如果需要自定义一些功能, 非常好用
+
 ## 能做什么? 为什么要学习他?
 
 1. 可以部署前端打包后的今天资源, 提供访问
@@ -9,13 +18,29 @@ Nginx 是一个高性能的 web 服务器软件, 类似的还有 [candy](https:/
 
 ## 安装
 
-```bash
+::: code-group
+
+```sh [包管理工具直接安装]
 # 可以用包管理工具一键安装
 yum install -y nginx
 
-# or 
+# or
 apt-get install nginx
 ```
+
+```sh [docker 方式运行容器]
+docker run -d \
+-p 80:80 -p 443:443 \
+-v ./config:/etc/nginx/conf.d \
+-v ./www:/usr/share/nginx/html \
+--name nginx \
+nginx:stable
+
+# ./config: 配置文件目录
+# ./www:    网站根目录
+```
+
+:::
 
 ## 配置
 
@@ -26,7 +51,6 @@ apt-get install nginx
 
 如果是 `apt-get install nginx` 命令安装的, 那么配置文件在 `/etc/nginx/nginx.conf` 目录下, 如果是源码编译安装的可能不此目录
 
-
 ## 基本配置
 
 > 配置 http 访问(www.demo1.com)
@@ -35,7 +59,7 @@ apt-get install nginx
 
 如: `include/conf.d/*.conf` `include/enable-sites/*.conf` 在 debian 上默认是这样的(可能略有不同)
 
-这代码的意思就是引入 `nginx.conf` 同级目录下的 `conf.d 和 enable-sites` 目录下的所有 `.conf` 的文件, 
+这代码的意思就是引入 `nginx.conf` 同级目录下的 `conf.d 和 enable-sites` 目录下的所有 `.conf` 的文件,
 
 那么只需要在 `enable-sites` 或者 `conf.d` 目录下新建 `xxx.conf` 就会自动生效了
 
@@ -52,7 +76,6 @@ server {
 ```
 
 > 配置 https 访问(www.demo2.com)
-
 
 ```
 server {
@@ -74,13 +97,14 @@ server {
 }
 ```
 
-
 ## 反向代理
+
+也可以使用图形化的 docker 项目 [nginx-proxy-manager](https://nginxproxymanager.com/)
 
 ```
 server {
   listen 8081;                       # 监听端口
-  server_name www.opendomain.com;    # 公开的域名(让别人用这个域名来访问)
+  server_name www.yourdomain.com;    # 公开的域名(让别人用这个域名来访问)
 
   location / {
     proxy_pass http://your.target.com;         # 代理的目标服务器
@@ -90,16 +114,15 @@ server {
 }
 ```
 
-> 什么是反向代理, 什么是正向代理?
+### 什么是反向代理, 什么是正向代理?
 
-+ 正向代理: 用户 -> 代理服务器 -> 访问谷歌: 用于保护客户端
+- 正向代理: 用户 -> 代理服务器 -> 访问谷歌: 用于保护客户端
 
-+ 反向代理: 用户 -> 代理服务器 -> 真正的服务器: 用于保护服务端
-
+- 反向代理: 用户 -> 代理服务器 -> 目标服务器: 用于保护服务端
 
 ## certbot 使用
 
-certbot 可以用来生成 ssl 证书(免费的), ssl 证书就是配置 https 需要的证书
+certbot 可以用来生成 ssl 证书(免费的), ssl 证书就是配置 https 需要的证书, 在 nginx-proxy-manager 中已经集成了这个功能, 这里简单记录一下原理
 
 ```shell
 # 安装 certbot 和 生成 nginx ssl 插件
@@ -117,7 +140,6 @@ sudo certbot -w /usr/local/www/example  -d www.example.com --email "example@gmai
 - `--email`: 邮箱,会在证书快过期时提示你(如: example@gmail.com)
 - `--renew-by-default`: 证书快到期,自动续期,有的不支持,不知道为什么
 
-
 > 注意点:
 
 生成的 `pem` 文件在 `/etc/letsencrypt/archive` 目录中,
@@ -126,9 +148,5 @@ sudo certbot -w /usr/local/www/example  -d www.example.com --email "example@gmai
 
 ```shell
 # 这个路径中的 example.com 是执行命令时的 域名
-ls -al /etc/letsencrypt/example.com 
+ls -al /etc/letsencrypt/example.com
 ```
-
-
-
-

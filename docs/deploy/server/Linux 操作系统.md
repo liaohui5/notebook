@@ -1,4 +1,4 @@
-## 介绍?
+## 介绍
 
 Linux 以高效性和灵活性著称, 具有真正的多任务、多用户能力, 在服务器设备上广泛使用, 互联网大多数服务器都是架构在 Linux 之上的
 
@@ -9,23 +9,37 @@ Linux 以高效性和灵活性著称, 具有真正的多任务、多用户能力
 
 同样的, 作为开发者, 不说玩的多溜, 至少要玩得转, 基本操作总得会吧
 
+## 发行版本
+
+- 发行版本了解 debian/centos/ubuntu
+
 ## 环境搭建
 
-- 发行版本了解 /debian/centos/ubuntu
+- 在虚拟机中需要的系统, 然后配置网络, 最后用 ssh 客户端去连接
+
+## 命令用法查询
+
+```
+man [command]
+```
+
+- [在线查询命令用法的工具](https://github.com/jaywcjlove/linux-command)
 
 ## 文件管理
 
+- ls
 - cd
 - cp
 - ln
 - mv
 - touch
 - cat
-- vim
 - whereis
 - find
 - tar
 - zip
+- chmod
+- vim 查看/编辑文件
 
 ## 用户管理
 
@@ -36,7 +50,7 @@ Linux 以高效性和灵活性著称, 具有真正的多任务、多用户能力
 ## 进程管理
 
 - ps
-- top
+- top/htop
 - kill
 - systemd/services
 
@@ -48,11 +62,15 @@ Linux 以高效性和灵活性著称, 具有真正的多任务、多用户能力
 - ifconfig/ipaddr
 - ping
 - netstat
+- lsof
 
 ## 软件管理
 
-- 换源
-- yum/apt
+- 换源(服务器在国外速度会很慢, 具体操作各个发行版本不同)
+- yum/apt/pacman
+
+## 容器化
+
 - docker
 
 ## 部署前端项目
