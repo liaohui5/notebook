@@ -40,4 +40,8 @@ export default defineConfig({
       copyright: 'Copyright © 2023-present liaohui5',
     },
   },
+
+  markdown: {
+    lineNumbers: true,
+  },
 });

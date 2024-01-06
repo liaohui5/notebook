@@ -2,9 +2,13 @@
 outline: deep
 ---
 
+## w3c在线文档
+
+https://www.w3school.com.cn/css/index.asp
+
 ## CSS 是什么?
 
-- CSS 是是一种标记语言
+- CSS 是是一种标记语言, 用于设置 html 标签的显示样式
 
 - CSS 的是 `Cascading Style Sheets` 的简称, 翻译成中文就是 `层叠样式表`
 

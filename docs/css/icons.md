@@ -4,13 +4,16 @@
 - 字体
 - svg
 
-
 ## svg 图标
 
-- https://www.nerdfonts.com/
-- https://github.com/twbs/icons
 - https://iconpark.oceanengine.com/home
 - https://xicons.org/#/
 - https://remixicon.com/
 - https://feathericons.com/
-- https://www.reshot.com/free-svg-icons/
+
+## 字体图标
+
+- https://www.nerdfonts.com/
+- https://www.iconfont.cn/
+- https://fontawesome.com/start
+- https://github.com/twbs/icons
