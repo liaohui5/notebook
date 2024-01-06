@@ -41,8 +41,8 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           connect_timeout: 30s
           first_ssh: |
-            rm -rf ~/gitea/study_notes/dist
+            rm -rf ~/study_notes/dist
           scp: |
-            './dist' => '~/gitea/study_notes/'
+            './dist' => '~/study_notes/'
           last_ssh: |
-            ls -al ~/gitea/study_notes/dist
+            ls -al ~/study_notes/dist
