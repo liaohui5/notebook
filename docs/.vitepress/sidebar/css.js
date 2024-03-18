@@ -61,36 +61,32 @@ export default {
       link: '/css/media-query',
     },
     {
+      text: 'CSS 响应式尺寸',
+      link: '/css/responsive',
+    },
+    {
+      text: 'CSS 常见单位',
+      link: '/css/units',
+    },
+    {
+      text: 'CSS 全局变量 & 换肤设计',
+      link: '/css/variables',
+    },
+    {
+      text: 'CSS 常见函数',
+      link: '/css/functions',
+    },
+    {
+      text: 'CSS 各种图标',
+      link: '/css/icons',
+    },
+    {
       text: 'CSS 预处理器',
       link: '/css/preprocessor',
     },
     {
-      text: 'PostCss 工具学习',
-      link: '/css/postcss',
-    },
-    {
-      text: '各种图标',
-      link: '/css/icons',
-    },
-    {
-      text: 'CSS 移动端设计方案',
-      link: '/css/mobile',
-    },
-    {
-      text: 'CSS 全局变量 & 换肤设计',
-      link: '/css/global_variables',
-    },
-    {
-      text: 'bootstrap',
-      link: '/css/bootstrap',
-    },
-    {
       text: 'tailwindcss',
       link: '/css/tailwindcss',
-    },
-    {
-      text: 'unocss',
-      link: '/css/unocss',
     },
   ],
 };

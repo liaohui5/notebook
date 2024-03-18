@@ -218,7 +218,7 @@ transition: width 500ms;
 ## 过渡练习:弹性效果
 
 ```html
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-cn">
   <head>
     <title>JavaScript</title>
@@ -253,5 +253,5 @@ transition: width 500ms;
   </body>
 </html>
 ```
-![弹性效果](https://raw.githubusercontent.com/liaohui5/images/main/images/202312312002572.gif)
 
+![弹性效果](https://raw.githubusercontent.com/liaohui5/images/main/images/202312312002572.gif)
