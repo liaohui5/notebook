@@ -15,7 +15,8 @@ export default {
       text: 'ES6 新增内容',
       items: [
         { text: '新关键字和运算符', link: '/js/base/es6_keywords' },
-        { text: '新增数据类型', link: '/js/base/es6_data_types' },
+        { text: '新增数据结构', link: '/js/base/es6_data_structs' },
+        { text: '面向对象完善', link: '/js/base/oop_optimize' },
         { text: 'ESM 模块化', link: '/js/base/es_module' },
         { text: '迭代器 & 生成器', link: '/js/base/generator_iterator' },
         { text: 'Promise', link: '/js/base/promise' },

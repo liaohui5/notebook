@@ -84,9 +84,7 @@
 
 ## Windows
 
-- [粘贴板管理工具 1Clipboard](https://github.com/wiziple/1Clipboard)
-
-- [粘贴板管理工具 Ditto](https://ditto-cp.sourceforge.io/)
+- [粘贴板管理工具 CopyQ](https://github.com/hluk/CopyQ)
 
 - [环境变量管理工具 Rapid Environment Editor](https://www.rapidee.com/en/download)
 
@@ -96,13 +94,11 @@
 
 - [压缩软件 PeaZip](https://github.com/peazip/PeaZip)
 
-- [开源免费的看图软件(速度快,无广告,墙裂推荐) ImageGlass](https://github.com/d2phap/ImageGlass)
+- [开源免费的看图软件 ImageGlass](https://github.com/d2phap/ImageGlass)
 
-- [快速启动器 wox, 功能比较简单, 但是开源](http://www.huochaipro.com/)
+- [wox 快速启动器, 功能比较简单](http://www.huochaipro.com/)
 
-- [快速启动器 火柴](http://www.huochaipro.com/)
-
-- [快速启动器 Flow Launcher](https://github.com/Flow-Launcher/Flow.Launcher)
+- [Flow Launcher 快速启动器](https://github.com/Flow-Launcher/Flow.Launcher)
 
 ## MacOS
 

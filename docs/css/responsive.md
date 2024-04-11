@@ -1,3 +1,7 @@
+---
+outline: deep
+---
+
 ## 常见单位
 
 ### 像素
@@ -16,7 +20,7 @@
 > 什么是百分比?
 
 百分比是一个动态单位, 永远都是以当前元素的父元素作为参考进行计算的
-例如: 父元素的宽度是 200px 设置子元素的宽度为 50%, 那么志愿书的宽度就是 100px
+例如: 父元素的宽度是 200px 设置子元素的宽度为 50%, 那么子元素的宽度就是 100px
 
 > 百分比的特点
 
@@ -145,7 +149,7 @@ rem 和 em 不同的是, rem 是参考根元素(html)的字体大小计算的单
         150         / 100           = 1.5rem
 
 还原px:  元素的rem尺寸 * 屏幕的每一份大小  = 75
-        1.5          * 50               = 75px       
+        1.5          * 50               = 75px
 *****************************************************/
 ```
 
@@ -165,7 +169,7 @@ rem 和 em 不同的是, rem 是参考根元素(html)的字体大小计算的单
 @media screen and (min-width: 375px) {
   html {
     /********************************
-          iphone6/7/8: 
+          iphone6/7/8:
           1rem = 375px(屏幕尺寸) / 7.5(均分的份数)
         ********************************/
     font-size: 50px;
@@ -184,7 +188,7 @@ rem 和 em 不同的是, rem 是参考根元素(html)的字体大小计算的单
 }
 ```
 
-### 方案 3: js 设置 html 的 fontsize + rem
+### 方案 3: js 动态设置 fontSize 结合 rem
 
 - 现在的 `android` 手机尺寸太多, 更新速度太快, 用媒体查询一个一个全都适配不太现实, 所以需要 js 动态获取屏幕的宽度然后除以指定份数
 
@@ -192,7 +196,7 @@ rem 和 em 不同的是, rem 是参考根元素(html)的字体大小计算的单
 document.documentElement.style.fontSize = window.innerWidth / 7.5 + 'px';
 ```
 
-### 解决物理像素和逻辑像素不同的问题
+#### 解决物理像素和逻辑像素不同的问题
 
 - 逻辑像素: css 编程虚拟的像素单位
 - 物理像素: 物理设备的实际像素
@@ -201,12 +205,18 @@ document.documentElement.style.fontSize = window.innerWidth / 7.5 + 'px';
 2. 设置视口
 
 ```js
-const viewportMeta = document.createElement('meta');
+const meta = document.createElement('meta');
 const dpr = 1.0 / window.devicePixelRatio;
-viewportMeta.name = 'viewport';
-viewportMeta.content = `width=device-width, initial-scale=${dpr}, maximum-scale=${dpr}, minimum-scale=${dpr}, user-scalable=no`;
-document.head.appendChild(viewportMeta);
+meta.name = 'viewport';
+meta.content = `width=device-width, initial-scale=${dpr}, maximum-scale=${dpr}, minimum-scale=${dpr}, user-scalable=no`;
+document.head.appendChild(meta);
 ```
+
+### 方案4: 使用 postcss 插件 px-to-viewport
+
+直接用 postcss 动态的将 px 单位转换为 vw/vh 就可以避免在各种尺寸的手机端显示出同样的效果
+
+- [postcss-px-to-viewport](https://github.com/evrone/postcss-px-to-viewport)
 
 ### PC 端响应式设计方案
 
