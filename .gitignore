@@ -183,6 +183,7 @@ yarn-error.log
 ### custom ###
 */.vitepress/cache
 today.md
+work.today.md
 run-handler.mjs
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,node,vuejs
