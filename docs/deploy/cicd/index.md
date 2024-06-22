@@ -39,6 +39,34 @@ CICD 其实是以下几个单词组合, 翻译成中文就是: 持续集成, 持
 
 ## ssh 远程链接的两种方式
 
+### 检查 ssh 服务状态
+
+1. 检查服务运行状态(以 debian 为例, CentOS 也大同小异问 AI 即可)
+2. 是否允许远程链接
+
+::: code-group
+
+```sh [sshd 服务]
+# 检查 sshd 运行状态(在运行的状态: Active: active (running))
+sudo service sshd status
+
+# 安装 sshd 服务(如果没有安装的话)
+sudo apt-get install -y openssh-server
+```
+
+```sh [允许 ssh 远程链接]
+# 编辑 sshd_config 配置文件
+vim /etc/ssh/sshd_config
+
+# 检查这几个选项
+Port 22                    # 服务监听的端口(默认:22 也可以用别的)
+PermitRootLogin yes        # 是否允许 root 登录(使用其他用户,可以设置为 no)
+PasswordAuthentication yes # 是否允许使用密码登录(默认 yes)
+PubkeyAuthentication no    # 是否允许使用公钥登录(默认 no)
+```
+
+:::
+
 ### 通过用户名和密码
 
 这是最常用的方式

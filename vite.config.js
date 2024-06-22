@@ -1,7 +1,7 @@
 export default {
-    server: {
-        watch: {
-            usePolling: true,
-        },
+  server: {
+    watch: {
+      usePolling: true,
     },
-}
+  },
+};

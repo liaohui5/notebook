@@ -85,8 +85,12 @@ export default {
       link: '/css/preprocessor',
     },
     {
-      text: 'tailwindcss',
+      text: '原子化-tailwindcss',
       link: '/css/tailwindcss',
+    },
+    {
+      text: '规范了解 - BEM',
+      link: '/css/bem',
     },
   ],
 };

@@ -3,8 +3,12 @@ export default {
   text: 'JavaScript',
   items: [
     {
-      text: 'JavaScript 语言基础',
+      text: 'JavaScript 基础',
       items: [
+        {
+          text: '内置对象',
+          link: '/js/api/',
+        },
         {
           text: '执行机制',
           link: '/js/base/',
@@ -14,7 +18,11 @@ export default {
           link: '/js/oop/',
         },
         {
-          text: 'DOM基础',
+          text: 'BOM',
+          link: '/js/bom/',
+        },
+        {
+          text: 'DOM',
           link: '/js/dom/',
         },
         {
