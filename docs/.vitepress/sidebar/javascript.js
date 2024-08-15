@@ -26,17 +26,16 @@ export default {
     },
   ],
 
-  '/js/dom/': [{ text: 'DOM 介绍', link: '/js/dom/index' }, ...autoGenSidebars('/js/dom')],
-
   '/js/oop/': [
     { text: '面向对象介绍', link: '/js/oop/index' },
     { text: '对象和构造函数(类)', link: '/js/oop/object-and-class' },
     { text: '原型和原型链', link: '/js/oop/prototype' },
     { text: '实现继承', link: '/js/oop/extends' },
     { text: 'this 指向', link: '/js/oop/this' },
-    { text: '遍历对象', link: '/js/oop/traverse' },
-    { text: '克隆对性', link: '/js/oop/clone' },
   ],
+
+  '/js/dom/': [{ text: '介绍', link: '/js/dom/index' }, ...autoGenSidebars('/js/dom')],
+
   '/js/magic/': [{ text: '介绍', link: '/js/magic/index' }, ...autoGenSidebars('/js/magic')],
 
   '/js/builtin/': [
@@ -84,7 +83,13 @@ export default {
       items: [
         {
           text: 'Object 对象',
-          link: '/js/builtin/object',
+          items: [
+            { text: '基本介绍', link: '/js/builtin/object' },
+            { text: '获取属性与遍历对象', link: '/js/builtin/object/object-get' },
+            { text: '设置属性与封闭对象', link: '/js/builtin/object/object-set' },
+            { text: '克隆对象', link: '/js/builtin/object/clone' },
+            { text: '树形数据处理', link: '/js/builtin/object/tree' },
+          ],
         },
         {
           text: 'Function 函数',
@@ -187,150 +192,148 @@ export default {
     },
   ],
 
-  // '/js/webapi/': [
-  //   {
-  //     text: '介绍',
-  //     link: 'js/webapi/index',
-  //   },
-  //   {
-  //     text: 'DOM',
-  //     items: [
-  //       // https://developer.mozilla.org/zh-CN/docs/Web/API/Document_Object_Model
-  //       { text: 'Window', link: '' },
-  //       { text: 'AbortController', link: '' },
-  //       { text: 'AboutSignal', link: '' },
-  //       { text: 'Attr', link: '' },
-  //       { text: 'Comment', link: '' },
-  //       { text: 'CustomEvent', link: '' },
-  //       { text: 'Document', link: '' },
-  //       { text: 'DocumentFragment', link: '' },
-  //       { text: 'DocumentType', link: '' },
-  //       { text: 'DOMExpection', link: '' },
-  //       { text: 'DOMParser', link: '' },
-  //       { text: 'DOMTokenList', link: '' },
-  //       { text: 'Element', link: '' },
-  //       { text: 'Event', link: '' },
-  //       { text: 'EventTarget', link: '' },
-  //       { text: 'HTMLCollection', link: '' },
-  //       { text: 'MutationObserver 和 MutationRecord', link: '' },
-  //       { text: 'Node', link: '' },
-  //       { text: 'NodeList', link: '' },
-  //     ],
-  //   },
-  //   {
-  //     text: 'HTML DOM API',
-  //     items: [
-  //       {
-  //         text: '介绍',
-  //         link: '',
-  //       },
-  //       {
-  //         text: 'Navigator', // https://developer.mozilla.org/zh-CN/docs/Web/API/Navigator
-  //         link: '',
-  //       },
-  //       {
-  //         text: 'History', // https://developer.mozilla.org/zh-CN/docs/Web/API/History_API
-  //         link: '',
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     text: 'Events',
-  //     items: [
-  //       { text: '介绍', link: '' },
-  //       { text: 'Pointer Events', link: '' }, // https://developer.mozilla.org/zh-CN/docs/Web/API/Pointer_events
-  //       { text: 'Touch Events', link: '' }, // https://developer.mozilla.org/zh-CN/docs/Web/API/Touch_events
-  //       {
-  //         // https://developer.mozilla.org/en-US/docs/Web/API/UI_Events
-  //         text: 'UI Events',
-  //         items: [
-  //           { text: 'CompositionEvent', link: '' },
-  //           { text: 'FocusEvent', link: '' },
-  //           { text: 'InputEvent', link: '' },
-  //           { text: 'MouseEvent', link: '' },
-  //           { text: 'MouseScrollEvent', link: '' },
-  //           { text: 'WheelEvent', link: '' },
-  //         ],
-  //       },
-  //     ],
-  //   },
-  //   {
-  //     text: 'Console API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Console_API
-  //     link: '',
-  //   },
-  //   {
-  //     text: 'XMLHttpRequest', // https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest
-  //     link: '',
-  //   },
-  //   {
-  //     text: 'Fetch API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch
-  //     link: '',
-  //   },
-  //   {
-  //     text: 'Clipboard API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Clipboard_API
-  //     link: '',
-  //   },
-  //   {
-  //     text: 'File API', // https://developer.mozilla.org/zh-CN/docs/Web/API/File_API
-  //     link: '',
-  //   },
-  //   {
-  //     text: 'Fullscreen API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Fullscreen_API
-  //     link: '',
-  //   },
-  //   {
-  //     text: 'HTML Drag and Drop', // https://developer.mozilla.org/zh-CN/docs/Web/API/HTML_Drag_and_Drop_API
-  //     link: '',
-  //   },
-  //   {
-  //     text: 'Channel Mesaging API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Channel_Messaging_API
-  //     link: '',
-  //   },
-  //   {
-  //     text: 'URL API', // https://developer.mozilla.org/zh-CN/docs/Web/API/URL_API
-  //     link: '',
-  //   },
-  //   {
-  //     text: 'WebStorage API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Storage_API
-  //     link: '',
-  //   },
-  //   {
-  //     text: 'WebComponents', // https://developer.mozilla.org/zh-CN/docs/Web/API/Web_components
-  //     link: '',
-  //   },
-  //   {
-  //     text: 'Performance API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Performance_API
-  //     link: '',
-  //   },
-  //   {
-  //     text: 'WebWorkers API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Workers_API
-  //     link: '',
-  //   },
-  //   {
-  //     text: 'IndexedDB API', // https://developer.mozilla.org/zh-CN/docs/Web/API/IndexedDB_API
-  //     link: '',
-  //   },
-  //   {
-  //     text: 'Resize API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Resize_Observer_API
-  //     link: '',
-  //   },
-  //   {
-  //     text: 'Selection API', // https://developer.mozilla.org/en-US/docs/Web/API/Selection_API
-  //     link: '',
-  //   },
-  //   {
-  //     text: 'Intersection Observer API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Intersection_Observer_API
-  //     link: '',
-  //   },
-  //   {
-  //     text: 'WebGL API', // https://developer.mozilla.org/zh-CN/docs/Web/API/WebGL_API
-  //     link: '',
-  //   },
-  //   {
-  //     text: 'CSSStyleDeclaration',
-  //     link: '',
-  //   },
-  // ],
+  '/js/webapi/': [
+    {
+      text: '介绍',
+      link: 'js/webapi/index',
+    },
+    {
+      text: 'DOM',
+      items: [
+        // https://developer.mozilla.org/zh-CN/docs/Web/API/Document_Object_Model
+        { text: 'Window', link: '' },
+        { text: 'AbortController', link: '' },
+        { text: 'AboutSignal', link: '' },
+        { text: 'Attr', link: '' },
+        { text: 'Comment', link: '' },
+        { text: 'CustomEvent', link: '' },
+        { text: 'Document', link: '' },
+        { text: 'DocumentFragment', link: '' },
+        { text: 'DocumentType', link: '' },
+        { text: 'DOMExpection', link: '' },
+        { text: 'DOMParser', link: '' },
+        { text: 'DOMTokenList', link: '' },
+        { text: 'Element', link: '' },
+        { text: 'Event 和 EventTarget', link: '' },
+        { text: 'MutationObserver 和 MutationRecord', link: '' },
+        { text: 'Node', link: '' },
+        { text: 'NodeList 和 HTMLCollection', link: '' },
+      ],
+    },
+    {
+      text: 'HTML DOM API',
+      items: [
+        {
+          text: '介绍',
+          link: '',
+        },
+        {
+          text: 'Navigator', // https://developer.mozilla.org/zh-CN/docs/Web/API/Navigator
+          link: '',
+        },
+        {
+          text: 'History', // https://developer.mozilla.org/zh-CN/docs/Web/API/History_API
+          link: '',
+        },
+      ],
+    },
+    {
+      text: 'Events',
+      items: [
+        { text: '介绍', link: '' },
+        { text: 'Pointer Events', link: '' }, // https://developer.mozilla.org/zh-CN/docs/Web/API/Pointer_events
+        { text: 'Touch Events', link: '' }, // https://developer.mozilla.org/zh-CN/docs/Web/API/Touch_events
+        {
+          // https://developer.mozilla.org/en-US/docs/Web/API/UI_Events
+          text: 'UI Events',
+          items: [
+            { text: 'CompositionEvent', link: '' },
+            { text: 'FocusEvent', link: '' },
+            { text: 'InputEvent', link: '' },
+            { text: 'MouseEvent', link: '' },
+            { text: 'MouseScrollEvent', link: '' },
+            { text: 'WheelEvent', link: '' },
+          ],
+        },
+      ],
+    },
+    {
+      text: 'Console API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Console_API
+      link: '',
+    },
+    {
+      text: 'XMLHttpRequest', // https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest
+      link: '',
+    },
+    {
+      text: 'Fetch API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch
+      link: '',
+    },
+    {
+      text: 'Clipboard API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Clipboard_API
+      link: '',
+    },
+    {
+      text: 'File API', // https://developer.mozilla.org/zh-CN/docs/Web/API/File_API
+      link: '',
+    },
+    {
+      text: 'Fullscreen API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Fullscreen_API
+      link: '',
+    },
+    {
+      text: 'HTML Drag and Drop', // https://developer.mozilla.org/zh-CN/docs/Web/API/HTML_Drag_and_Drop_API
+      link: '',
+    },
+    {
+      text: 'Channel Mesaging API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Channel_Messaging_API
+      link: '',
+    },
+    {
+      text: 'URL API', // https://developer.mozilla.org/zh-CN/docs/Web/API/URL_API
+      link: '',
+    },
+    {
+      text: 'WebStorage API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Storage_API
+      link: '',
+    },
+    {
+      text: 'WebComponents', // https://developer.mozilla.org/zh-CN/docs/Web/API/Web_components
+      link: '',
+    },
+    {
+      text: 'Performance API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Performance_API
+      link: '',
+    },
+    {
+      text: 'WebWorkers API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Workers_API
+      link: '',
+    },
+    {
+      text: 'IndexedDB API', // https://developer.mozilla.org/zh-CN/docs/Web/API/IndexedDB_API
+      link: '',
+    },
+    {
+      text: 'Resize API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Resize_Observer_API
+      link: '',
+    },
+    {
+      text: 'Selection API', // https://developer.mozilla.org/en-US/docs/Web/API/Selection_API
+      link: '',
+    },
+    {
+      text: 'Intersection Observer API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Intersection_Observer_API
+      link: '',
+    },
+    {
+      text: 'WebGL API', // https://developer.mozilla.org/zh-CN/docs/Web/API/WebGL_API
+      link: '',
+    },
+    {
+      text: 'CSSStyleDeclaration',
+      link: '',
+    },
+  ],
 
   '/js/ts/base/': [
     { text: '介绍&安装', link: '/js/ts/base/index' },

@@ -20,9 +20,9 @@
 
 ## SOLID
 
-SOLID 原则是我们心爱的 Bob 叔(Uncle Bob)提出的，是面向对象编程的基本设计原则。
+SOLID 原则是我们心爱的 Bob 叔(Uncle Bob)提出的,是面向对象编程的基本设计原则.
 
-SOLID 是五条设计原则英文首字母的组合，如下：
+SOLID 是五条设计原则英文首字母的组合,如下:
 
 - S – Single Responsibility Principle 单一职责原则
 - O – Open-Closed Principle 开放封闭原则
