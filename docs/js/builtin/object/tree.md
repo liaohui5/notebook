@@ -1,1 +1,384 @@
-## 树型数据处理
+---
+outline: deep
+---
+
+## 什么叫树型数据?
+
+这其实是[数据结构与算法](/js/algorithms/tree)中的一个概念
+
+## 树形结构的数据
+
+```js
+const data = [
+  {
+    label: '肉类',
+    children: [
+      {
+        label: '猪肉',
+        children: [{ label: '五花肉' }, { label: '里脊肉' }],
+      },
+      {
+        label: '鸡肉',
+        children: [{ label: '鸡腿' }, { label: '鸡翅' }],
+      },
+    ],
+  },
+  {
+    label: '蔬菜',
+    children: [
+      {
+        label: '叶菜类',
+        children: [{ label: '大白菜' }, { label: '小白菜' }],
+      },
+      {
+        label: '根茎类',
+        children: [{ label: '萝卜' }, { label: '土豆' }],
+      },
+    ],
+  },
+];
+```
+
+## 遍历树形结构数据
+
+### 纵向遍历
+
+深度优先, 所以也叫深度遍历
+
+```js
+/**
+ * 深度优先遍历(递归)
+ * @param {Array} data 需要遍历的树形结构数
+ * @param {String} children 子类的key
+ * @param {Function} handler 遍历每一项的callback
+ * @param {Object} thisArg
+ * @returns {Array}
+ */
+function eachTreeDfs(data, children, handler, thisArg = null) {
+  if (!Array.isArray(data)) {
+    throw new TypeError('data must be instance of Array');
+  }
+  if (typeof handler !== 'function') {
+    throw new TypeError('handler is not a function');
+  }
+  if (typeof children !== 'string') {
+    throw new TypeError('the children mest be a string');
+  }
+
+  // 遍历函数
+  function each(data, handler) {
+    for (let i = 0; i < data.length; i++) {
+      const node = data[i];
+      handler(node);
+
+      const subNodes = node[children];
+      if (subNodes && Array.isArray(subNodes)) {
+        each(subNodes, handler);
+      }
+    }
+  }
+  each(data, handler.bind(thisArg));
+}
+
+// 深度优先遍历树形结构数据并转成数组
+function tree2list(data, children) {
+  const items = [];
+  eachTreeDfs(data, children, items.push, items);
+  return items;
+}
+
+console.log(tree2list(data, 'children'));
+// [
+//   { label: '肉类', children: [...] },
+//   { label: '猪肉', children: [...] },
+//   { label: '五花肉' },
+//   { label: '里脊肉' },
+//   { label: '鸡肉', children: [...] },
+//   { label: '鸡腿' },
+//   { label: '鸡翅' },
+//   { label: '蔬菜', children: [...] },
+//   { label: '叶菜类', children: [...] },
+//   { label: '大白菜' },
+//   { label: '小白菜' },
+//   { label: '根茎类', children: [...] },
+//   { label: '萝卜' },
+//   { label: '土豆' },
+// ];
+```
+
+### 横向遍历
+
+广度优先, 所以也叫广度遍历, 层序遍历
+
+```js
+/**
+ * 利用栈的结构,横向遍历树形结构数据生成平铺数据
+ * @param {Array} data 需要遍历的树形结构数
+ * @param {String} children 子类的key
+ * @param {Function} handler 遍历每一项的处理函数
+ * @param {Object} thisArg
+ * @returns
+ */
+function eachTreeBfs(data, children, func, thisArg = null) {
+  if (!Array.isArray(data)) {
+    throw new TypeError('data must be instance of Array');
+  }
+
+  if (typeof children !== 'string') {
+    throw new TypeError('childrenKey must be a string');
+  }
+
+  if (typeof func !== 'function') {
+    throw new TypeError('callback is not a function');
+  }
+
+  const handler = func.bind(thisArg);
+
+  let node, subNodes;
+  let stack = [].concat(data); // 不改变原数据
+  while (stack.length) {
+    node = stack.shift();
+    handler(node);
+    subNodes = node[children];
+    if (subNodes && Array.isArray(subNodes)) {
+      stack = stack.concat(subNodes);
+    }
+  }
+}
+
+function tree2list(data, children) {
+  const items = [];
+  eachTreeBfs(data, children, items.push, items);
+  return items;
+}
+
+// [
+//   { label: "肉类", children: [..] },
+//   { label: "蔬菜", children: [..] },
+//   { label: "猪肉", children: [..] },
+//   { label: "鸡肉", children: [..] },
+//   { label: "叶菜类", children: [..] },
+//   { label: "根茎类", children: [..] },
+//   { label: "五花肉" },
+//   { label: "里脊肉" },
+//   { label: "鸡腿" },
+//   { label: "鸡翅" },
+//   { label: "大白菜" },
+//   { label: "小白菜" },
+//   { label: "萝卜" },
+//   { label: "土豆" },
+// ];
+```
+
+## 将平铺数据转树型结构数据
+
+所谓平铺的数据, 就可以简单理解为数组(线性数据结构)
+
+### 平铺数据(有关系的)
+
+```js
+const menus = [
+  {
+    id: 1,
+    desc: '用户管理',
+    path: '',
+    level: 0,
+    pid: 0,
+  },
+  {
+    id: 2,
+    desc: '用户列表',
+    path: '/users',
+    level: 1,
+    pid: 1,
+  },
+  {
+    id: 3,
+    desc: '权限管理',
+    path: null,
+    level: 0,
+    pid: 0,
+  },
+  {
+    id: 4,
+    desc: '角色管理',
+    path: '/roles',
+    level: 1,
+    pid: 3,
+  },
+  {
+    id: 5,
+    desc: '权限管理',
+    path: '/permissions',
+    level: 1,
+    pid: 3,
+  },
+  {
+    id: 6,
+    desc: '测试管理',
+    path: '/test',
+    level: 2,
+    pid: 5,
+  },
+];
+```
+
+## 递归(filter)
+
+```js
+/**
+ * 克隆递归将线性数据变成树形结构的数据
+ * @param {Array} data 待遍历的数据
+ * @param {Object} options 生成树形数据的参数选项
+ * @param {String|Number} options.rootId 顶层id的值
+ * @param {String} options.idKey 当前数据的 id
+ * @param {String} options.pidKey 当前数据的父级 id
+ * @param {String} options.children 当前数据的子级 id
+ * @param {Boolean} options.cloneSource 是否需要克隆原数据
+ * @returns
+ */
+function list2tree(data, options = {}) {
+  if (!Array.isArray(data)) {
+    throw new TypeError('data is not an array');
+  }
+  const config = Object.assign(
+    {
+      root: 0,
+      idKey: 'id',
+      pidKey: 'pid',
+      children: 'children',
+      cloneSource: true,
+    },
+    options,
+  );
+
+  // 克隆一份不会改变原数据
+  const { root: rootId, idKey, pidKey, children, cloneSource } = config;
+  const target = cloneSource ? JSON.parse(JSON.stringify(data)) : data;
+  return target.filter((root) => {
+    const children = target.filter((child) => root[idKey] === child[pidKey]);
+    if (children.length) {
+      root[children] = children;
+    }
+    return root.pid === rootId;
+  });
+}
+// [
+//   {
+//     id: 1,
+//     desc: "用户管理",
+//     path: "",
+//     pid: 0,
+//     subNodes: [{ id: 2, desc: "用户列表", path: "/users", pid: 1 }],
+//   },
+//   {
+//     id: 3,
+//     desc: "权限管理",
+//     path: null,
+//     pid: 0,
+//     subNodes: [
+//       { id: 4, desc: "角色管理", path: "/roles", pid: 3 },
+//       {
+//         id: 5,
+//         desc: "权限管理",
+//         path: "/permissions",
+//         pid: 3,
+//         subNodes: [{ id: 6, desc: "测试管理", path: "/test", pid: 5 }],
+//       },
+//     ],
+//   },
+// ];
+```
+
+## 映射(手动for)
+
+```js
+/**
+ * 使用对象映射key+修改对象引用来生成树形数据
+ * @param {Array} data
+ * @param {Object} options
+ * @param {Number|String} option.root
+ * @param {String} option.id
+ * @param {String} option.pid
+ * @param {String} option.children
+ * @returns {Array}
+ */
+function list2tree(data, options = {}) {
+  if (!Array.isArray(data)) {
+    throw new TypeError('data is not an array');
+  }
+  const config = Object.assign(
+    {
+      root: 0,
+      idKey: 'id',
+      pidKey: 'pid',
+      children: 'children',
+      cloneSource: true,
+    },
+    options,
+  );
+
+  const { root, idKey, pidKey, children, cloneSource } = config;
+  const target = cloneSource ? JSON.parse(JSON.stringify(data)) : data;
+  const dataMap = {};
+  const result = [];
+
+  for (let i = 0; i < target.length; i++) {
+    const item = target[i];
+    const id = item[idKey];
+    const pid = item[pidKey];
+
+    if (!dataMap[id]) {
+      // { [id]: item }
+      dataMap[id] = item;
+    }
+
+    // 顶级类
+    if (pid === root) {
+      result.push(item);
+      continue;
+    }
+
+    // 非顶级类
+    if (!dataMap[pid]) {
+      // 没有顶级类的二级类(一般是脏数据)
+      dataMap[pid] = {};
+    }
+
+    if (!Array.isArray(dataMap[pid][children])) {
+      dataMap[pid][children] = [];
+    }
+
+    dataMap[pid][children].push(item);
+  }
+
+  return result;
+}
+
+console.log(list2tree(menus, 0, 'id', 'pid', 'subNodes'));
+// [
+//   {
+//     id: 1,
+//     desc: "用户管理",
+//     path: "",
+//     pid: 0,
+//     subNodes: [{ id: 2, desc: "用户列表", path: "/users", pid: 1 }],
+//   },
+//   {
+//     id: 3,
+//     desc: "权限管理",
+//     path: null,
+//     pid: 0,
+//     subNodes: [
+//       { id: 4, desc: "角色管理", path: "/roles", pid: 3 },
+//       {
+//         id: 5,
+//         desc: "权限管理",
+//         path: "/permissions",
+//         pid: 3,
+//         subNodes: [{ id: 6, desc: "测试管理", path: "/test", pid: 5 }],
+//       },
+//     ],
+//   },
+// ];
+```

@@ -40,4 +40,12 @@ export default {
     },
     ...autoGenSidebars('/deploy/vite'),
   ],
+
+  '/deploy/python/': [
+    {
+      text: '介绍',
+      link: '/deploy/python/index',
+    },
+    ...autoGenSidebars('/deploy/python'),
+  ],
 };

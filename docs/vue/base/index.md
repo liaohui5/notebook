@@ -39,7 +39,7 @@
 
 ## 组件化
 
-所谓组件化就是把图形、非图形的各种逻辑均抽象为一个统一的概念（组件）来实现开发的模式,在 Vue 中每一个.vue 文件都可以视为一个组件
+所谓组件化就是把图形,非图形的各种逻辑均抽象为一个统一的概念（组件）来实现开发的模式,在 Vue 中每一个.vue 文件都可以视为一个组件
 
 ![components.png](https://raw.githubusercontent.com/liaohui5/images/main/images/202206081559023.png)
 

@@ -30,6 +30,10 @@ export default {
           text: 'CICD 持续集成',
           link: '/deploy/cicd/',
         },
+        {
+          text: 'Python 脚本',
+          link: '/deploy/python/',
+        },
       ],
     },
   ],

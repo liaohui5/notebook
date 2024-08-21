@@ -26,7 +26,7 @@ outline: deep
 
 TypeScript 是一种编程语言(简称 ts), 它扩展了 JavaScript,
 增加了静态类型检查, 以帮助开发人员在开发过程中更快地发现错误.
-TypeScript 还支持许多其他高级特性,如接口、模块、泛型等, 使它成为一种强大的编程语言
+TypeScript 还支持许多其他高级特性,如接口,模块,泛型等, 使它成为一种强大的编程语言
 
 而且, Vue3 就是使用 TypeScript 开发的, 所以会必须要求有 TypeScript 的基础
 

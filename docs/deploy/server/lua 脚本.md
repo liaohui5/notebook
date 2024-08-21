@@ -4,9 +4,10 @@ outline: deep
 
 ## 介绍
 
-万能胶水语言, 优雅小巧, 灵活强大, 执行效率最快的脚本语言, [点击这里查看文档](https://www.lua.org/docs.html)
+万能胶水语言, 优雅小巧, 灵活强大, 执行效率最快的脚本语言
 
-[菜鸟教程, 中文入门教程](https://www.runoob.com/lua/lua-tutorial.html)
+- [5.3 在线中文文档](https://cloudwu.github.io/lua53doc/contents.html#index)
+- [最新版本英文文档](https://www.lua.org/docs.html)
 
 ## lua 能做什么
 

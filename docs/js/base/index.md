@@ -1,8 +1,8 @@
 ## 什么是 JS
 
-JavaScript是一种轻量级、高级的编程语言,广泛应用于Web开发中.
+JavaScript是一种轻量级,高级的编程语言,广泛应用于Web开发中.
 
-JavaScript（简称JS）最初设计的目的是作为浏览器中的脚本语言,用来增强网页的交互性.随着技术的发展,JavaScript的应用已经远远超出了浏览器的范围,现在它也被用于服务器端编程（如Node.js）、移动应用开发（React Native）、桌面应用开发（Electron）等众多领域.
+JavaScript（简称JS）最初设计的目的是作为浏览器中的脚本语言,用来增强网页的交互性.随着技术的发展,JavaScript的应用已经远远超出了浏览器的范围,现在它也被用于服务器端编程（如Node.js）,移动应用开发（React Native）,桌面应用开发（Electron）等众多领域.
 
 以下是JavaScript的一些主要特点:
 

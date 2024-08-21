@@ -2,7 +2,7 @@
 
 - [在线文档](https://www.runoob.com/design-pattern/design-pattern-tutorial.html)
 
-设计模式是一套被反复使用的、多数人知晓的、经过分类编目的、代码设计经验的总结
+设计模式是一套被反复使用的,多数人知晓的,经过分类编目的,代码设计经验的总结
 
 ## 为什么用设计模式?
 
