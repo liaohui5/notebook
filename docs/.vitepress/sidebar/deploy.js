@@ -1,51 +1,10 @@
 import { autoGenSidebars } from '../utils/gen-sidebar';
 
 export default {
-  '/deploy/cicd': [
-    {
-      text: '介绍',
-      link: '/deploy/cicd/index',
-    },
-    ...autoGenSidebars('/deploy/cicd'),
-  ],
-
-  '/deploy/server/': [
-    {
-      text: '介绍',
-      link: '/deploy/server/index',
-    },
-    ...autoGenSidebars('/deploy/server'),
-  ],
-
-  '/deploy/docker/': [
-    {
-      text: '介绍',
-      link: '/deploy/docker/index',
-    },
-    ...autoGenSidebars('/deploy/docker'),
-  ],
-
-  '/deploy/webpack/': [
-    {
-      text: '介绍',
-      link: '/deploy/webpack/index',
-    },
-    ...autoGenSidebars('/deploy/webpack'),
-  ],
-
-  '/deploy/vite/': [
-    {
-      text: '介绍',
-      link: '/deploy/vite/index',
-    },
-    ...autoGenSidebars('/deploy/vite'),
-  ],
-
-  '/deploy/python/': [
-    {
-      text: '介绍',
-      link: '/deploy/python/index',
-    },
-    ...autoGenSidebars('/deploy/python'),
-  ],
+  '/deploy/cicd': autoGenSidebars('/deploy/cicd'),
+  '/deploy/server/': autoGenSidebars('/deploy/server'),
+  '/deploy/docker/': autoGenSidebars('/deploy/docker'),
+  '/deploy/webpack/': autoGenSidebars('/deploy/webpack'),
+  '/deploy/vite/': autoGenSidebars('/deploy/vite'),
+  '/deploy/python/': autoGenSidebars('/deploy/python'),
 };

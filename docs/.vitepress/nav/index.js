@@ -3,6 +3,7 @@ import vue from './vue';
 import react from './react';
 import deploy from './deploy';
 import fragment from './fragment';
+import rust from './rust';
 
 // https://vitepress.dev/reference/default-theme-config
 export default [
@@ -22,6 +23,7 @@ export default [
   javascript,
   vue,
   react,
+  rust,
   deploy,
   fragment,
 ];

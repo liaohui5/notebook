@@ -1,12 +1,21 @@
 import fs from 'fs';
 
 // 根据文件生成侧边栏
-export function autoGenSidebars(filePath, ...excludes) {
+export function autoGenSidebars(filePath, autoGenIntro = true, ...excludes) {
   excludes.push('.DS_Store');
   excludes.push('index.md');
   const targetPath = `docs/${filePath}`.replace(new RegExp('//', 'g'), '/');
   const fileNames = fs.readdirSync(targetPath).filter((fileName) => !excludes.includes(fileName));
   const result = [];
+
+  if (autoGenIntro) {
+    result.push({
+      text: '介绍',
+      link: `${filePath}/index`,
+      sort: 0,
+    });
+  }
+
   for (let i = 0; i < fileNames.length; i++) {
     const fileName = fileNames[i];
     const text = removeFileNameExt(fileName);

@@ -34,9 +34,9 @@ export default {
     { text: 'this 指向', link: '/js/oop/this' },
   ],
 
-  '/js/dom/': [{ text: '介绍', link: '/js/dom/index' }, ...autoGenSidebars('/js/dom')],
+  '/js/dom/': autoGenSidebars('/js/dom'),
 
-  '/js/magic/': [{ text: '介绍', link: '/js/magic/index' }, ...autoGenSidebars('/js/magic')],
+  '/js/magic/': autoGenSidebars('/js/magic'),
 
   '/js/builtin/': [
     {
