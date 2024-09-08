@@ -1,4 +1,6 @@
 import { autoGenSidebars } from '../utils/gen-sidebar';
+import webapi_sidebar from './webapi_sidebar';
+import nodejs_sidebar from './nodejs_sidebar';
 
 export default {
   '/js/base': [
@@ -40,43 +42,16 @@ export default {
 
   '/js/builtin/': [
     {
-      text: '前置知识',
+      text: '介绍',
       link: '/js/builtin/index',
     },
     {
       text: '值属性',
-      items: [
-        {
-          text: 'globalThis',
-          link: '',
-        },
-        {
-          text: 'Infinity',
-          link: '',
-        },
-        {
-          text: 'NaN',
-          link: '',
-        },
-        {
-          text: 'undefined',
-          link: '',
-        },
-      ],
+      link: '/js/builtin/值属性',
     },
     {
       text: '函数属性',
-      items: [
-        { text: 'eval', link: '' },
-        { text: 'isFinite', link: '' },
-        { text: 'isNaN', link: '' },
-        { text: 'parseFloat', link: '' },
-        { text: 'parseInt', link: '' },
-        { text: 'decodeURI', link: '' },
-        { text: 'decodeURIComponent', link: '' },
-        { text: 'encodeURI', link: '' },
-        { text: 'encodeURIComponent', link: '' },
-      ],
+      link: '/js/builtin/函数属性',
     },
     {
       text: '基本对象',
@@ -105,17 +80,10 @@ export default {
         },
       ],
     },
+
     {
       text: '错误对象',
-      items: [
-        { text: 'Error', link: '' },
-        { text: 'RangeError', link: '' },
-        { text: 'TypeError', link: '' },
-        { text: 'EvalError', link: '' },
-        { text: 'SyntaxError', link: '' },
-        { text: 'ReferenceError', link: '' },
-        { text: 'URIError', link: '' },
-      ],
+      link: '/js/builtin/错误对象.md',
     },
 
     {
@@ -192,148 +160,8 @@ export default {
     },
   ],
 
-  '/js/webapi/': [
-    {
-      text: '介绍',
-      link: 'js/webapi/index',
-    },
-    {
-      text: 'DOM',
-      items: [
-        // https://developer.mozilla.org/zh-CN/docs/Web/API/Document_Object_Model
-        { text: 'Window', link: '' },
-        { text: 'AbortController', link: '' },
-        { text: 'AboutSignal', link: '' },
-        { text: 'Attr', link: '' },
-        { text: 'Comment', link: '' },
-        { text: 'CustomEvent', link: '' },
-        { text: 'Document', link: '' },
-        { text: 'DocumentFragment', link: '' },
-        { text: 'DocumentType', link: '' },
-        { text: 'DOMExpection', link: '' },
-        { text: 'DOMParser', link: '' },
-        { text: 'DOMTokenList', link: '' },
-        { text: 'Element', link: '' },
-        { text: 'Event 和 EventTarget', link: '' },
-        { text: 'MutationObserver 和 MutationRecord', link: '' },
-        { text: 'Node', link: '' },
-        { text: 'NodeList 和 HTMLCollection', link: '' },
-      ],
-    },
-    {
-      text: 'HTML DOM API',
-      items: [
-        {
-          text: '介绍',
-          link: '',
-        },
-        {
-          text: 'Navigator', // https://developer.mozilla.org/zh-CN/docs/Web/API/Navigator
-          link: '',
-        },
-        {
-          text: 'History', // https://developer.mozilla.org/zh-CN/docs/Web/API/History_API
-          link: '',
-        },
-      ],
-    },
-    {
-      text: 'Events',
-      items: [
-        { text: '介绍', link: '' },
-        { text: 'Pointer Events', link: '' }, // https://developer.mozilla.org/zh-CN/docs/Web/API/Pointer_events
-        { text: 'Touch Events', link: '' }, // https://developer.mozilla.org/zh-CN/docs/Web/API/Touch_events
-        {
-          // https://developer.mozilla.org/en-US/docs/Web/API/UI_Events
-          text: 'UI Events',
-          items: [
-            { text: 'CompositionEvent', link: '' },
-            { text: 'FocusEvent', link: '' },
-            { text: 'InputEvent', link: '' },
-            { text: 'MouseEvent', link: '' },
-            { text: 'MouseScrollEvent', link: '' },
-            { text: 'WheelEvent', link: '' },
-          ],
-        },
-      ],
-    },
-    {
-      text: 'Console API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Console_API
-      link: '',
-    },
-    {
-      text: 'XMLHttpRequest', // https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest
-      link: '',
-    },
-    {
-      text: 'Fetch API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch
-      link: '',
-    },
-    {
-      text: 'Clipboard API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Clipboard_API
-      link: '',
-    },
-    {
-      text: 'File API', // https://developer.mozilla.org/zh-CN/docs/Web/API/File_API
-      link: '',
-    },
-    {
-      text: 'Fullscreen API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Fullscreen_API
-      link: '',
-    },
-    {
-      text: 'HTML Drag and Drop', // https://developer.mozilla.org/zh-CN/docs/Web/API/HTML_Drag_and_Drop_API
-      link: '',
-    },
-    {
-      text: 'Channel Mesaging API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Channel_Messaging_API
-      link: '',
-    },
-    {
-      text: 'URL API', // https://developer.mozilla.org/zh-CN/docs/Web/API/URL_API
-      link: '',
-    },
-    {
-      text: 'WebStorage API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Storage_API
-      link: '',
-    },
-    {
-      text: 'WebComponents', // https://developer.mozilla.org/zh-CN/docs/Web/API/Web_components
-      link: '',
-    },
-    {
-      text: 'Performance API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Performance_API
-      link: '',
-    },
-    {
-      text: 'WebWorkers API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Web_Workers_API
-      link: '',
-    },
-    {
-      text: 'IndexedDB API', // https://developer.mozilla.org/zh-CN/docs/Web/API/IndexedDB_API
-      link: '',
-    },
-    {
-      text: 'Resize API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Resize_Observer_API
-      link: '',
-    },
-    {
-      text: 'Selection API', // https://developer.mozilla.org/en-US/docs/Web/API/Selection_API
-      link: '',
-    },
-    {
-      text: 'Intersection Observer API', // https://developer.mozilla.org/zh-CN/docs/Web/API/Intersection_Observer_API
-      link: '',
-    },
-    {
-      text: 'WebGL API', // https://developer.mozilla.org/zh-CN/docs/Web/API/WebGL_API
-      link: '',
-    },
-    {
-      text: 'CSSStyleDeclaration',
-      link: '',
-    },
-  ],
+  '/js/webapi/': webapi_sidebar,
+  '/js/nodejs/': nodejs_sidebar,
 
   '/js/ts/base/': [
     { text: '介绍&安装', link: '/js/ts/base/index' },

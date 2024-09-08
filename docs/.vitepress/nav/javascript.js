@@ -36,7 +36,7 @@ export default {
         },
         {
           text: 'NodeJS',
-          link: '/nodejs/',
+          link: '/js/nodejs/',
         },
       ],
     },
