@@ -55,3 +55,13 @@ cargo add rand
 ```sh
 cargo rm rand # cargo remove rand
 ```
+
+## 采用发布配置自定义构建
+
+## 将 crate 发布到 Crates.io
+
+## Cargo 工作空间
+
+## 使用 cargo install 从 Crates.io 安装二进制文件
+
+## Cargo 自定义扩展命令
