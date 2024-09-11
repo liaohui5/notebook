@@ -15,6 +15,10 @@ export default {
       link: '/fragments/vscode',
     },
     {
+      text: 'Zed',
+      link: '/fragments/zed',
+    },
+    {
       text: 'dotfiles',
       link: 'https://github.com/liaohui5/dotfiles',
     },
