@@ -24,6 +24,8 @@ export default defineConfig({
     sidebar,
     logo: '/logo.svg',
 
+    outline: 'deep',
+
     search: {
       provider: 'local',
     },

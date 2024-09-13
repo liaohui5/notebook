@@ -1,7 +1,3 @@
----
-outline: deep
----
-
 ## 文本字体
 
 ### 字体种类 font-family

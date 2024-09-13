@@ -1,6 +1,4 @@
----
-outline: deep
----
+
 
 ## Promise 介绍
 

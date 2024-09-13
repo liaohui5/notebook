@@ -1,7 +1,3 @@
----
-outline: deep
----
-
 ## w3c在线文档
 
 https://www.w3school.com.cn/css/index.asp

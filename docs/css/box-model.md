@@ -1,7 +1,3 @@
----
-outline: deep
----
-
 ## CSS 盒模型
 
 ![](https://raw.githubusercontent.com/liaohui5/images/main/images/202311012038577.png)
