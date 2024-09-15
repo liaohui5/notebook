@@ -45,5 +45,17 @@ export default defineConfig({
 
   markdown: {
     lineNumbers: true,
+    image: {
+      lazyLoading: true,
+    },
+  },
+
+  vite: {
+    optimizeDeps: {
+      exclude: ['@nolebase/vitepress-plugin-enhanced-readabilities/client'],
+    },
+    ssr: {
+      noExternal: ['@nolebase/vitepress-plugin-enhanced-readabilities'],
+    },
   },
 });
