@@ -1,8 +1,6 @@
-
-
 ## 什么是 trait
 
-中文直译就是: `特性`
+中文直译就是: `特性` 或者 `特征`
 
 可以简单的理解为其他编程语言中接口(interface)的功能,
 就是为了定义共同行为
@@ -216,7 +214,7 @@ trait Runable {
     }
 }
 
-// 如果特性比较多, 那么这么些就比较变态, 建议使用 where 关键字
+// 如果特性比较多, 那么这么写就比较变态, 建议使用 where 关键字
 // fn is_full_perms<T: Readable + Writable, U:Readable + Writable + Runable>
 // (path: T, file: U) -> bool
 // {
@@ -263,3 +261,12 @@ fn main() {
     swimable_animal.swim();
 }
 ```
+
+## 标准库 trait 学习
+
+### Eq 和 PartialEq
+
+### Ord 和 PartialOrd
+
+### Clone 和 Copy
+
