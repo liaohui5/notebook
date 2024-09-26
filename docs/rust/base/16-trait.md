@@ -262,6 +262,55 @@ fn main() {
 }
 ```
 
+## dyn 关键字
+
+用来创建一个 指向实现了特定 trait 的实例对象的引用
+
+```rust
+trait Executable {
+    fn exec(&self);
+}
+
+struct ShellScript {
+    path: String
+}
+impl Executable for ShellScript {
+    fn exec(&self) {
+        println!("执行shell脚本:{}", self.path);
+    }
+}
+
+struct Command {
+    name: String
+}
+impl Executable for Command {
+    fn exec(&self) {
+        println!("执行系统命令:{}", self.name);
+    }
+}
+
+// dyn 的作用就是用来创建一个 `指向实现特定trait的实例对象的引用`
+// 直接 &Executable 是不允许的, 必须加上 dyn 关键字
+// 不能这样操作:
+// fn execute(x: &Executable) {
+fn execute(x: &dyn Executable) {
+    x.exec();
+}
+
+// run 和 execute 是等价的
+fn run<T: Executable>(x: &T) {
+    x.exec();
+}
+
+fn main() {
+    let command = Command { name: "ls".to_string() };
+    execute(&command);
+
+    let script  = ShellScript { path: "./run.sh".to_string() };
+    run(&script);
+}
+```
+
 ## 标准库 trait 学习
 
 ### Eq 和 PartialEq
