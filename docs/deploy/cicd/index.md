@@ -80,8 +80,8 @@ ssh root@192.168.10.11 -p2233
 1. 生成1对公私钥, 执行命令后会生成2个文件 `id_rsa(私钥)` 和 `id_rsa.pub(公钥)`
 
 ```sh
+ssh-keygen -t rsa -C "email@example.com"
 # -C 这个其实是关于这两个key的一些描述, 可填写真实的邮箱
-ssh-keygen -t rsa -b 2048 -C "email@example.com"
 # 这个命令是交互式的: 他会问你一些问题, 如:
 # 生成的文件存在哪里, 如: ./keys
 # 设置密码(不需要就直接回车)
