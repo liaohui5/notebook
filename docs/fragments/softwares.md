@@ -10,6 +10,18 @@
 
 ## 跨操作系统
 
+- [轻量 http 客户端 httpie](https://httpie.io/download)
+
+- [邮件客户端 雷鸟](https://www.thunderbird.net/zh-CN/)
+
+- [局域网文件共享 localsend, 微信和QQ实在太难用了](https://localsend.org/zh-CN)
+
+- [双因子认证客户端 Ente Auth](https://github.com/ente-io/ente)
+
+- [开源办公套件 onlyoffice](https://www.onlyoffice.com/desktop.aspx)
+
+- [翻译软件 pot](https://github.com/pot-app/pot-desktop)
+
 - [代码编辑器 vscode](https://code.visualstudio.com/) [vscode-insiders](https://code.visualstudio.com/insiders/)
 
 - [命令行编辑器 neovim 简称 nvim](https://github.com/neovim/neovim)
