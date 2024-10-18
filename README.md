@@ -12,7 +12,7 @@
 
 ## 联系方式
 
-邮箱: liaohui5@foxmail.com
+邮箱: secretx500@qq.com
 
 github: [https://github.com/liaohui5](https://github.com/liaohui5)
 ![logo](https://raw.githubusercontent.com/liaohui5/images/main/images/202209201513473.jpg)

@@ -290,3 +290,183 @@ npm i nodemon -D
 ## 开发 vscode 插件
 
 推荐阅读[快速开始](https://liiked.github.io/VS-Code-Extension-Doc-ZH/#/get-started/your-first-extension)
+
+
+## 配置
+
+```jsonc
+{
+  // 编辑器 & 终端字体设置
+  "editor.fontSize": 16,
+  "editor.fontLigatures": true,
+  "editor.fontFamily": "'JetBrainsMono Nerd Font Mono', 'OperatorMono Nerd Font Mono', 'Maple Mono NF', 'Hack Nerd Font Mono'",
+  "editor.fontWeight": 300,
+  "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font Mono'",
+  "terminal.integrated.fontSize": 14,
+  // 不开启固定滚动
+  "editor.stickyScroll.enabled": false,
+  // 不要开启声音提示
+  "editor.accessibilitySupport": "off",
+  // 不要自动换行
+  "editor.wordWrap": "off",
+  // 光标宽度  
+  "editor.cursorWidth": 1,
+  // 行高
+  "editor.lineHeight": 1.4,
+  // 是否开启: 顶部命令中心输入框
+  "window.commandCenter": false,
+  // 是否开启: 面包屑导航  
+  "breadcrumbs.enabled": false,
+  // 是否开启: 代码小地图
+  "editor.minimap.enabled": true,
+  // 代码小地图最大宽度 & 是否渲染字符 & 总是显示当前位置滑块
+  "editor.minimap.maxColumn": 100,
+  "editor.minimap.renderCharacters": false,
+  "editor.minimap.showSlider": "always",
+  // 不要显示滚动条
+  "editor.scrollbar.horizontal": "hidden",
+  "editor.scrollbar.vertical": "hidden",
+  "editor.scrollbar.horizontalScrollbarSize": 0,
+  "editor.scrollbar.verticalScrollbarSize": 0,
+  // 是否允许 hover & 多少毫秒秒后显示
+  "editor.hover.enabled": true,
+  "editor.hover.sticky": true,
+  "editor.hover.delay": 1500,
+  // 多少毫秒后显示代码提示 & 多个窗口共享提示 & 代码提示的内容
+  "editor.quickSuggestionsDelay": 100,
+  "editor.suggest.shareSuggestSelections": true,
+  "editor.quickSuggestions": {
+    "other": "on", // 其他(snippets + lsp)
+    "strings": "on", // 代码中的字符串
+    "comments": "off" // 注释内容
+  },
+  // 匹配括号高亮 && 匹配当前光标所在位置单词高亮
+  "editor.matchBrackets": "never",
+  "editor.occurrencesHighlight": "singleFile",
+  // 同步 Git 前请先确认 && 允许直接提交(git -am) && 自动拉取代码
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "git.autofetch": true,
+  // 文件删除确认 && 拖放文件确认 && 自动合并目录/文件显示
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "explorer.compactFolders": false,
+  // 光标变化就自动保存文件
+  "files.autoSave": "onFocusChange",
+  // 在侧边栏修改文件名时,代码自动跟新路径
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  // 忽略插件提示
+  "extensions.ignoreRecommendations": true,
+  // 更新模式: 启动的时候检查
+  "update.mode": "start",
+  // 打开设置使用左右json
+  "workbench.settings.editor": "json",
+  "workbench.settings.useSplitJSON": true,
+  // 在启动时不自动打开任何文件
+  "workbench.startupEditor": "none",
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+  // 主题配色
+  "workbench.colorTheme": "Monokai",
+  // 图标主题, 需要安装插件
+  "workbench.iconTheme": "material-icon-theme",
+  "material-icon-theme.hidesExplorerArrows": true,
+}
+```
+
+## 快捷键配置
+
+```jsonc
+[
+  {
+    // 搜索文件快速打开
+    "key": "ctrl+p",
+    "command": "workbench.action.quickOpen"
+  },
+  {
+    // 在编辑器/任意输入框没有焦点的时: 获取焦点
+    "key": "escape",
+    "command": "workbench.action.focusFirstEditorGroup",
+    "when": "!editorTextFocus && !textInputFocus && !editorFocus && !inputFocus"
+  },
+  {
+    // 切换 命令行
+    "key": "ctrl+x",
+    "command": "workbench.action.terminal.toggleTerminal",
+    "when": "terminal.active"
+  },
+  {
+    // 切换侧边栏显示
+    "key": "ctrl+e",
+    "command": "workbench.view.explorer",
+    "when": "editorTextFocus"
+  },
+  {
+    // 切换侧边栏显示
+    "key": "ctrl+e",
+    "command": "workbench.action.toggleSidebarVisibility",
+    "when": "!editorTextFocus"
+  },
+  {
+    // 显示代码提示
+    "key": "ctrl+o",
+    "command": "editor.action.triggerSuggest",
+    "when": "!suggestWidgetVisible && editorTextFocus && neovim.mode == 'insert'"
+  },
+  {
+    // 代码提示显示时: 选中上一个代码提示
+    "key": "ctrl+k",
+    "command": "selectPrevSuggestion",
+    "when": "suggestWidgetVisible && suggestWidgetMultipleSuggestions"
+  },
+  {
+    // 代码提示显示时: 选中下一个代码提示
+    "key": "ctrl+j",
+    "command": "selectNextSuggestion",
+    "when": "suggestWidgetVisible && suggestWidgetMultipleSuggestions"
+  },
+  {
+    // 在显示搜索文件输入框时: 选中上一个
+    "key": "ctrl+k",
+    "command": "workbench.action.quickOpenSelectPrevious",
+    "when": "inQuickOpen"
+  },
+  {
+    // 在显示搜索文件输入框时: 选中下一个
+    "key": "ctrl+j",
+    "command": "workbench.action.quickOpenSelectNext",
+    "when": "inQuickOpen"
+  },
+  {
+    // 在展开 snippets 后, 可以跳到上一个位置
+    "key": "ctrl+h",
+    "command": "jumpToPrevSnippetPlaceholder",
+    "when": "editorTextFocus && hasPrevTabstop && inSnippetMode"
+  },
+  {
+    // 在展开 snippets 后, 可以跳到下一个位置
+    "key": "ctrl+l",
+    "command": "jumpToNextSnippetPlaceholder",
+    "when": "editorTextFocus && hasNextTabstop && inSnippetMode"
+  },
+  {
+    // 当 codeAction 菜单显示的时候 c-k 选中上一个
+    "key": "ctrl+k",
+    "when": "codeActionMenuVisible",
+    "command": "selectPrevCodeAction"
+  },
+  {
+    // 当 codeAction 菜单显示的时候 c-j 选择下一个
+    "key": "ctrl+j",
+    "when": "codeActionMenuVisible",
+    "command": "selectNextCodeAction"
+  },
+  {
+    // 当 codeAction 菜单显示的时候 c-l 确认选择
+    "key": "ctrl+l",
+    "command": "acceptSelectedCodeAction",
+    "when": "codeActionMenuVisible"
+  }
+]
+```

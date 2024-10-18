@@ -475,3 +475,540 @@ mod unit_tests {
 }
 
 ```
+
+## 优化版(进阶练手项目)
+
+上面的处理方式太简单, 且耦合性太高, 需要优化
+
+### 分析
+
+![preview](https://raw.githubusercontent.com/liaohui5/images/main/images/202410181616699.png)
+
+### 创建项目
+
+```sh
+cargo new mp-web-server
+```
+
+### 目录结构
+
+```sh
+.
+├── Cargo.lock
+├── Cargo.toml
+├── public
+│   ├── 404.html       # 404 页面
+│   ├── index.html     # 首页
+│   ├── index.js       # JS脚本文件
+│   ├── other.html     # 其他html
+│   ├── sleep.html     # 测试多线程处理
+│   └── style.css      # CSS样式文件
+└── src
+    ├── handler.rs     # 处理器:处理具体的请求
+    ├── lib.rs         # 模块定义文件
+    ├── main.rs        # 程序主入口
+    ├── request.rs     # 解析请求
+    ├── response.rs    # 解析响应
+    ├── router.rs      # 路由器:分发请求给处理器
+    ├── server.rs      # 服务器:监听请求
+    └── thread_pool.rs # 线程池
+```
+
+### 静态页面
+
+::: code-group
+
+```html [public/index.html]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>首页</h2>
+  <script src="index.js"></script>
+</body>
+</html>
+```
+
+```js [public/index.js]
+(function () {
+  console.log("index.js execute");
+})();
+```
+
+```js [public/style.css]
+h2 {
+  color: #f00;
+}
+```
+
+```html [public/404.html]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h2>NotFound</h2>
+  <a href="/">回到首页</a>
+</body>
+</html>
+```
+
+```html [public/sleep.html]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h2>测试多线程</h2>
+</body>
+</html>
+```
+
+:::
+
+### main.rs 和 lib.rs
+
+::: code-group
+
+```rust [src/main.rs]
+use mp_web_server::server::Server;
+
+fn main() {
+    let addr = "127.0.0.1:3000";
+    let server = Server::new(addr);
+    server.run();
+}
+```
+
+```rust [src/lib.rs]
+pub mod handler;
+pub mod request;
+pub mod response;
+pub mod router;
+pub mod server;
+pub mod thread_pool;
+```
+
+:::
+
+### src/server.rs
+
+```rust
+use crate::request::Request;
+use crate::router::Router;
+use crate::thread_pool::ThreadPool;
+use colored::Colorize; // 打印出彩色的字符到标准输出
+use std::io::{Read, Write};
+use std::net::TcpListener;
+
+pub struct Server<'a> {
+    socket_addr: &'a str,
+}
+
+impl<'a> Server<'a> {
+    pub fn new(socket_addr: &'a str) -> Self {
+        Server { socket_addr }
+    }
+
+    pub fn run(&self) {
+        // 监听请求
+        let listener = TcpListener::bind(self.socket_addr).unwrap();
+        let pool = ThreadPool::new(4);
+
+        println!(
+            "Server running on: {}{}",
+            "http://".red(),
+            self.socket_addr.red()
+        );
+
+        for stream in listener.incoming() {
+            let mut stream = stream.unwrap();
+
+            // 使用线程池处理请求
+            pool.execute(move || {
+                handle_http_request(&mut stream);
+            });
+        }
+    }
+}
+
+// 处理请求:
+// 1. 解析请求字符串为 Request struct
+// 2. 使用 Router 分发给 Handler 去处理
+fn handle_http_request<T: Read + Write>(stream: &mut T) {
+    // read stream to String
+    let mut buffer: [u8; 1024] = [0; 1024];
+    Read::read(stream, &mut buffer).unwrap();
+
+    // parse String to Request
+    let request: Request = String::from_utf8(buffer.to_vec()).unwrap().into();
+
+    // dispatch to handlers
+    Router::route(request, stream);
+}
+```
+
+
+### src/request.rs
+
+```rust
+use std::collections::HashMap;
+
+#[derive(PartialEq, Debug)]
+pub enum Method {
+    // 请求方式
+    Get,
+    Post,
+    Put,
+    Patch,
+    Delete,
+    Uninitialized,
+}
+impl From<&str> for Method {
+    fn from(s: &str) -> Self {
+        match s {
+            "GET" => Method::Get,
+            "POST" => Method::Post,
+            "PUT" => Method::Put,
+            "PATCH" => Method::Patch,
+            "DELETE" => Method::Delete,
+            _ => Method::Uninitialized,
+        }
+    }
+}
+
+#[derive(Debug, PartialEq)]
+pub enum ProtocolVersion {
+    // HTTP 协议版本
+    HTTP1_1,
+    HTTP2,
+    Uninitialized,
+}
+impl From<&str> for ProtocolVersion {
+    fn from(s: &str) -> Self {
+        match s {
+            "HTTP/1.1" => ProtocolVersion::HTTP1_1,
+            "HTTP/2" => ProtocolVersion::HTTP2,
+            _ => ProtocolVersion::Uninitialized,
+        }
+    }
+}
+
+#[derive(Debug, PartialEq)]
+pub enum Resource {
+    // HTTP 请求资源(路径字符串)
+    Path(String),
+}
+
+#[derive(Debug)]
+pub struct Request {
+    pub method: Method,
+    pub protocol_version: ProtocolVersion,
+    pub resource: Resource,
+    pub headers: HashMap<String, String>,
+    pub body: String,
+}
+impl From<String> for Request {
+    fn from(req_str: String) -> Self {
+        let mut method = Method::Uninitialized;
+        let mut protocol_version = ProtocolVersion::Uninitialized;
+        let mut resource = Resource::Path(String::new());
+        let mut headers = HashMap::new();
+        let mut request_body = "";
+
+        let iter = req_str.lines();
+
+        for line in iter {
+            if line.contains("HTTP") {
+                let (m, r, v) = process_req_line(line);
+                method = m;
+                resource = r;
+                protocol_version = v;
+            } else if line.contains(":") {
+                let (key, val) = process_header(line);
+                headers.insert(key, val);
+            } else if line.is_empty() {
+                // empty line
+            } else {
+                request_body = line;
+            }
+        }
+
+        Request {
+            method,
+            protocol_version,
+            headers,
+            resource,
+            body: request_body.into(),
+        }
+    }
+}
+
+// 解析请求行
+fn process_req_line(line: &str) -> (Method, Resource, ProtocolVersion) {
+    let mut words = line.split_whitespace(); // split by space charetacter
+    let m = words.next().unwrap();
+    let r = words.next().unwrap();
+    let v = words.next().unwrap();
+    (m.into(), Resource::Path(String::from(r)), v.into())
+}
+
+// 解析请求头
+fn process_header(line: &str) -> (String, String) {
+    let mut key = String::new();
+    let mut val = String::new();
+    let mut iter = line.split(":");
+
+    if let Some(k) = iter.next() {
+        key = k.trim().to_string();
+    }
+
+    if let Some(v) = iter.next() {
+        val = v.trim().to_string();
+    }
+
+    (key, val)
+}
+
+// 单元测试模块
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn should_return_method_get_variant() {
+        assert_eq!(Method::Get, Method::from("GET"));
+
+        // 实现 From 特性后,就可以调用 into 方法
+        assert_eq!(Method::Get, "GET".into());
+    }
+
+    #[test]
+    fn should_return_protocol_version_variant() {
+        assert_eq!(ProtocolVersion::HTTP1_1, "HTTP/1.1".into());
+    }
+
+    #[test]
+    fn should_parse_req_line_string_to_enums() {
+        let (m, r, v) = process_req_line("GET /test.html HTTP/1.1");
+        assert_eq!(m, Method::Get);
+        assert_eq!(r, Resource::Path("/test.html".to_string()));
+        assert_eq!(v, ProtocolVersion::HTTP1_1);
+    }
+
+    #[test]
+    fn should_parse_header_line_string_to_tuple() {
+        let (k, v) = process_header("Accept:text/html");
+        assert_eq!(k, String::from("Accept"));
+        assert_eq!(v, String::from("text/html"));
+
+        // trim spaces
+        let (k, v) = process_header(" Host : localhost ");
+        assert_eq!(k, String::from("Host"));
+        assert_eq!(v, String::from("localhost"));
+    }
+
+    #[test]
+    fn should_parse_string_to_request_struct() {
+        // parse str to Request struct
+        let req_str =
+            String::from("GET /search HTTP/1.1\r\nAccept:text/html\r\nHost:localhost\r\n\r\nhello");
+        let request = Request::from(req_str);
+
+        // expected request instance
+        let expected = Request {
+            method: Method::Get,
+            protocol_version: ProtocolVersion::HTTP1_1,
+            resource: Resource::Path(String::from("/search")),
+            headers: {
+                let mut headers = HashMap::new();
+                headers.insert("Accept".to_string(), "text/html".to_string());
+                headers.insert("Host".to_string(), "localhost".to_string());
+                headers
+            },
+            body: String::from("hello"),
+        };
+
+        assert_eq!(expected.method, request.method);
+        assert_eq!(expected.protocol_version, request.protocol_version);
+        assert_eq!(expected.resource, request.resource);
+        assert_eq!(expected.headers, request.headers);
+    }
+}
+```
+
+### src/router.rs
+
+```rust
+use crate::handler::{ApiHandler, Handler, NotFoundHandler, StaticFileHandler};
+use crate::{request, response::Response};
+use std::io::{Read, Write};
+
+pub struct Router;
+
+impl Router {
+    #[allow(unused)]
+    pub fn route<T: Read + Write>(req: request::Request, stream: &mut T) {
+        // 此处只处理 GET 请求凡事
+        if let request::Method::Get = req.method {
+            // 结构方式获取请求路径
+            let request::Resource::Path(s) = &req.resource;
+            let route: Vec<&str> = s.split("/").collect();
+
+            // 根据 handler 获取响应
+            let response: Response = if route[1] == "api" {
+                ApiHandler::handle(&req)
+            } else {
+                StaticFileHandler::handle(&req)
+            };
+
+            // 发送响应
+            response.send(stream).unwrap();
+            return;
+        }
+
+        // 如果不是 GET 请求就直接使用 NotFoundHandler
+        NotFoundHandler::handle(&req).send(stream).unwrap();
+    }
+}
+```
+
+### src/response.rs
+
+```rust
+use std::collections::HashMap;
+use std::io::{Result as IOResult, Write};
+
+#[derive(Debug, PartialEq, Clone)]
+pub struct Response<'a> {
+    protocol_version: &'a str,
+    status_code: &'a str,
+    status_text: &'a str,
+    headers: Option<HashMap<&'a str, &'a str>>,
+    body: Option<String>,
+}
+
+impl<'a> Default for Response<'a> {
+    fn default() -> Self {
+        Self {
+            protocol_version: "HTTP/1.1",
+            status_code: "200",
+            status_text: "OK",
+            headers: None,
+            body: None,
+        }
+    }
+}
+
+// 将 Response struct 解析为响应字符串
+impl<'a> From<Response<'a>> for String {
+    fn from(r: Response) -> Self {
+        let res = r.clone();
+
+        // response line
+        // header lines
+        // empty line
+        // response body line
+        let res_str = format!(
+            "{} {} {}\r\nContent-Length:{}\r\n\r\n{}",
+            &res.protocol_version(),
+            &res.status_code(),
+            &res.status_text(),
+            &r.body().len(),
+            &res.body(),
+        );
+
+        println!("res_str:{:?}\r\n---end---", res_str);
+
+        res_str
+    }
+}
+
+impl<'a> Response<'a> {
+    pub fn new(
+        status_code: &'a str,
+        headers: Option<HashMap<&'a str, &'a str>>,
+        body: Option<String>,
+    ) -> Response<'a> {
+        let mut response: Response<'a> = Response::default();
+
+        if status_code != "200" {
+            response.status_code = status_code;
+        }
+
+        response.status_text = match response.status_code {
+            "200" => "OK",
+            "400" => "Bad Request",
+            "500" => "Internal Server Error",
+            _ => "Not Found",
+        };
+
+        response.headers = match &headers {
+            Some(_h) => headers,
+            None => {
+                let mut header_items = HashMap::new();
+                header_items.insert("Content-Type", "text/plain");
+                Some(header_items)
+            }
+        };
+
+        response.body = body;
+
+        response
+    }
+
+    pub fn protocol_version(&self) -> &str {
+        self.protocol_version
+    }
+
+    pub fn status_code(&self) -> &str {
+        self.status_code
+    }
+
+    pub fn status_text(&self) -> &str {
+        self.status_text
+    }
+
+    pub fn headers(&self) -> String {
+        let headers_map: HashMap<&str, &str> = self.headers.clone().unwrap();
+        let mut headers_str = String::new();
+
+        for (k, v) in headers_map.iter() {
+            headers_str.push_str(k);
+            headers_str.push(':');
+            headers_str.push_str(v);
+            headers_str.push_str("\r\n");
+        }
+
+        headers_str
+    }
+
+    pub fn body(&self) -> &str {
+        match &self.body {
+            Some(s) => s.as_str(),
+            None => "",
+        }
+    }
+
+    // 发送响应
+    pub fn send<T: Write>(&self, stream: &mut T) -> IOResult<()> {
+        let res = self.clone();
+
+        let res_string: String = res.into();
+        Write::write_all(stream, res_string.as_bytes())?;
+
+        Ok(())
+    }
+}
+```
