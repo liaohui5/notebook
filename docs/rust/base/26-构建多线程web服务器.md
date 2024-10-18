@@ -478,7 +478,7 @@ mod unit_tests {
 
 ## 优化版(进阶练手项目)
 
-上面的处理方式太简单, 且耦合性太高, 需要优化
+上面的处理方式太简单, 且耦合性太高, 所以需要优化, [在线代码](https://github.com/liaohui5/mp-web-server-write-in-rust)
 
 ### 分析
 
@@ -886,6 +886,7 @@ impl Router {
 
 ### src/handler.rs
 
+
 ```rust
 use crate::request;
 use crate::{request::Request, response::Response};
@@ -894,7 +895,6 @@ use std::collections::HashMap;
 use std::time::Duration;
 use std::{env, fs, thread};
 
-// 定义处理器特性(接口)
 pub trait Handler {
     fn handle(req: &Request) -> Response;
     fn load_file(file_name: &str) -> Option<String> {
@@ -928,18 +928,24 @@ impl Handler for StaticFileHandler {
     fn handle(req: &Request) -> Response {
         let request::Resource::Path(s) = &req.resource;
         let route: Vec<&str> = s.split("/").collect();
+
+        // default response header
+        let mut headers: HashMap<&str, &str> = HashMap::new();
+        headers.insert("Content-Type", "text/html");
+
         println!("{}:{:?}", "route".cyan(), route);
         match route[1] {
-            "" | "index.html" => Response::new("200", None, Self::load_file("index.html")),
-            "health" => Response::new("200", None, Self::load_file("health.html")),
+            "" | "index.html" => Response::new("200", Some(headers), Self::load_file("index.html")),
             "sleep.html" => {
                 // for test multiple threads
                 thread::sleep(Duration::from_secs(5));
-                Response::new("200", None, Self::load_file("sleep.html"))
+                Response::new("200", Some(headers), Self::load_file("sleep.html"))
             }
             path => {
                 if let Some(contents) = Self::load_file(path) {
-                    let mut headers: HashMap<&str, &str> = HashMap::new();
+                    println!("{}", format!("req_path:{}", path).cyan());
+
+                    // set Content-Type for override response header
                     if path.ends_with(".css") {
                         headers.insert("Content-Type", "text/css");
                     } else if path.ends_with(".js") {
