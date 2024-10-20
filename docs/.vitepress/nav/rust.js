@@ -10,5 +10,9 @@ export default {
       text: 'Rust 基础',
       link: '/rust/base/',
     },
+    {
+      text: 'Rust 异步',
+      link: '/rust/async/',
+    },
   ],
 };
