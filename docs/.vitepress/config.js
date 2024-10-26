@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress';
 import nav from './nav';
 import sidebar from './sidebar';
+import markdownItCheckBox from "markdown-it-todo-lists";
 
 // head 标签中的内容
 const head = [
@@ -48,6 +49,9 @@ export default defineConfig({
     image: {
       lazyLoading: true,
     },
+    config: (md) => {
+      md.use(markdownItCheckBox)
+    }
   },
 
   vite: {
