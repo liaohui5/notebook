@@ -10,16 +10,16 @@ const head = [
   ['link', { rel: 'icon', type: 'image/svg+xml', href: '/logo.svg' }],
   ['meta', { name: 'og:type', content: 'website' }],
   ['meta', { name: 'og:locale', content: 'zh-CN' }],
-  ['meta', { name: 'og:site_name', content: 'study-notes' }],
+  ['meta', { name: 'og:site_name', content: 'notebook' }],
 ];
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   head,
   base: '/',
-  title: 'study-notes',
+  title: 'notebook',
   titleTemplate: '个人学习笔记',
-  description: 'study notes for my self',
+  description: 'notebook for myself',
   themeConfig: {
     nav,
     sidebar,

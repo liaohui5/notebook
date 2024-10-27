@@ -8,14 +8,14 @@ hero:
   tagline: '个人的学习笔记总结, 记录学习过的知识输出成文档'
   image:
     src: /logo.svg
-    alt: study-notes
+    alt: notebook
   actions:
     - theme: brand
       text: 关于我
       link: /aboutMe
     - theme: alt
       text: 'Github'
-      link: https://github.com/liaohui5/study-notes
+      link: https://github.com/liaohui5/notebook
 
 features:
   - title: 前端开发
