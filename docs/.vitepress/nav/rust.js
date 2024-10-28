@@ -11,7 +11,7 @@ export default {
       link: '/rust/base/',
     },
     {
-      text: 'Rust 第三方包',
+      text: 'Rust 工具库',
       link: '/rust/libs/',
     },
     {

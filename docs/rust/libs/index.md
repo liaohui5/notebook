@@ -2,18 +2,26 @@
 
 学习一些优秀的第三方库笔记, 这些第三方库的功能可能是 日志/时间日期/异步运行时/web框架等
 
+## .env 文件加载
+
+- [x] dotenv
+
 ## 数据序列化
 
-- [ ] serde
-- [ ] json/json5/bson
-- [ ] toml
-- [ ] yaml
-- [ ] csv
+- [x] serde
+- [x] json/json5/bson
+- [x] toml
+- [x] yaml
+- [x] csv
 
 ## 日志
 
-- [ ] log
-- [ ] tracing
+- [x] log + pretty_env_logger/env_logger
+- [ ] tracing `application level log framework, can be use in async tasks`
+
+## 时间日期处理
+
+- [x] chrono
 
 ## 网络
 
