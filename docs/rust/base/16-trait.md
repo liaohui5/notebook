@@ -808,3 +808,88 @@ fn main() {
 ```
 
 :::
+
+## 标准库中的 trait 学习
+
+### std::fmt::Display
+
+实现这个特性就可以直接使用 `println!()` 宏来输出到标准输出,
+
+他会自动实现 `ToString` trait 也就是说, 实现 `Display` trait 就可以使用 `to_string` 方法
+
+```rust
+use std::fmt;
+
+struct Point {
+    x: i32,
+    y: i32,
+}
+
+impl fmt::Display for Point {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "x={},y={}", self.x, self.y)
+    }
+}
+
+fn main() {
+    let p = Point { x: 10, y: 20 };
+    println!("p is {}", p); // p is x=10,y=20
+
+    let s = p.to_string();
+    println!("s is {}", s); // p is x=10,y=20
+}
+```
+
+### Form<&str>
+
+这个特性可以传递泛型, 比一定是 `&str` 也可以是其他的类型
+
+实现这个特性就可以直接使用 `into` 方法, 或者 `from` 方法
+
+```rust
+#[derive(Debug)]
+enum Season {
+    Spring,
+    Summer,
+    Autumn,
+    Winter,
+    Unknown,
+}
+
+impl From<u32> for Season {
+    fn from(value: u32) -> Season {
+        match value {
+            0 => Season::Spring,
+            1 => Season::Summer,
+            2 => Season::Autumn,
+            3 => Season::Winter,
+            _ => Season::Unknown,
+        }
+    }
+}
+
+impl From<&str> for Season {
+    fn from(value: &str) -> Season {
+        match value {
+            "spring" => Season::Spring,
+            "summer" => Season::Summer,
+            "autumn" => Season::Autumn,
+            "winter" => Season::Winter,
+            _ => Season::Unknown,
+        }
+    }
+}
+
+fn main() {
+    let s1 = Season::from("summer");
+    let s3 = Season::from(0);
+
+    // 使用 into 方法必须指定类型
+    let s2: Season = "winter".into();
+    let s4: Season = 2.into();
+    println!("s1: {:?}", s1);
+    println!("s2: {:?}", s2);
+    println!("s3: {:?}", s3);
+    println!("s4: {:?}", s4);
+}
+```
