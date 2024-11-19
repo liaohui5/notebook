@@ -1,0 +1,560 @@
+## 声明数组
+
+1. `var arr = []` 推荐, 使用数组字面量
+2. `var arr = new Array()` 通过系统内置的构造函数 Array
+3. `var arr = Array()` 不使用, 虽然可以, <font style="color:#F5222D;background-color:transparent;">但是不推荐使用</font>
+
+三种声明方式的数组都继承: `Array.prototype` 也就是说, 所有的数组实例对象都能使用 Array.prototype 上的所有方法, 同理: 对象类型也是这样的
+
+## Array 与 Object 类型的关系
+>
+> Array 是特殊的 Object
+>
+
+对象底层也是用 `obj[key]` 来取值的, 数组取值就是利用这种机制
+
+```javascript
+// 数组的每一个元素对应了一个下标(也叫索引), 下标从0开始
+var arr = [1, 2, 3];
+// 索引值: [0, 1, 2];
+
+// 模拟数组:
+var obj = {
+ 0: 1,
+  1: 2,
+  2: 3,
+  length: 3,
+};
+
+console.log(arr[1] === obj[1]);
+
+arr.hello = "world";
+obj.hello = "world";
+console.log(arr.hello === obj.hello); // true
+```
+
+## 稀松数组
+
+数组的元素含有 `empty` 的数组就叫做 `稀松数组`
+
+1. 如果数组最后一位是 `empty` 那么,那么不会计算最后一位
+2. 如果使用构造函数来创建数组, 就不能有 `empty` 的元素, 因为 new Array, 传的是参数, 参数不能随便乱写, 会语法错误
+
+```javascript
+var arr = [,1,2,,,3,4,]; // length: 7
+console.log(arr);
+```
+
+## Array 构造函数创建数组注意点
+
+1. 如果只有一个参数, 并且是一个 `正整数` (比如: `3`) , 它会直接创建一个长度为3, 元素全部是 `empty` 的数组
+2. 如果只有一个参数, 这个数是一个number类型, 但是不是一个 `正整数` 就会报错, 比如 `Array(-5)` `Array(1.2)`
+3. 如果只有一个参数, 并且这个数不是number类型, 他会创建一个数组, 并且把这个参数作为数组的第一个元素
+4. 如果有多个参数, 他会直接把这些参数全部放到一个数组中, 然后返回
+
+```javascript
+var arr1 = new Array(3); // [ empty, empty, empty ]
+var arr2 = new Array(-1); // 报错: RanageError: Invalid array length
+var arr3 = new Array(1.2); // 报错: Invalid array length
+var arr4 = new Array('a'); // ['a']
+var arr5 = new Array(1, 2, 3, 4); // [ 1, 2, 3, 4 ]
+```
+
+## Array 原型上的方法(改变原数组)
+
+### 数组的方法都是从哪里来的?
+
+结论: 所有的方法都是继承自Array构造函数的原型对象(Array.prototype)上的方法, 原因如下:
+
+1. 所有的数组实例对象都是有 Array 这个构造函数创建的
+2. 实例对象本身没有这些函数, 就会沿着原型链去查找
+3. 实例对象去找其构造函数的原型对象上的方法, 肯定是能找到的
+
+![](https://cdn.nlark.com/yuque/0/2021/png/380797/1625462385721-210db421-a9eb-4d79-8255-3869f7d7517c.png)
+
+### 添加元素: push/unshift
+
+| 方法名 | 作用效果 | 返回值 | 是否改变原数组 |
+| --- | --- | --- | --- |
+| push | 在数组的最后面添加元素 | 新的 length | 是 |
+| unshift | 在数组的最前面添加元素 | 新的 length | 是 |
+
+```javascript
+var arr = [2,3];
+
+console.log(arr.unsfhit(1)); // 3
+console.log(arr);  // [1, 2, 3]
+
+console.log(arr.push(4, 5)); // 5
+console.log(arr); // [1, 2, 3, 4, 5]
+
+```
+
+### 弹出元素 pop/shift
+
+| 方法名 | 作用效果 | 返回值 | 是否改变原数组 |
+| --- | --- | --- | --- |
+| pop | 弹出数组最后一个元素 | 被弹出的元素 | 是 |
+| shift | 弹出数组第一个元素 | 被弹出的元素 | 是 |
+
+```javascript
+var arr = [1,2,3];
+
+console.log(arr.pop()); // 3
+console.log(arr); // [1, 2]
+
+console.log(arr.shit()); // 1
+console.log(arr); // [2]
+```
+
+### 数组元素排序
+
+| 方法名 | 作用效果 | 返回值 | 是否改变原数组 |
+| --- | --- | --- | --- |
+| reverse | 翻转数组元素位置 | 翻转后的数组 | 是 |
+| sort | 对数组排序 | undefined | 是 |
+
+#### reverse 翻转数组顺序
+
+```javascript
+var arr = [1, 2, 3];
+arr.reverse();
+console.log(arr); // [3, 2, 1]
+
+
+var pets = ['cat', 'dog', 'rabbit'];
+pets.reverse();
+console.log(pets); // ['rabbit', 'dog', 'cat']
+
+```
+
+#### sort 排序
+
+`sort(callbaack)` : 数组排序, 返回排序后的数组, 会改变原数组
+
+1. 按照元素 ASCII 码, 十进制的值来排序
+2. 默认是升序排序(假设元素全部是number类型)
+3. 如果想指定倒序排序, 可以传入一个检测函数
+    1. 这个函数有二个参数 `a, b`
+    2. 必须 return 一个number类型的值
+    3. 如果return的值是负数, a 就排在 b 前面
+    4. 如果return的值是正数, b 就排在 a 前面
+    5. 如果return的值是 0, 则顺序保持不懂
+
+```javascript
+var arr = [28, 36, 5, 6, 8];
+
+arr.sort(); // 默认根据 ASCII 码排序
+console.log(arr); // 结果并不是我们想要的效果: [28, 36, 5, 6, 8]
+
+arr.sort(function(a, b) {
+ if (a > b) {
+    return -1; // 如果return的值是负数, a 就排在 b 前面
+  } else {
+   return 1; // 如果return的值是正数, b 就排在 a 前面
+  }
+});
+
+```
+
+### 替换数组元素 splice
+
+<font style="color:#F5222D;"></font>
+
+[splice(start, deleteCount?, ...items?)](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/splice) :剪切或者替换数组现有的元素, 返回被剪切的值, 改变原数组<font style="color:#F5222D;"></font>
+
+```javascript
+
+var arr = ["a", "b", "c", "d", "e"];
+
+// 1. 从下标值为 start 的位置开始剪切, 如果没有后面两个参数, 则默认剪切到最后
+console.log(arr.splice(2)); // 从开始位置截取到最后: ['c', 'd', 'e']
+console.info(arr); // ['a', 'b']
+
+
+// 2. 剪切 deleteCont 个元素, 如果没有 items 参数, 则直接返回被剪切的元素
+arr = ["a", "b", "c", "d", "e"];
+console.log(arr.splice(2, 2)); // 从开始位置截取2个: ['c', 'd']
+console.info(arr); // ['a', 'b', 'e']
+
+
+// 3. 剪切 deleteCount 个元素, 如果有 items 参数, 则用items参数替换(从start开始替换), 然后返回被剪切的元素
+arr = ["a", "b", "c", "d", "e"];
+console.info(arr.splice(2, 2, 1, 2, 3)); // 从开始位置, 截取一个, 然后替换成 1,2,3
+console.info(arr); // ['a', 'b', 1, 2, 3, 'e']
+
+```
+
+###
+
+## Array 原型上的方法(不改变原数组)
+
+### concat 合并数组
+
+合并两个数组, 并且返回合并后的新数组
+
+```javascript
+var arr1 = [1, 3, 5];
+var arr2 = [2, 4, 6];
+var arr3 = arr1.concat(arr2);
+
+console.log(arr1); // [1, 3, 5]
+console.log(arr2); // [2, 4, 6]
+console.log(arr3); // [1, 3, 5, 2, 4, 6]
+
+```
+
+### slice 截取数组元素
+
+[slice(start, end)](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/slice) 截取数组中某个位置的元素,并返回截取的元素
+
+1. start: 从哪个下标开始截取,如果是负数则从后往前截取, 如果没有 `end` 参数, 则截取到最后
+2. end: 截取到那个下标, 但是不包括这个下标
+
+```javascript
+var arr1 = ['a', 'b', 'c', 'd', 'e'];
+
+
+console.log( arr1.slice(3) ); // ['d', 'e'], 从开始位置开始截取到最后
+
+console.log( arr1.slice(1, 3) ); // ['b', 'c'], 结果没有包含下标为3的元素(不包括3)
+
+console.log( arr1.slice(-3) ); // ['c', 'd', 'e'], 从-3开始截取到最后
+
+console.log( arr1.slice(-4, 3) ); // ['b', 'c'], 从-4位置开始截取到索引为3的位置(不包括3)
+
+console.log( arr1.slice(-4, -2) ); // ['b', 'c'], 从-4位置开始截取到索引为-2的位置(不包括-2)
+
+```
+
+### 字符串和数组互转
+
+| 方法 | 功能 | 返回值 | 是否改变原值 |
+| --- | --- | --- | --- |
+| join | 将数组按指定字符切割为字符串 | 字符串 | 不改变 |
+| split | 将字符按指定字符串切割为数组 | 数组 | 不改变 |
+
+```javascript
+// 数组 -> 字符串
+var arr = ['a', 'b', 'c', 'd'];
+var str = arr.join('-');
+console.log(str); // a-b-c-d
+
+// 字符串 -> 数组
+var str = "a-b-c-d";
+var arr = str.split('-');
+console.log(arr); // ['a', 'b', 'c', 'd'];
+
+// split 第二个参数: 限制返回的数组长度
+var str = "a-b-c-d";
+var arr = str.split('-', 2);
+console.log(arr); // ['a', 'b']
+
+```
+
+## 类数组
+>
+> 什么是类数组
+>
+
+1. 是一个类似于数组对象, key的是索引值, 并且有 length  属性
+2. 没有 Array 构造函数原型对象上的方法
+3. `arguments`对象就是一个典型的类数组对象 `Array-Like`
+
+```javascript
+// 以下就是一个类数组
+var arrayLike = {
+  0: 'a',
+  1: 'b',
+  2: 'c',
+  length: '3'
+};
+
+// arguments 对象也是一个类数组
+
+// document.querySelectAll 返回的也是一个类数组
+document.querySelectAll('div');
+```
+
+## 练习题1: 分析下面的代码会输出什么
+
+Q: 控制台会打印出什么
+
+A: 打印出一个对象 `{empty, empty, 2:1, 3:2, length:4, push: function, splice: function}`
+
+```javascript
+var obj = {
+  '2': 3,
+  '3': 4,
+  'length': 2, // 注意这个值, 然后再结合下面连接中源码的实现
+  'push': Array.prototype.push,
+  'splice': Array.prototype.splice
+};
+
+obj.push(1);
+obj.push(2);
+console.log(obj);
+
+// 结果: { empty, empty, 2: 1, 3:2, length:4, push:funciotn() {}, splice: function() {} }
+
+// 在答题之前建议先看: https://www.yuque.com/liaohui5/js-base/xg1g4t#OOIUx 
+
+```
+
+解题思路:
+
+1. `obj.push(1)`  此时会执行 `obj[obj.length] = 1;`  也就是覆盖 `obj[2]`   的值, 将值修改为 `1`  并且把 `length`  修改为 `3` ,因为数组的索引必须从0开始,如果前两个位置没有值就是 empty 元素
+2. `obj.push(2)` 此时会执行 `obj[obj.length] = 2` 也就是会覆盖 `obj[3]`  的值(因为执行第一步的时候已经把 length 修改为 3 了), 所以会将`obj[3]`值修改为 `2`
+
+## 练习2: 数组的随机排序(打乱数组)
+
+```javascript
+/**
+ * 数组随机排序(打乱数组)
+ * @param {Array} arr 数组
+ * @returns {array} 排序后的数组
+ */
+function shuffle(arr) {
+ return arr.sort(() => Math.random() - 0.5);
+}
+
+var arr = [1, 2, 3, 4, 5];
+shuffle(arr);
+console.log(arr); // [4, 3, 5, 2, 1]
+
+/*
+1. Math.random() 会返回一个0-1随机数, 不包括0和1, 也就是说, 可能大于0.5, 也可能小于0.5
+2. 如果大于0.5那么减去0.5则会返回一个正数
+3. 如果小于0.5那么减去0.5则会返回一个负数
+4. 也就是说, 每次排序的时候, 都是随机排序的
+*/
+
+```
+
+## 练习3: 使用 splice 方法实现 unshift 方法
+
+```javascript
+/**
+ * 手动实现unshift方法
+ * @param  {...any} args 元素
+ * @returns array
+ */
+Array.prototype.$unshift = function (...args) {
+  for (var i = 0, l = args.length; i < l; i++) {
+    this.splice(i, 0, args[i]);
+  }
+  return this;
+};
+
+var arr = ["a", "b", "c"];
+arr.$unshift(1, 2, 3);
+console.info(arr); // [1, 2, 3, "a", "b", "c"]
+
+```
+
+## 课后4: 按照直接数排序数组元素
+
+请按照字节数排序以下数组元素: `['我爱你', 'OK', 'hello', '你说What', '可以']`
+
+```javascript
+// 获取字符串的字节数
+function getByteSize(str) {
+  var str = new String(str);
+  var len = str.length;
+  if (len === 0) {
+    return 0;
+  }
+
+  var bytes = 0;
+  for (var i = 0; i < len; i++) {
+    if (str[i].charCodeAt() <= 255) {
+      bytes += 1;
+    } else {
+      bytes += 2;
+    }
+  }
+  return bytes;
+}
+
+
+var arr = ['我爱你', 'OK', 'hello', '你说What', '可以'];
+
+arr.sort(function (a, b) {
+  return getByteSize(a) - getByteSize(b)
+});
+
+console.info(arr); // ["OK", "可以", "hello", "我爱你", "你说What"]
+// bytes:               2      4       5        6         8
+
+/*
+假设: a='我爱你' -> bytes: 6, b='OK' -> btyes: 2
+6-2=4 所以会返回正数
+
+假设: a='OK' -> bytes: 2, b='hello' -> bytes: 5
+2-5=-3 所以会返回负数
+*/
+
+```
+
+## 课后5: 数组去重
+
+实现数组去重方法
+
+```javascript
+/**
+ * 数组去重(indexOf)
+ * @returns
+ */
+Array.prototype.$unique = function () {
+  var arr = [];
+  var item, type;
+  for (var i = 0, l = this.length; i < l; i++) {
+    item = this[i];
+    type = typeof item;
+
+    if (type && type === "object") {
+      // reference value
+      arr.push(item);
+      continue;
+    }
+
+    if (arr.indexOf(item) === -1) { // 判断一个值是否存在数组中
+      arr.push(item);
+    }
+  }
+  return arr;
+};
+
+var arr = [1, 2, 1, 2, "str", "str", false, false, new Date(), new Date()];
+console.log(arr.$unique());
+
+/*
+console output: 
+
+[
+  0: 1
+  1: 2
+  2: "str"
+  3: false
+  4: Tue Jul 13 2021 19:28:13 GMT+0800 (中国标准时间) {}
+  5: Tue Jul 13 2021 19:28:13 GMT+0800 (中国标准时间) {}
+  length: 6
+]
+
+*/
+
+
+// ----------------------------------------------------------------------- //
+
+
+/**
+ * 数组去重2(利用对象的属性)
+ * @returns
+ */
+Array.prototype._unique = function () {
+  var temp = {};
+  var uniqueArray = [];
+  var item;
+  for (var i = 0, l = this.length; i < l; i++) {
+    item = this[i];
+    if (item && typeof item === "object") {
+      // reference value
+      uniqueArray.push(item);
+      continue;
+    }
+
+    if (!temp.hasOwnProperty(item)) {
+      // unique array
+      temp[item] = item;
+      uniqueArray.push(item);
+    }
+  }
+
+  return uniqueArray;
+};
+
+var arr = [
+  0,
+  0,
+  false,
+  false,
+  1,
+  2,
+  1,
+  2,
+  "a",
+  "a",
+  new Date(),
+  new Date(),
+  {},
+  [],
+  {},
+];
+
+arr = arr._unique(arr);
+
+console.info(arr);
+
+
+```
+
+## 课后6: 写一个 _typeof 精准判断数据类型
+
+手动实现 `typeof` 方法, 能够准确的返回以下几种类型 `string` `number` `boolean` `null` `undefined` `function` `object` `object-number` `object-boolean` `object-string`
+
+```javascript
+/**
+ * 获取任意值的准确类型
+ * @param {*} val 任意类型的值
+ * @returns {string}
+ */
+function _typeof(val) {
+  var type = typeof val;
+  if (type && type !== "object") {
+    return type;
+  }
+
+  type = Object.prototype.toString.call(val); // [object xxx]
+  type = type.slice(8, -1).toLowerCase();
+
+  if (type === "object" || type === "array") {
+    return type;
+  }
+
+  if (type === "number" || type === "string" || type === "boolean") {
+    return "object-" + type;
+  }
+
+  return type;
+}
+
+
+console.log(_typeof([1, 2, 3])); // array
+console.log(_typeof({ name: "hello" })); // object
+console.log(_typeof(new Number(1))); // object-number
+console.log(_typeof(new Boolean(false))); // object-boolean
+console.log(_typeof(new String("hello"))); // object-boolean
+console.log(_typeof(new Date())); // date
+```
+
+## 练习7: 计算一个字符串中单个字符出现的次数
+
+```javascript
+function getCharCounts(str) {
+  if(typeof str !== "string") {
+    throw new TypeError("the parameter must be a string");
+  }
+  var charItem, charMap = {},
+  for (var i =0, len = str.length; i<len; i++) {
+    charItem = str[i];
+    if(charMap[charItem]) {
+      charMap[charItem] += 1;
+    } else {
+      charMap[charItem] = 1;
+    }
+  }
+  return charMap;
+}
+
+
+```

@@ -1,0 +1,357 @@
+## 文档
+
+[https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object)
+
+## 特殊功能类
+
+### Object.defineProperty
+
+Object.defineProperty: 主要用于给对象定义属性, 并且定义描述, 还可以代理 get/set, vue2.x的双向绑定的原理就是基于这种方式
+
+注意, 这个方法是 Object 类上的静态方法, 不要通过实例来调用
+
+```javascript
+var obj = {
+  id: 101
+};
+
+var objId = obj['id'];
+
+var descriptor = {
+  configurable: true, 
+  // configurable: 是否可以修改描述符, 默认true
+  // 如果false: 不能删除属性
+  // 而且 writable 自动为 false, 但是可以强行覆盖(writable: true)
+  // 而且不能再用 Object.defineProperty 去重新定义
+  
+  enumerable: true, // 是否可以枚举(可以遍历获取每一项), 如果false就无法用 for in 遍历获取
+  
+  // value: 'test', // 属性的值, 与 getter/setter 互斥
+  // writable: true, // 当前的属性是否可以被修改 obj.id = 102, 如果false就无法修改, 与 getter/setter 互斥
+  
+  get: function() { // getter: 当属性的值被获取时调用
+    console.log("啊,我的值被获取了");
+    return objId;
+  },
+  
+  set: function(newValue) { // setter: 当属性的值被修改的时候调用
+    console.log("啊, 我的值被设置成了" + newValue); 
+    objId = newValue;
+    return true;
+  }
+};
+
+Object.defineProperty(obj, 'id', descriptor);
+
+
+var objId = obj.id; // 啊,我的值被获取了
+obj.id = 1101;      // 啊, 我的值被设置成了1101
+
+// 当一个对象设置了 Object.defineProperty 
+
+
+```
+
+### Object.getOwnPropertyDescriptor
+
+```javascript
+// 获取属性的 描述符(descriptor)
+var obj = {
+  id: 101,
+};
+
+Object.definePropertyDescriptor(obj, 'name', {
+  configurable: false,
+  enumerable: false,
+  value: 'obj-name-value'
+});
+
+var idDescriptor = Object.getOwnPropertyDescriptor(obj, id);
+console.log(idDescriptor);
+// { configurable: true, enumerable: true, value: 101, writable: true }
+
+var nameDescriptor = Object.getOwnPropertyDescriptor(obj, name);
+console.log(nameDescriptor);
+// { configurable: false, enumerable: false, value: 'obj-name-value', writable: false }
+
+
+
+```
+
+### Object.freeze
+
+冻结对象: 不能增加/修改/删除属性
+
+```javascript
+var obj = {
+  id: 101,
+  email: "admin@qq.com"
+};
+
+Object.freeze(obj);
+
+delete obj.id; // false
+obj.email = 'xxx@qq.com'; // 修改不成功
+obj.password = '123456'; // 添加不成功
+
+// 这种方式只会冻结第一层, 如果是对象嵌套, 就无法冻结了
+// 如果需要深度冻结,可以使用这种方式
+Object.$deepFreeze = function (obj) {
+  var o = Object.freeze(Object(obj));
+  var val;
+  for (var key in o) {
+    if (Object.hasOwnProperty.call(o, key)) {
+      val = o[key];
+      if (val && typeof val === "object") {
+        return Object.$deepFreeze(val);
+      }
+    }
+  }
+  return o;
+};
+
+var userInfos = {
+  id: 1001,
+  infos: {
+    name: 'tom',
+    avatar: {
+      url: 'https://xxx.com/1.jpg'
+    }
+  }
+};
+
+Object.$deepFreeze(userInfos);
+
+// 修改失败: 抛出异常
+userInfos.infos.name = 'alex';
+userInfos.infos.avatar.url = 'https://xxx.com/2.jpg';
+
+```
+
+### Object.seal
+
+密封对象: 不能增加/删除修改, 但是可以修改属性的值
+
+```javascript
+var obj = {
+  id: 101,
+  email: "admin@qq.com"
+};
+
+Object.seal(obj);
+
+delete obj.id; // false
+obj.email = 'xxx@qq.com'; // 修改成功
+obj.password = '123456'; // 添加不成功
+
+```
+
+### Object.preventExtension
+
+禁止扩展对象
+
+```javascript
+var obj = {
+  id: 1001,
+};
+
+Object.preventExtensions(obj);
+
+// 添加失败(静默失败)
+obj.name = 'tom';
+
+// 添加失败(抛出异常)
+Object.defineProperty(obj, 'sex', {value: 'boy'}); 
+
+console.log(obj); // {id: 1001}
+
+```
+
+## 赋值/取值类
+
+### Object.assign
+
+合并两个对象的属性, `如果有重复的key, 后面的覆盖前面的` 然后返回一个新的对象
+
+```javascript
+var o1 = {id: 1001};
+var o2 = {id: 101, email: 'admin@qq.com'};
+var o3 = Object.assign(o1, o2);
+console.log(o3);// { id: 101, email: 'admin@qq.com' }
+```
+
+### Object.entries
+
+```javascript
+var obj = { id: 101, email: 'admin@qq.com' };
+var entries = Object.entries(obj); // 返回一个迭代器对象
+
+for(item of entries) {
+  console.log(item);
+  // 第一次输出: ['id', 101]
+  // 第二次输出: ['email', 'admin@qq.com']
+}
+
+```
+
+### Object.create
+
+创建对象, 并且指定这个对象的原型对象
+
+```javascript
+var plainObj = Object.create(null); // 没有 prototype 的对象
+
+var proto = {
+  show() {
+    console.log('function show was executed');
+  }
+};
+
+var obj = Object.create(proto);
+obj.show(); // function show was executed
+```
+
+### Object.getPrototypeOf
+
+获取对象的原型对象
+
+```javascript
+var d = new Date();
+var dateProto = Object.getPrototypeOf(d);
+console.log(d.__proto__ === dateProto); // true
+console.log(Date.prototype === dateProto); // true
+```
+
+### Object.setPrototypeOf
+
+设置对象(实例)的原型对象, 与Object.create方法功能类似, 但是这是设置已经存在的对象,而不是创建
+
+```javascript
+var d = new Date();
+var proto = {
+  show() {
+    console.log('function show was executed');
+  }
+};
+
+Object.setPrototypeOf(d, proto);
+
+d.show(); // function show was executed
+
+```
+
+### Object.keys/Object.values
+
+1. keys: 获取所有的key并且返回一个数组
+2. values: 获取所有的值并且返回一个数组
+
+```javascript
+var obj = {
+  id: 1001,
+  email: "admin@qq.com",
+};
+
+var keys = Object.keys(obj);
+console.log(keys); // ['id', 'email']
+
+var values = Object.values(obj);
+console.log(values); // [1001, 'admin@qq.com']
+
+```
+
+### Object.getOwnPropertySymbols
+
+获取对象上的所有 Symbol 类型的属性, 普通方法是无法获取 Symbol 类型属性的
+
+```javascript
+
+var obj = {
+  [Symbol('uid')]: 'uuid',
+  [Symbol('privateKey')]: 'privateValue'
+};
+
+var symbolProps = Object.getOwnPropertySymbols(obj);
+console.log(SymbolProps);
+// 输出: [ Symbol('uid'), Symbol('privateKey') ]
+
+```
+
+## 判断类
+
+### Object.is
+
+判断两个值是否是同一个值
+
+```javascript
+console.log(Object.is(true, true)); // true
+
+var o1 = {};
+var o2 = o1;
+console.log(Object.is(o1, o2));     // true
+
+console.log(Object.is(undefined, undefined)); // true
+console.log(Object.is(null, null));           // true
+console.log(Object.is(undefined, null));      // false
+
+console.log(Object.is(NaN, NaN)); // true, 可以替代 Number.isNaN 来判断NaN
+
+var fn1 = function () {};
+var fn2 = fn1;
+console.log(Object.is(fn1, fn2)); // true
+```
+
+### Object.isFreezen
+
+判断对象是否是冰冻状态
+
+```javascript
+var obj = {id: 1};
+console.log(Object.isFreezen()); // false
+
+Object.freeze(obj);
+console.log(Object.isFreezen()); // true
+```
+
+### Object.isSealed
+
+判断对象是否是封闭状态
+
+```javascript
+var obj = {id: 1};
+console.log(Object.isSealed()); // false
+
+Object.seal(obj);
+console.log(Object.isSealed()); // true
+```
+
+### Object.isExtensiable
+
+判断对象是否可扩展(非冰冻 && 非封闭)的状态
+
+```javascript
+var obj1 = {id: 1};
+console.log(Object.isExtensiable()); // true
+
+Object.seal(obj1);
+console.log(Object.isExtensiable()); // false
+
+
+var obj2 = {id: 2};
+console.log(Object.isExtensiable()); // true
+
+Object.freeze(obj2);
+console.log(Object.isExtensiable()); // false
+```
+
+## 关于操作原型对象的建议
+
+> 为什么用这些方法而不是直接获取/或者赋值?
+>
+
+比如: setPrototypeOf, 好像完全没有必要, 我直接赋值不行吗??
+
+[https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf)
+
+其实在文档中说的非常清楚了, 所以建议用这些内置的方法, 而不是直接操作
+
+![](https://raw.githubusercontent.com/liaohui5/images/main/images/202411200222926.png)

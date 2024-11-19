@@ -1,0 +1,1395 @@
+## 数组常用方法
+
+### 操作方法
+
+| 函数名 | 返回值 | 作用 | 是否改变原数组 |
+| --- | --- | --- | --- |
+| slice | Array | 截取原数组中n个元素并返回一个新数组 | N |
+| concat | Array | 合并两个数组并返回一个新数组 | N |
+| splice | Array | 截取/增加n个数组元素 | Y |
+| pop | any | 删除数组最后一项并返回 | Y |
+| push | Number | 最素组末尾添加一项并返回数组改变后的 length | Y |
+| shift | any | 删除数组最后一项并返回 | Y |
+| unshift | Number | 在数组最前添加一项并返回改变后数组的 length | Y |
+
+### 排序方法
+
+| 函数名 | 返回值 | 作用 | 是否改变原数组 |
+| --- | --- | --- | --- |
+| sort | undefined | 对数组进行排序(默认升序) | Y |
+| reverse | Array | 翻转数组顺序 | N |
+
+### 转换方法
+
+| 函数名 | 返回值 | 作用 | 是否改变原数组 |
+| --- | --- | --- | --- |
+| join | String | 将数组通过指定符号拼接成字符串 | N |
+
+### 迭代方法
+
+| 函数名 | 返回值 | 作用 | 是否改变原数组 |
+| --- | --- | --- | --- |
+| some | Boolean | 对数组每一项都运行测试函数, 如果至少有1个元素符合要求,就返回true,否则返回false | N |
+| every | Boolean | 对数组每一项都运行测试函数, 如果全部符合要求就返回true, 否则返回false | N |
+| forEach | undefined | 对数组每一项都运行传入的函数，没有返回值 | N |
+| filter | Array | 对数组每一项都运行传入的函数，函数返回 true 的项会组成数组之后返回 | N |
+| map | Array | 对数组每一项都运行传入的函数，返回由每次函数调用的结果构成的数组 | N |
+
+## [copyWithin(target, start, end)](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/copyWithin)
+>
+> 从start位置开始(包含start)复制到end位置结束(不包含end), 然后将这个结果从 target 位置开始替换
+>
+> 不改变数组长度, 返回改变后的数组, 但是会改变原数组
+>
+
+1. 复制元素: 从start索引开始到end结束, 但是不包含end
+2. 替换元素: 从target开始, 复制的元素有多少个, 就向后替换多少个
+
+```javascript
+// 1.正常截取
+var arr = ["a", "b", "c", "d", "e"];
+arr.copyWithin(0, 1, 3);
+console.info(arr);
+// 复制元素(1,3): ['b', 'c']
+// 替换元素(0): ["a", "b", "c", "d", "e"] => ["b", "c", "c", "d", "e"]
+
+// 2.target 大于 length: 截取到最后
+arr = ["a", "b", "c", "d", "e"];
+arr.copyWithin(0, 3, 8);
+console.info(arr);
+// 复制元素(3, 8): ['d', 'e']
+// 替换元素(0): ["a", "b", "c", "d", "e"] => ["d", "e", "c", "d", "e"]
+
+// 3.如果start或end是负数, 则从后往前开始计算(length+start, length+end)
+arr = ["a", "b", "c", "d", "e"];
+arr.copyWithin(0, -3, -1);
+console.info(arr);
+// 复制元素(2, 4): ["c", "d"]
+// 替换元素(0): ["a", "b", "c", "d", "e"] => ["c", "d", "c", "d", "e"]
+
+// 4.如果没有指定复制元素的索引, 默认从0开始
+arr = ["a", "b", "c", "d", "e"];
+arr.copyWithin(3);
+console.info(arr);
+// 复制元素: ["a", "b", "c", "d", "e"]
+// 替换元素(3), 从3开始替换到最后: ["a", "b", "c", "d", "e"] => ["a", "b", "c", "a", "b"]
+
+// 5. 如果没有指定结束位置, 直接从开始位置复制到最后
+arr = ["a", "b", "c", "d", "e"];
+arr.copyWithin(2, 3);
+console.info(arr);
+// 复制元素: ["d", "e"]
+// 替换元素(3), 从3开始替换到最后: ["a", "b", "c", "d", "e"] => ["a", "b", "d", "e", "e"]
+
+```
+
+### 手动实现 copyWithin
+
+```javascript
+/**
+ * 手动实现 copyWithin
+ * @param {Number} target 替换开始位置
+ * @param {Number} start 剪切开始位置
+ * @param {Number} end 剪切结束的位置
+ */
+Array.prototype.$copyWithin = function (target) {
+  var O = Object(this);
+  var len = this.length;
+
+  // 将target转number类型
+  var relativeTarget = target >> 0;
+  
+  // to: 正整数(如果小于0:(如-2: len + -2), 如果大于0: 最大值为 len)
+  var to =
+    relativeTarget < 0
+      ? Math.max(len + relativeTarget, 0)
+      : Math.min(relativeTarget, len);
+
+  // 将开始替换坐标装number类型
+  var relativeStart = start >> 0;
+  var from =
+    relativeStart < 0
+      ? Math.max(len + relativeStart, 0)
+      : Math.min(relativeStart, len);
+
+  // 如果 end !== undefined 说明传值了, 需要转数字
+  var end = arguments[2];
+  var relativeEnd = end === undefined ? len : end >> 0;
+  var final =
+    relativeEnd < 0
+      ? Math.max(len + relativeEnd, 0)
+      : Math.min(relativeEnd, len);
+
+  // Step 15.
+  var count = Math.min(final - from, len - to);
+
+  // Steps 16-17.
+  var direction = 1;
+
+  if (from < to && to < from + count) {
+    direction = -1;
+    from += count - 1;
+    to += count - 1;
+  }
+
+  // Step 18.
+  while (count > 0) {
+    if (from in O) {
+      O[to] = O[from];
+    } else {
+      delete O[to];
+    }
+
+    from += direction;
+    to += direction;
+    count--;
+  }
+
+  // Step 19.
+  return O;
+};
+```
+
+## entries
+
+返回数组的迭代器对象
+
+```javascript
+
+var arr = ['a', 'b', 'c'];
+var it = arr.entries();
+
+// 与普通生成器函数生成的迭代器不一样的是: value: [索引, 值], value 的值是一个数组
+console.info(it.next()); // {value: [0, "a"], done: false}
+console.info(it.next()); // {value: [0, "b"], done: false}
+console.info(it.next()); // {value: [0, "c"], done: false}
+console.info(it.next()); // {value: undefined, done: true}
+
+```
+
+### 为什么 for of 默认可以迭代数组却不能迭代对象
+
+`for of` 只能迭代原型上有 `[Symbol.iterator]` 这个属性的对象
+
+```javascript
+var obj = {
+  0: "a",
+  1: "b",
+  2: "c",
+  length: 3,
+};
+
+// 必须需要将obj代码改成这样就可以迭代, 否则就会报错: TypeError: obj is not iterable
+obj[Symbol.iterator] = Array.prototype[Symbol.iterator];
+// Reflect.set(obj, Symbol.iterator, Reflect.get(Array, Symbol.iterator))
+for (item of obj) {
+  console.info(item);
+}
+
+```
+
+### entries 练习
+
+排序一个二维数组中的每一个数组
+
+```javascript
+let arr = [
+  [11, 24, 13, 44],
+  [23, 15, 33, 46],
+  [12, 23, 33, 34],
+];
+
+// 二维数组排序
+function sortArray(arr) {
+  const it = arr.entries();
+  let hasNext = true;
+
+  while (hasNext) {
+    const item = it.next();
+    if (item.done) {
+      hasNext = false;
+      break;
+    }
+    item.value[1].sort((a, b) => a - b);
+  }
+  return arr;
+}
+
+console.info(sortArray(arr));
+
+/*
+输入的结果:
+[
+  [11, 13, 24, 44],
+  [15, 23, 33, 46],
+  [12, 23, 33, 34]
+]
+*/
+
+```
+
+## fill(val, start, end)
+
+fill 方法是根据下标范围( `从start开始到end结束, 不包括end` )覆盖新的值 `val` , 这个方法会改变原数组
+
+```javascript
+let arr = [1, 2, 3, 4, 5];
+
+// 1.正常替换
+arr.fill("a", 2, 4);
+console.info(arr); // [1, 2, 'a', 'a', 5]
+
+// 2.不指定end: 从start位置开始, 替换到最后
+arr.fill("b", 2);
+console.info(arr); // [1, 2, "b", "b", "b"]
+
+// 3.不指定start和end: 全部替换
+arr.fill("c");
+console.info(arr); // ["c", "c", "c", "c", "c"]
+
+
+// 4.不指定参数: 全部替换成undefined
+arr.fill();
+console.info(arr); 
+// [undefined, undefined, undefined, undefined, undefined]
+
+// 5. start===end 或者star和end不是数字: 不会执行替换
+arr.fill('a', 1, 1);
+arr.fill('a', 'b', 'c');
+console.info(arr);
+
+```
+
+## find/findIndex(callback(item, index, array), thisArg)
+
+find: 返回第一个满足回调函数返回的条件的元素, 如果没有符合回调函数返回的条件, 返回 `undefined`
+
+findIndex: 返回第一个满足回调函数返回的条件的索引, 如果没有符合回调函数返回的条件, 返回 `-1`
+
+1. `callback(item, index, array)` : 回调函数必须返回一个布尔值, 就算不返回布尔值, 内部也会隐式转换成布尔值
+    1. `item` 当前遍历到的元素
+    2. `index` 当前遍历到的索引
+    3. `array` 指向调用 `find` 方法的对象
+2. `thisArg` 可选参数, 可以指定 callback 的 this 指向, 默认情况下: callback 中的 this 指向 window, 严格模式下指向 `undefined`
+
+```javascript
+let arr = [1, 2, 3, 4, 5];
+
+const findItem = arr.find((item, index, obj) => {
+  console.info(arr === obj); // true
+  console.info(arr[index] === item); // true
+  return item > 3;
+});
+
+console.info(findItem); // 4
+
+
+let arrLike = {
+  0: "a",
+  1: "b",
+  2: "c",
+  length: 3,
+};
+
+let item = Array.prototype.find.call(arrLike, (item, index, array) => {
+  console.info(arrLike === array); // true
+  console.info(item === arrLike[index]); // true
+  return item === "c";
+});
+console.info(item); // c
+
+```
+
+### 关于遍历的问题
+
+find 的遍历效率是低于ES5的数组扩展方法的, 因为在 `遍历稀松数组` 的时候, find方法, 不会跳过 `empty` 元素, 而其他的es5的数组扩展方法会跳过 `empty` 元素
+
+ES5数组的其他扩展方法: `map` `forEach` `filter` `reduce` `reduceRight` `every` `some`
+
+```javascript
+var arr = ['a', , 'c', , 'e'];
+
+arr.find((item) => {
+  console.log(item); // a undefined c undefined e
+});
+
+
+
+```
+
+## flat 多维数组转一维数组
+
+将多维数组扁平化, 返回一个新的数组, 不会改变原数组
+
+1. `flat(deep)` : deep 必须是一个正整数, 而且必须大于0才会生效
+2. 如果原数组是一个稀松数组, 返回的新数组, 会忽略稀松数组的empty元素
+
+```javascript
+let arr = [1, 2, 3, [4, 5, 6], [7, 8, 9]];
+
+// 二维数组
+let arr2 = arr.flat();
+console.info(arr2);
+console.info(arr === arr2);
+
+// 三维数组
+let arr = [1, 2, 3, [4, 5, 6, [7, 8, 9]]];
+let arr2 = arr.flat(2);
+console.info(arr2); // [1,2,3,4,5,6,7,8,9]
+
+// 多维数组(用Infinity而不是去看数组嵌套的深度)
+let arr = [1, [2, [3, [4, [5, [6, [7, [8]]]]]]]];
+// let arr2 = arr.flat(7);
+let arr2 = arr.flat(Infinity);
+console.info(arr2); // [1,2,3,4,5,6,7,8]
+
+
+
+```
+
+## flatMap(callback(item, index, array), thisArg)
+
+将每次 `callback` 返回的结果数组, 放到一个新的数组中, 并且扁平化处理
+
+1. callback:
+    1. item: 当前遍历的元素
+    2. index: 当前遍历的索引
+    3. array: 被遍历的原数组
+2. thisArg: 指定 `callback` 函数的时候 this 指向, 如果不传这个参数, 默认 this 指向 window,严格模式下是 `undefined`
+
+```javascript
+let nums = ["123", "345", "789"]; 
+// 如何快速转换成这样: ["1", "2", "3", "3", "4", "5", "7", "8", "9"]
+
+// 1. map + flat
+let arr1 = nums.map((item) => item.split("")).flat(); 
+// ["1", "2", "3", "3", "4", "5", "7", "8", "9"]
+
+// 2. flatMap
+let arr2 = nums.flatMap((item, index, array) => {
+  console.info(array === nums); // true
+  console.info(array[index] === item); // true
+  return item.split("");
+}); // ["1", "2", "3", "3", "4", "5", "7", "8", "9"]
+
+
+```
+
+### 手动实现 flatMap
+
+本质就是 map + flat
+
+```javascript
+Array.prototype.$flatMap = function (callback) {
+  if (typeof callback !== "function") {
+    throw new TypeError("the callback must be a function");
+  }
+
+  let thisArg = arguments[1];
+  let len = this.length;
+  let res = [];
+  let items;
+  let item;
+  for (let i = 0; i < len; i++) {
+    item = this[i];
+    items = callback.apply(thisArg, [item, i, this]);
+    items && res.push(items);
+  }
+  return res.flat();
+};
+
+let nums = ["123", "345", "789"];
+let arr = nums._flatMap((item, index, array) => {
+  console.info(nums === array);
+  console.info(item === nums[index]);
+  return item.split("");
+});
+console.info(arr); // ["1", "2", "3", "3", "4", "5", "7", "8", "9"]
+
+```
+
+## Array.from(arrLike, mapFn(item, index), thisArg)
+
+将一个 `类数组对象` 或者 `可迭代对象` 转换成一个新的数组
+
+1. arrLike: 被转换的类数组对象
+2. mapFn: 转换的时候, 每一项都会被这个函数处理, 然后把这个函数处理后的值放到返回的数组小红
+    1. item: 当前项的值
+    2. index: 当前遍历到的索引值
+3. thisArg: 指定 mapFn 执行时的 this 指向
+
+```javascript
+// 类数组--arrLike就是一个标准的类数组对象
+var arrLike = {
+  0: { id: 101, username: "tom" },
+  1: { id: 102, username: "jerry" },
+  2: { id: 103, username: "jack" },
+  length: 3,
+};
+
+var arr = Array.from(arrLike);
+console.info(arr); // [{id:101,username:"tom"},{id:102,username:"jerry"},{id:103,username:"jack"}]
+
+// 可迭代对象 -- 字符串对象有 Symbol(Symbol.iterator) 这个属性, 有这个属性的对象: 比如 map set 都是可迭代对象
+var str = "hello";
+var arr2 = Array.from(str); // 会自动装箱 str -> new String(str)
+console.log(arr2); // ["h", "e", "l", "l", "o"]
+
+```
+
+### 多数组去重
+
+```javascript
+// 多数组去重
+function combine() {
+  var arr = Array.prototype.concat.apply([], arguments);
+  return Array.from(new Set(arr));
+}
+var arr1 = [1, 2, 3, 4, 5];
+var arr2 = [2, 3, 4, 5, 6];
+var arr3 = [3, 4, 5, 6, 7];
+
+var uniArr = combine(arr1, arr2, arr3);
+console.info(uniArr); // [1, 2, 3, 4, 5, 6, 7]
+
+```
+
+### Array.from 源码实现(<font style="color:#F5222D;">重点</font>)
+
+```javascript
+Array.$from = (function () {
+  // 判断是否是一个函数
+  var isCallable = function (fn) {
+    return typeof fn === "function";
+  };
+
+  // 判断一个值是否是构造函数, 箭头函数是无法实例化的, 只有通过 function/class 关键字声明的函数可以实例化
+  var isConstructor = function (fn) {
+    if (typeof fn !== "function") {
+      return false;
+    }
+    try {
+      new fn();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  };
+
+  // 将一个值转number类型
+  var toInteger = function (value) {
+    var number = Number(value);
+    if (isNaN(number)) {
+      return 0;
+    }
+    if (number === 0 || !isFinite(number)) {
+      return number;
+    }
+    return (number > 0 ? 1 : -1) * Math.floor(Math.abs(number));
+  };
+
+  // 将一个值转正整数: 最小0, 最大maxSafeInteger
+  var maxSafeInteger = Math.pow(2, 53) - 1;
+  var toLength = function (value) {
+    var len = toInteger(value);
+    return Math.min(Math.max(len, 0), maxSafeInteger);
+  };
+
+  // 第一个参数: arrayLike
+  //     如果是一个 undefined / null 就直接抛出错误
+  //     如果是一个对象(初始值会自动装箱):
+  //     有length并且是一个正整数, 就会返回与length值对应个数的数组元素的数组 {length:3} => [e,e,e]
+  //     没有length或者length不是一个正整数, 则返回一个空对象 {} => []
+  //
+  // 第二个参数: mapFn
+  //     如果传递了这个参数, 并且是一个可调用的函数, 则所有的元素都会被这个函数处理
+  //     var arr = [1,2,3,4];
+  //     var fn = (item) => item += 1;
+  //     Array.from(arr, fn);
+  //     arr 中所有的元素都会执行fn , 然后将执行的结果返回
+  //
+  // 第三个参数:
+  //     可以指定第二个参数执行时的 this 指向
+  return function (arrayLike /*, mapFn, thisArg */) {
+    // 如果被转换的值是 null/undefined 直接报错
+    if (arrayLike == null) {
+      throw new TypeError("Array.from requires an array-like object - not null or undefined");
+    }
+
+    // 第一个参数items: 即将被转换的值
+    // 如果是一个引用值, 则不会进行任何操作
+    // 如果是一个初始值, 则调用与之对应的包装类来装箱
+    // 12 => new Number(12)
+    // false => new Boolean(false)
+    // "str" => new String(str)
+    var items = Object(arrayLike);
+
+    // 获取第二个参数 mapFn, 如果没传默认就是 undefined
+    // 因为arguments是一个类数组对象, 去对象上取一个不存在的key的值, 就是 undefined
+    var mapFn = arguments[1];
+
+    // 获取第3个参数: 指定第二个参数(函数)调用时的 this 指向, 默认 undefined
+    var thisArg = arguments[2];
+
+    // 如果第二个参数 mapFn 不是undefined && 不是函数, 则直接抛出错误
+    if (typeof mapFn !== "undefined" && !isCallable(mapFn)) {
+      throw new TypeError("Array.from: when provided, the second argument must be a function");
+    }
+
+    // 获取被转换参数的 length, 值是0或正整数
+    var len = toLength(items.length);
+
+    // $constructor = this;
+    // 调用这个 from 方法的对象: this
+    // 判断当前调用这个 from 方法的函数执行上下文是否是一个构造函数, 如果不是一个构造函数直接 new Array(len)
+    // 如果是一个构造函数, 就实例化这个函数: new $constructor(len), 获得一个实例对象
+    // 一般是这样调用的: Array.from() 此时的 this 指向 Array构造函数
+    // 如果这样调用: Array.from.call(null, ...) 此时的 this 就是 null, 此时的3元运算符就会返回 Array 函数
+    // 如果这样调用: Array.from.call(Number, ...) 此时的 this 指向 Number 函数, 那就会执行 new Number(len)
+    var $constructor = this;
+    $constructor = isConstructor(this) ? $constructor : Array;
+    var arr = new $constructor(len);
+
+    var key = 0;
+    var val;
+    while (key < len) {
+      // 获取被转换对象items上的key的值, 如果key不存在值就是 undefined
+      val = items[key];
+
+      // 如果传递了每一项的处理函数mapFn, 在赋值的时候就调用这个处理函数, 没有传入就直接赋值
+      // 调用处理函数式mapFn: 如果传递了 thisArg, 就改变 mapFn 的this指向
+      if (mapFn) {
+        arr[key] = typeof thisArg === "undefined" ? mapFn(val, key) : mapFn.call(thisArg, val, key);
+      } else {
+        arr[key] = val;
+      }
+      key += 1;
+    }
+
+    arr.length = len;
+    return arr;
+  };
+})();
+
+```
+
+## includes
+
+判断一个数组中是否包含某个值, 返回一个布尔值
+
+1. searchItem: 需要搜索的值
+2. formIndex: 从那个位置开始搜索, 如果这个值大于数组的 length 则返回false
+
+```javascript
+var arr = ['a', 'b', 'hello', 'word'];
+var searchItem = 'hello';
+
+if (arr.includes(arr)) {
+  console.log("数组中包含" + searchItem);
+} else {
+  console.log("数组中不包含" + searchItem);
+}
+
+
+```
+
+## 数组方法重写
+>
+> 原生就要的方法为什么要重写呢? ??
+>
+> 重写只是为了更加理解原生方法的运行原理, 有助于学习和记忆
+>
+
+### forEach
+
+```javascript
+/**
+ * 遍历数组
+ * @param {Function} callback
+ * @param {Object} thisArg
+ */
+Array.prototype.$forEach = function(callback) {
+  if (typeof callback !== "function") {
+    throw new TypeError("forEach callback must be a function");
+  }
+
+  var thisArg = arguments[1] || window;
+
+  for (var i = 0, l = this.length; i<l; i++) {
+    callback.call(thisArg, this[i], i, this);
+  }
+}
+
+```
+
+### filter
+
+```javascript
+/**
+ * 筛选数组(filter)
+ * @param {Function} callback
+ * @param {any} thisArg
+ * @return {Array} res
+ */
+Array.prototype.$filter = function(callback) {
+  if (typeof callback !== "function") {
+    throw new TypeError("The filter callback must be a function");
+  }
+
+  var thisArg = arguments[1] || window;
+  var res = [];
+  var item;
+
+  for(var i = 0, l = this.length; i < length; i++) {
+    item = this[i];
+    if(callback.call(thisArg, item, i, this)) {
+      res.push(item);
+    } 
+  }
+
+  return res;
+};
+
+
+```
+
+### map
+
+```javascript
+  /**
+   * 遍历数组, 并且返回新的数组, 数组的元素是callback返回的值(map)
+   * @param {Function} callback
+   * @param {any} thisArg
+   * @return {Array} res
+   */
+  Array.prototype.$map = function(callback) {
+    if (typeof callback !== "function") {
+      throw new TypeError("The filter callback must be a function");
+    }
+
+    var thisArg = arguments[1] || window;
+    var len = this.length;
+    var res = new Array(len);
+    
+    for(var i = 0; i < len; i++) {
+      res[i] = callback.call(thisArg, this[i], i, this);
+    }
+
+    return res;
+  };
+
+
+
+```
+
+### every/some
+
+```javascript
+/**
+ * 检测数组所有项是否符合需求
+ * @param {Function} testCallback
+ * @param {any} thisArg
+ * @return {Boolean}
+ */
+Array.prototype.$every = function(testCallback) {
+  if (typeof callback !== "function") {
+    throw new TypeError("The filter callback must be a function");
+  }
+
+  var thisArg = arguments[1] || window;
+
+  for(var i=0, l=this.length; i<l; i++) {
+    if (!testCallback.call(thisArg, this[i], i, this)) {
+      return false;
+    }
+  }
+
+  return true;
+};
+
+
+/**
+ * 判断数组中所有的项所否有一项/多项符合测试函数
+ * @param {Function} callback
+ * @param {Object}  thisArg
+ * @return {Boolean} 
+ */
+Array.prototype.$some = function(callback) {
+  var o = Object(this);
+  var len = o.length >>> 0;
+  if (len === 0) {
+    return false;
+  }
+
+  var thisArg = arguments[1] || window;
+  for (var i = 0; i<len; i++) {
+    if (callback.call(thisArg, o[i], i, o)) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+```
+
+### find/findIndex
+
+```javascript
+/**
+ * 返回检测函数要求的第一个元素,没有找到返回undefined 
+ * @param {Function} callback
+ * @param {any} thisArg
+ * @return {Boolean}
+ */
+Array.prototype.$find = function(callback) {
+  if (typeof callback !== "function") {
+    throw new TypeError("The filter callback must be a function");
+  }
+
+  var thisArg = arguments[1] || window;
+  var item;
+  for(var i=0, l=this.length; i<l; i++) {
+    item = this[i];
+    if (callback.call(thisArg, item, i, this)) {
+      return item;
+    }
+  }
+
+  // return undefined; 默认就会返回 undefined
+};
+
+
+
+/**
+ * 返回检测函数要求的第一个元素的索引,没有找到返回undefined 
+ * @param {Function} callback 
+ * @param {any} thisArg
+ * @return {Boolean}
+ */
+Array.prototype.$findIndex = function(callback) {
+  if (typeof callback !== "function") {
+    throw new TypeError("The filter callback must be a function");
+  }
+
+  var thisArg = arguments[1] || window;
+  
+  for(var i=0, l=this.length; i<l; i++) {
+    if (callback.call(thisArg, this[i], i, this)) {
+      return i;
+    }
+  }
+};
+
+
+
+```
+
+### flat
+
+```javascript
+/**
+ * 数组扁平化
+ * @return {Array} 结果数组
+ */
+Array.prototype.$flat = function() {
+  var stack = [].concat(this);
+  var res = [];
+  var item;
+
+  while(stack.length) {
+    item = stack.shift();
+    if (Array.isArray(item)) {
+      stack.push(...item);
+    } else {
+      res.push(item);
+    }
+  }
+
+  return res;
+};
+
+```
+
+### includes/indexOf/lastIndexOf
+
+```javascript
+/**
+ * 数组是否包含指定的值 
+ * @return {boolean} 是否包含
+ */
+Array.prototype.$includes = function(findItem) {
+  var len = this.length;
+  if(len === 0){
+    return false;
+  }
+
+  var n = arguments[1] || 0;
+  var fromIndex = Math.max(n >= 0 ? n : len - Math.abs(n), 0); // 正整数
+
+  for(var i = fromIndex; i<len; i++) {
+    // 不能用: === 因为 NaN 不等于 NaN 
+    if (Object.is(findItem, this[i])) {
+      return true;
+    }
+  }
+  return false;
+};
+
+
+/**
+ * 查询给定值第一次出现的位置
+ * @param {any} 要差早的值
+ * @fromIndex {Number} 从哪个位置开始查找
+ * @return {Number} 结果索引,没找到就-1
+ */
+Array.prototype.$indexOf = function (findItem) {
+  var len = this.length;
+  var resultIndex = -1;
+  if (len === 0) {
+    return resultIndex;
+  }
+
+  var n = arguments[1] || 0;
+  var fromIndex = Math.max(n >= 0 ? n : len - Math.abs(n), 0); // 正整数
+
+  for (var i = fromIndex; i < len; i++) {
+    if(this[i] === findItem) {
+      resultIndex = i;
+      break;
+    }
+  }
+
+  return resultIndex;
+};
+
+
+/**
+ * 查询给定值最后一次出现的位置
+ * @param {any} 要差早的值
+ * @fromIndex {Number} 从哪个位置开始查找
+ * @return {Number} 结果索引,没找到就-1
+ */
+Array.prototype.$lastIndexOf = function (findItem) {
+  var len = this.length;
+  var resultIndex = -1;
+  if (len === 0) {
+    return resultIndex;
+  }
+
+  var n = arguments[1] || len;
+  var fromIndex = Math.max(n >= 0 ? n : len - Math.abs(n), 0); // 正整数
+
+  for (var i = fromIndex; i >= 0; i--) {
+    if(this[i] === findItem) {
+      resultIndex = i;
+      break;
+    }
+  }
+
+  return resultIndex;
+};
+
+
+```
+
+### join/split
+
+字符串数组互相装换
+
+```javascript
+/**
+ * 将数组按照指定字符分割为字符串
+ * @return {String} 结果字符串
+ */
+Array.prototype.$join = function(separator) {
+  var tag = ",";
+  if (typeof separator !== "undefined") {
+    tag = String(separator);
+  }
+
+  var str = "";
+  var len = this.length;
+  if(len === 0){
+    return str;
+  }
+
+  var maxIndex = len - 1;
+  for(var i = 0; i<len; i++) {
+    str += this[i];
+    str += i === maxIndex ? '': tag; // 删除最后一个 tag
+  }
+
+  return str;
+};
+
+
+
+/**
+ * 将字符串按照指定格式切割成数组(依赖: substring 方法)
+ * @param {String}
+ * @return {Array} 
+ */
+String.prototype.$split = function (separator) {
+  var str = this;
+  var len = this.length;
+  if(len === 0){
+    return [""];
+  }
+
+  var tag = "";
+  if (typeof separator !== "undefined") {
+    tag = separator;
+  }
+
+  var taglen = tag.length;
+  var res = [];
+  var item, tagIndex;
+  while(str.length) {
+    tagIndex = str.indexOf(tag);
+    if (tagIndex === -1) {
+      // last item
+      res.push(String(str));
+      break;
+    }
+    item = str.substring(0, tagIndex);
+    item && res.push(item);
+    str = str.substring(tagIndex + taglen);
+  }
+
+  return res;
+};
+
+```
+
+### keys/values/entries
+
+返回一个迭代器对象
+
+```javascript
+/**
+ * 获取keys的迭代器对象 
+ * @return {Iterator}
+ */
+Array.prototype.$keys = function () {
+  var index = 0;
+  var len = this.length;
+  return {
+    next: function() {
+      var done = index >= len;
+      var value = done ? undefined: index;
+      index++;
+      return {
+        done: done,
+        value: value
+      };
+    },
+    // 实现迭代器接口
+    [Symbol.iterator]: function(){
+      return this;
+    }
+  };
+};
+
+
+/**
+ * 获取values的迭代器对象 
+ * @return {Iterator}
+ */
+Array.prototype.$values = function () {
+  var index = 0;
+  var len = this.length;
+  var _self = this;
+  return {
+    next: function() {
+      var done = index >= len;
+      var value = done ? undefined: _self[index];
+      index++;
+      return {
+        done: done,
+        value: value
+      };
+    },
+    // 实现迭代器接口
+    [Symbol.iterator]: function(){
+      return this;
+    }
+  };
+};
+
+
+/**
+ * 获取迭代器对象 
+ * @param {Array}
+ * @return {Array} 
+ */
+Array.prototype.$entries = function () {
+  var index = 0;
+  var len = this.length;
+  var _self = this;
+  return {
+    next: function() {
+      var done = index >= len;
+      var value = done ? undefined: [index, _self[index]];
+      index++;
+      return {
+        done: done,
+        value: value 
+      };
+    },
+    // 实现迭代器接口
+    [Symbol.iterator]: function(){
+      return this;
+    }
+  };
+};
+
+```
+
+### concat
+
+```javascript
+/**
+ * 合并两个数组并返回新的数组
+ * @param {Array}
+ * @return {Array} 
+ */
+Array.prototype.$concat = function () {
+  var res = []; 
+  for (var i = 0, l = this.length; i<l; i++) {
+    res.push(this[i]);
+  }
+
+  for (var k in arguments) {
+    arguments.hasOwnProperty(k) && res.push(arguments[k]);
+  }
+
+  return res;
+};
+
+```
+
+### reverse
+
+```javascript
+/**
+ * 将数组倒转顺序(虽然倒着遍历一遍是最简单的, 但是那样性能不如只遍历一半, 而且不会改变原数组)
+ * @return {Array} 
+ */
+Array.prototype.$reverse = function () {
+  var o = Object(this); // 转换类型,让 o 必定是一个 object
+  var len = o.length >>> 0;
+  if (len < 2) {
+    return this;
+  }
+
+  var swapCount = Math.floor( len / 2 );
+  var item, snapIndex;
+  for (var i = 0; i<swapCount; i++) {
+    snapIndex = len - 1 - i;
+    item = o[i];
+    o[i] = o[snapIndex];
+    o[snapIndex] = item;
+  }
+
+  return o;
+};
+```
+
+### fill
+
+```javascript
+Array.prototype.$fill = function (value) {
+  var O = Object(this);
+
+  // 强行将 length 转数字, 防止是 call/apply 这种
+  // 调用的传一个带length的对象
+  var len = O.length >>> 0;
+
+  // 开始位置
+  var start = arguments[1];
+  var relativeStart = start >> 0;
+  var k =
+    relativeStart < 0
+      ? Math.max(len + relativeStart, 0)
+      : Math.min(relativeStart, len);
+
+  // 结束位置
+  var end = arguments[2];
+  var relativeEnd = end === undefined ? len : end >> 0;
+  var final =
+    relativeEnd < 0
+      ? Math.max(len + relativeEnd, 0)
+      : Math.min(relativeEnd, len);
+
+  // 填充
+  while (k < final) {
+    O[k] = value;
+    k++;
+  }
+
+  // 返回填充后的数组
+  return O;
+};
+```
+
+### reduce/reduceRight
+
+```javascript
+/**
+ * reduce: 从左向右遍历
+ * @param {Function} callback
+ * @param {any} initVal
+ */
+Array.prototype.$reduce = function (callback) {
+  if (typeof callback !== "function") {
+    throw new TypeError("The 'callback' must be a function");
+  }
+
+  var o = Object(this);
+  var len = o.length;
+
+  // 如果没有传初始值, 将数组的第一个值作为初始值, 并且从1开始循环
+  var initVal = o[0];
+  var startIndex = 1;
+  if (arguments.length > 1) {
+    // 如果传入了初始值
+    initVal = arguments[1];
+    startIndex = 0;
+  }
+
+  for (var i=startIndex; i<len; i++) {
+    initVal = callback(initVal, o[i], i, o);
+  }
+
+  return initVal;
+};
+
+
+/**
+ * reduceRight
+ * @param {Function} callback
+ * @param {any} initVal
+ */
+Array.prototype.$reduceRight = function (callback) {
+  if (typeof callback !== "function") {
+    throw new TypeError("The 'callback' must be a function");
+  }
+
+  var o = Object(this);
+  var maxIndex = o.length - 1;
+
+  // 如果没有传初始值, 将数组的最后一个值作为初始值, 并且从倒数第二个开始循环
+  var initVal = o[maxIndex];
+  var startIndex = maxIndex - 1;
+  if (arguments.length > 1) {
+    // 如果传入了初始值
+    initVal = arguments[1];
+    startIndex = maxIndex;
+  }
+
+  for (var i=startIndex; i>=0; i--) {
+    initVal = callback(initVal, o[i], i, o);
+  }
+
+  return initVal;
+};
+
+```
+
+### push/unshift
+
+```javascript
+/**
+ * 向数组的最后添加元素
+ * @param  {...any} args 要插入到数组中的元素
+ * @returns {number} length 数组的长度
+ */
+Array.prototype.$push = function (...args) {
+  for (let i = 0, l = args.length; i < l; i++) {
+    this[this.length] = args[i];
+  }
+  return this.length;
+};
+
+var arr = [1, 2];
+
+console.log(arr.$push(3, 4, 5)); // 5;
+console.info(arr); // [1, 2, 3, 4, 5]
+
+
+
+/**
+ * 向数组的最前面添加元素
+ * @param  {...any} args
+ * @returns {number}
+ */
+Array.prototype.$unsfhit = function (...args) {
+  let item;
+  for (let i = 0, len = args.length; i < len; i++) {
+    item = this[i];
+    this[i] = args[i];
+    this[i + len] = item;
+  }
+  return this.length;
+};
+
+var arr = [1, 2, 3];
+console.log(arr.$unsfhit(4, 5, 6)); //6
+console.info(arr); // [4, 5, 6, 1, 2, 4]
+
+```
+
+### pop/shift
+
+```javascript
+/**
+ * 弹出数组最后一个元素并且返回
+ * @returns {any}
+ */
+Array.prototype.$pop = function () {
+  const max = this.length - 1;
+  const lastElement = this[max];
+  delete this[max];
+  this.length -= 1;
+  return lastElement;
+};
+
+var arr = [1, 2, 3];
+console.info(arr.$pop()); // 3
+console.info(arr); // [1, 2]
+
+
+/**
+ * 弹出数组的第一个元素并且返回
+ * @returns {any}
+ */
+Array.prototype.$shift = function () {
+  const len = this.length;
+  const firstElement = this[0];
+  for (let i = 0; i < len; i++) {
+    if (i === 0) {
+      continue;
+    }
+    // 从1开始,后面的所有元素向前移动一位
+    this[i - 1] = this[i];
+  }
+  
+  // 前面的元素都向前移动了一位, 所以删除最后一位多余的元素
+  delete this[len];
+  this.length -= 1;
+  return firstElement;
+};
+
+var arr = [1, 2, 3];
+console.info(arr.$shift()); // 1
+console.info(arr); // [2, 3]
+
+```
+
+### splice
+
+删除/替换原数组, 也就是说会改变原数组
+
+```javascript
+/**
+ * 完美实现 splce 函数的效果(改变原数组)
+ * @param {start} 开始删除/替换的位置
+ * @param {deleteCount} (可选)要剪切的个数
+ * @param {any} (可选)要替换的多个参数
+ * @return {Array} 剪切的数组
+ */
+Array.prototype.$splice = function () {
+  var o = Object(this);
+  if (Object.prototype.toString.call(o) !== "[object Array]") {
+    throw new TypeError("'this' must be [object Array]");
+  }
+
+  var len = o.length >>> 0;
+  var start = arguments[0] >> 0;
+  start = start < 0 ? Math.max(0, len+start) : Math.min(len, start);
+
+  // 如果传入了 deleteCount 就转为数字, 如果没传截取到最后
+  // deleteCount 只能是 0-len 的正整数
+  var deleteCount = arguments.length > 1 ? arguments[1] >> 0 : Infinity;
+  deleteCount = deleteCount < 0 ? Math.max(0, len + deleteCount) : Math.min(len, deleteCount);
+
+  // 判断是否需要替换, 从第2个位置截取到最后
+  var replaces = arguments.length > 2 ? Array.prototype.slice.call(arguments, 2) : [];
+  var replaceLen = replaces.length;
+
+  // res: 返回值
+  var res = [];
+
+  if (replaceLen) {
+    // >>> 替换操作:
+    // 原数组从插入位置开始, 后面所有的元素向后移动 replaceLen - deleteCount 个位置
+    // 必须是从最后开始往前的顺序向后移动, 如果从前向后的顺序, 就可能导致后面的元素被覆盖
+    var index = len - 1;
+    while (index >= start) {
+      o[index + replaceLen - deleteCount] = o[index];
+      index--;
+    }
+
+    // 从 start 位置开始插入 replaceLen 个项目
+    var currentIndex;
+    for (var i = 0; i < replaceLen; i++) {
+      currentIndex = i + start;
+      res.push(o[currentIndex]);
+      o[currentIndex] = replaces[i];
+    }
+  } else {
+    // >>> 删除操作:
+    // 保存指定位置的元素放入到结果数组res中
+    // 从 start + deleteCount 位置开始,后面所有的元素向前移动 deleteCount 个位置
+    // index: 当前要移动的元素位置, deleteIndex: 当前要删除的元素位置
+    var index = start + deleteCount;
+    var deleteIndex;
+    while (index < len) {
+      currentIndex = index - deleteCount;
+      res.push(o[deleteIndex]);
+      o[deleteIndex] = o[index];
+      delete o[index];
+      index++;
+    }
+
+    // 删除最后 deleteCount 个空元素
+    o.length -= deleteCount;
+  }
+
+  return res;
+};
+
+```
+
+### slice
+
+```javascript
+/**
+ * slice 截取数组中n个元素
+ * @param {Number} 开始下标
+ * @param {Number} (可选)结束下标
+ * @returns {Array} 截取的值
+ */
+Array.prototype.$slice = function () {
+  var o = Object(this);
+  var len = o.length >>> 0;
+  if (len === 0) {
+    return [];
+  }
+
+  // 开始坐标/结束坐标都必须是: 正整数
+  var startIndex = arguments[0] >> 0;
+  startIndex = startIndex < 0 ? Math.max(len + startIndex, 0) : Math.min(len, startIndex);
+
+  var endIndex = arguments.length > 1 ? arguments[1] >> 0 : Infinity;
+  endIndex = endIndex < 0 ? Math.max(len + endIndex, 0) : Math.min(len, endIndex);
+
+  var res = [];
+  for (var i = startIndex; i < endIndex; i++) {
+    res.push(o[i]);
+  }
+  return res;
+};
+
+```

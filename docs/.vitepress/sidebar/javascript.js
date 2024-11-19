@@ -47,11 +47,11 @@ export default {
     },
     {
       text: '值属性',
-      link: '/js/builtin/值属性',
+      link: '/js/builtin/value_property',
     },
     {
       text: '函数属性',
-      link: '/js/builtin/函数属性',
+      link: '/js/builtin/function_property',
     },
     {
       text: '基本对象',
@@ -61,8 +61,9 @@ export default {
           items: [
             { text: '基本介绍', link: '/js/builtin/object' },
             { text: '获取属性与遍历对象', link: '/js/builtin/object/object-get' },
-            { text: '设置属性与封闭对象', link: '/js/builtin/object/object-set' },
-            { text: '克隆对象', link: '/js/builtin/object/clone' },
+            { text: '静态方法学习', link: '/js/builtin/object/static-method' },
+            { text: '实例方法学习', link: '/js/builtin/object/instance-method' },
+            { text: '对象克隆', link: '/js/builtin/object/clone' },
             { text: '树形数据处理', link: '/js/builtin/object/tree' },
           ],
         },
@@ -80,12 +81,10 @@ export default {
         },
       ],
     },
-
     {
       text: '错误对象',
-      link: '/js/builtin/错误对象.md',
+      link: '/js/builtin/error',
     },
-
     {
       text: '数值和日期对象',
       items: [
@@ -122,7 +121,12 @@ export default {
       items: [
         {
           text: 'Array 数组',
-          link: '/js/builtin/array',
+          items: [
+            { text: '基本介绍', link: '/js/builtin/array' },
+            { text: '基础学习', link: '/js/builtin/array/base' },
+            { text: '数组方法', link: '/js/builtin/array/methods' },
+            { text: '数组去重', link: '/js/builtin/array/unique' },
+          ]
         },
       ],
     },

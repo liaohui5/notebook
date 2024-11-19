@@ -14,9 +14,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@nolebase/vitepress-plugin-enhanced-readabilities": "^2.6.1",
+    "@nolebase/vitepress-plugin-enhanced-readabilities": "^2.9.0",
     "markdown-it-todo-lists": "^0.1.7",
     "sass": "1.78.0",
-    "vitepress": "^1.4.1"
+    "vitepress": "^1.5.0"
   }
 }
