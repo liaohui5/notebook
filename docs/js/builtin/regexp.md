@@ -84,15 +84,15 @@ console.log(reg.lastIndex); // 0
 
 |  表达式  |  描述  |
 | :--- | :--- |
-| [[abc]](https://www.w3school.com.cn/jsref/jsref_regexp_charset.asp) |  查找方括号之间的任何字符。  |
-| [[^abc]](https://www.w3school.com.cn/jsref/jsref_regexp_charset_not.asp) |  查找任何不在方括号之间的字符。  |
+| \[\[abc\]\](<https://www.w3school.com.cn/jsref/jsref_regexp_charset.asp>) |  查找方括号之间的任何字符。  |
+| \[\[^abc\]\](<https://www.w3school.com.cn/jsref/jsref_regexp_charset_not.asp>) |  查找任何不在方括号之间的字符。  |
 |  [0-9]  |  查找任何从 0 至 9 的数字。  |
 |  [a-z]  |  查找任何从小写 a 到小写 z 的字符。  |
 |  [A-Z]  |  查找任何从大写 A 到大写 Z 的字符。  |
 |  [A-z]  |  查找任何从大写 A 到小写 z 的字符。  |
 |  [adgk]  |  查找给定集合内的任何字符。  |
 |  [^adgk]  |  查找给定集合外的任何字符。  |
-|  (red|blue|green)  |  查找任何指定的选项。  |
+|  \(red\|blue\|green\)  |  查找任何指定的选项。  |
 
 ```javascript
 var str = "a2Aas12Ad3dfB2B";
