@@ -56,7 +56,7 @@
 > 数据结构
 
 - [x] 新建 github 仓库保存所有代码(写单元测试)
-- [x] 改进 LinkedList 等数据结构的泛型, 应该 `new LinkedList<T>()`
+- [x] 改进 LinkedList 等数据结构的泛型, 应该 `new LinkedList`
 
 > 算法
 
