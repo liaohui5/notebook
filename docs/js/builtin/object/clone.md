@@ -52,6 +52,7 @@ console.log(obj.name === obj2.name); // true, 证明修改的是同一个堆内�
 
 1. 先将引用类型转换为基本类型, 然后在赋值
 2. 缺点: `JSON.stringify` 会忽略 `Function` 类型的数据, 如果数据较大, 会比较消耗内存
+3. 缺点: 无法处理循环引用的对象
 
 ```javascript
 const obj1 = { id: 1001, name: "Jerry" };
@@ -71,6 +72,18 @@ console.log(obj1.name === obj2.name); // false, 证明修改的不是同一个�
 const obj1 = { id: 1001, name: "Jerry" };
 const obj2 = structuredClone(obj1);
 console.log(obj1 === obj2, obj1, obj2); // false
+```
+
+### 使用 MessageChannel
+
+```javascript
+function deepClone(origin) {
+  return new Promise((resolve) => {
+    const { port1, port2 } = new MessageChannel();
+    port1.postMessage(origin);
+    port2.onmessage = (target) =>resolve(target);
+  });
+}
 ```
 
 ## 手动实现
