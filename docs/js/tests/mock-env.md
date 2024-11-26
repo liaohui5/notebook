@@ -16,35 +16,9 @@
 
 而且, window 是个对象, 有的时候可能会在 window 对象上设置一些属性, 此时如果要测试这样的方法, 就需要模拟环境
 
-```typescript
-// 被测试的源码
-export function getWinSize() {
-  return {
-    width: window.innerWidth,
-    height: window.innerHeight,
-  };
-}
+::: code-group
 
-export function openURL(url: string) {
-  window.open(url);
-}
-
-export function getBaseURL() {
-  const baseUrlMap = {
-    development: 'http://localhost:3000',
-    production: 'http://api.demo.com',
-    test: 'http://test.demo.com',
-  };
-  const url = baseUrlMap[import.meta.env.NODE_ENV];
-  if (!url) {
-    throw new Error('unknown env');
-  }
-  return url;
-}
-```
-
-```typescript
-// 测试代码
+```typescript [测试代码]
 import { getWinSize, openURL, getBaseURL } from '@/main';
 
 describe('模拟浏览器运行环境的全局变量和方法', () => {
@@ -92,9 +66,38 @@ describe('模拟浏览器运行环境的全局变量和方法', () => {
 });
 ```
 
+```typescript [被测试的源码]
+export function getWinSize() {
+  return {
+    width: window.innerWidth,
+    height: window.innerHeight,
+  };
+}
+
+export function openURL(url: string) {
+  window.open(url);
+}
+
+export function getBaseURL() {
+  const baseUrlMap = {
+    development: 'http://localhost:3000',
+    production: 'http://api.demo.com',
+    test: 'http://test.demo.com',
+  };
+  const url = baseUrlMap[import.meta.env.NODE_ENV];
+  if (!url) {
+    throw new Error('unknown env');
+  }
+  return url;
+}
+```
+
+:::
+
 ## 模拟输入
 
-一般直接输入的函数, 不需要模拟, 直接传入参数后执行, 然后测试输出结果即可
+一般直接输入的`纯函数`, 不需要模拟, 直接传入参数后执行, 然后测试输出结果即可,
+所以写单元测试其实就是给代码提纯, 尽量避免强依赖外部的内容
 
 ```typescript
 function sum(nums: number[]) {
@@ -114,27 +117,28 @@ it('测试直接输入的函数', () => {
 
 但是在写程序时, 不可避免的会有一下间接输入, 如调用其他方法获取的值, 或者发送请求获取的响应值
 
-```typescript
-// types.d.ts
-interface IUserDto {
-  id: number;
-  username: string;
-  phone: string;
-}
+::: code-group
 
-// user.ts
-function getUserInfo(): Promise<IUserDto> {
-  return fetch('http://api.xxx.com/users/1').then((res) => res.json());
-}
+```typescript [user.ts 被测试的源码]
+import { getUserInfo } from "./userService";
 
-// main.ts
-async function getUserPhone(): string {
+export const getUserPhone = async (): Promise<string> => {
   const user: IUserDto = await getUserInfo();
-  return String(user.phone).substring(0, 3) + '*'.repeat(8);
-}
+  return String(user.phone).substring(0, 3) + "*".repeat(8);
+};
+
+export const getUserEmail = async (): Promise<string> => {
+  const user: IUserDto = await getUserInfo();
+  const [mail, hostname] = user.email.split("@");
+  const start = Math.floor(mail.length / 2);
+
+  const email = mail.substring(0, start);
+  const stars = "*".repeat(mail.length - start);
+  return `${email}${stars}@${hostname}`;
+};
 ```
 
-```typescript
+```typescript [user.spec.ts 单元测试]
 import { getUserPhone } from '@/main';
 import * as userModule from '@/user';
 
@@ -144,7 +148,7 @@ describe('模拟程序间接输入', () => {
   });
 
   it('使用 mock 替换模块的方式来模拟间接输入', async () => {
-    // 直接使用工厂函数来返回一个值
+    // 直接使用工厂函数, 模拟模块中的方法
     vi.mock('@/user', () => {
       return {
         getUserInfo: () => Promise.resolve({ phone: '18712345678' }),
@@ -169,17 +173,39 @@ describe('模拟程序间接输入', () => {
 });
 ```
 
+
+```typescript [userService.ts]
+export function getUserInfo(): Promise<IUserDto> {
+  return fetch('http://api.xxx.com/users/1').then((res) => res.json());
+}
+```
+
+```typescript [types.d.ts]
+// 获取用户信息接口响应
+interface IUserDto {
+  id: number;
+  username: string;
+  phone: string;
+  email: string;
+}
+```
+
+:::
+
 ## 注意 BUG
 
-<span style="color:red;">注:由于 vitest 的 mock 实现原理是通过劫持 `import` 语句来实现的, 如果是同一个模块直接调用就会 mock 失败</span>
+> [!NOTE]
+> 由于 vitest 的 mock 实现原理是通过劫持 `import` 语句来实现的, 如果是同一个模块直接调用就会 mock 失败
 
-```typescript
+::: code-group
+
+```typescript [源码]
 // foo.ts
 export foo = () => Math.random().toString(16).slice(2);
 export bar = () => foo() + "-bar";
 ```
 
-```typescript
+```typescript [单元测试]
 // foo.spec.ts
 import { foo, bar } from '@/foo';
 vi.mock('@/foo', () => {
@@ -193,9 +219,13 @@ it('这个测试用例会失败, 因为 bar 是直接调用的 foo 函数, 没�
 });
 ```
 
+:::
+
 如何避免这个 bug? 只需要让 `foo` 和 `bar` 在不同的文件中, 然后 `import`, 这样 vitest 就可以劫持到
 
-```typescript
+::: code-group
+
+```typescript [源码]
 // foo.ts
 export foo = () => Math.random().toString(16).slice(2);
 
@@ -204,7 +234,7 @@ import {foo} from "./foo"
 export bar = () => foo() + "-bar";
 ```
 
-```typescript
+```typescript [单元测试]
 // bar.spec.ts
 import { bar } from '@/bar';
 vi.mock('@/foo', () => {
@@ -217,16 +247,17 @@ it('这个测试用例会成功', () => {
 });
 ```
 
+:::
+
 ## 保证代码结果的可预测性
 
 有时候我们需要测试随机数/日期相关的内容来做一些事情, 此时就不太好测试,
 
-因为日期你今天写的测试通过来, 明天再来测试可能就无法通过了
+因为日期你今天写的测试通过了之后, 明天再来测试可能就无法通过了
 
-- [模拟日期实现原理](https://github.com/sinonjs/fake-timers)
-- [useFakeTimers 文档, 推荐阅读](https://cn.vitest.dev/api/vi.html#vi-usefaketimers)
+::: code-group
 
-```typescript
+```typescript [源码]
 // main.ts
 export function randomString(): string {
   // 这个代码, 其实 Math.random 随机数的结果是多少并不重要,
@@ -243,7 +274,7 @@ export function isFriday() {
 }
 ```
 
-```typescript
+```typescript [单元测试]
 // main.spec.ts
 import { isFriday, randomString } from '@/main';
 describe('保证代码结果的可预测性', () => {
@@ -269,11 +300,19 @@ describe('保证代码结果的可预测性', () => {
 });
 ```
 
+:::
+
 ## 时光机:模拟定时器/超时器
 
 因为有的时候,定时器如果比较多的话,需要等待比较长的时间,想要快速验证,就应该使用模拟的时间
 
-```typescript
+- [模拟日期实现原理](https://github.com/sinonjs/fake-timers)
+- [useFakeTimers 文档, 推荐阅读](https://cn.vitest.dev/api/vi.html#vi-usefaketimers)
+
+
+::: code-group
+
+```typescript [源码]
 /**
  * 函数防抖
  * @param func - 要防止抖动的函数
@@ -303,27 +342,32 @@ export function debounce(
 }
 ```
 
-```typescript
+```typescript [单元测试]
 import { debounce } from '@/main';
 describe('时光机:跳过定时器快速验证代码', () => {
-  afterEach(() => {
-    vi.useRealTimers();
-  });
-
-  it('加速定时器', () => {
-    // given
+  it('在指定时间后代用传入函数', () => {
+    // 使用假的时间
+    // 注意需要在调用 setTimeout 的代码前面调用这个方法
     vi.useFakeTimers();
     const cb = vi.fn();
 
-    // when
     const wait = 1000;
-    debounce(cb, wait)(); // execute returned function
+    debounce(cb, wait)();
     expect(cb).not.toBeCalled();
 
-    // then
-    vi.advanceTimersToNextTimer(); // 快进到下一个定时器(推荐)
-    // vi.advanceTimersByTime(wait); // 快进指定毫秒
+    // 快进到下一个定时器(推荐)
+    // 注意需要在调用 setTimeout 的代码后面调用这个方法
+    vi.advanceTimersToNextTimer();
+
+    // 快进指定毫秒
+    // vi.advanceTimersByTime(wait);
     expect(cb).toBeCalled();
+
+    // 测试完之后,恢复使用真时间,避免影响其他测试
+    // 当然这个可以放到 afterEach 生命周期函数中
+    vi.useRealTimers();
   });
 });
 ```
+
+:::

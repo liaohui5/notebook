@@ -6,115 +6,10 @@
 - store/user.ts 实际业务 pinia store 文件
 - store/user.spec.ts 实际业务 store 的测试文件
 
-```typescript
-// types.d.ts 其他文件需要的数据类型约束
-// 登录表单数据结构
-interface ILoginForm {
-  email: string;
-  password: string;
-}
+::: code-group
 
-// 更新用户密码
-interface IUpdatePasswordForm {
-  old_password: string;
-  new_password: string;
-  confirm_password: string;
-}
-
-// 用户对象
-interface IUserDto {
-  id: number;
-  username: string;
-  email: string;
-  avatar: string;
-  status: number;
-  created_at: string;
-  token?: string;
-  permissions?: IPermisssionDto[];
-  roles?: IRoleDto[];
-}
-
-// 创建用户信息
-type ICreateUserForm = Pick<IUserDto, 'username' | 'email' | 'password'> & {
-  confirm: string;
-  avatar?: string;
-};
-
-// 修改用户信息
-type IUpdateUserForm = Partial<IUserDto>;
-
-// 角色对象
-interface IRoleDto {
-  id: 1;
-  role_name: '超级管理员';
-  role_desc: '拥有所有权限';
-  permissions?: IPermisssionDto[];
-}
-
-// 权限对象
-interface IPermisssionDto {
-  id: number;
-  desc: string;
-  type: number;
-  method: string | null;
-  icon: string;
-  path: string;
-  status: number;
-  pid: number;
-}
-
-// 带有分页信息的响应数据
-interface PaginateResponse<T> {
-  count: number;
-  rows: T[];
-}
-
-// 分页参数
-interface IPagination {
-  page: number;
-  size: number;
-}
-
-// 搜索参数
-interface ISearchParams extends IPagination {
-  type?: number | string;
-  content?: string;
-}
-
-// 获取用户接口的响应数据
-type IGetUsersResponse = PaginateResponse<IUserDto>;
-```
-
-```typescript
-// services/index.ts services导出总出口, 这样的好处是在导入时, 不需要再 @/services/xxx 可以直接 @services
-export * as userService from './user';
-```
-
-```typescript
-// services/user.ts
-export function login(data: ILoginForm): Promise<IUserDto> {
-  return http.post('/api/auth/login', data);
-}
-
-export function updatePassword(data: IUpdatePasswordForm): Promise<void> {
-  return http.patch('/api/users/update_password', data);
-}
-
-export function getUsers(params: ISearchQuery): Promise<IGetUsersResponse> {
-  return http.get('/api/users', { params });
-}
-
-export function createUser(data: ICreateUserForm): Promise<IUserDto> {
-  return http.post('/api/users', data);
-}
-
-export function updateUser(id: number, data: IUpdateUserForm): Promise<void> {
-  return http.patch(`/api/users/${id}`, data);
-}
-```
-
-```typescript
-// store/user.ts 用户相关数据
+```typescript [store/user.ts]
+// store/user.ts 用户相关数据操作的具体逻辑
 import { removeToken, saveToken } from '@/utils/token';
 import { defineStore } from 'pinia';
 import { userService } from '@/services';
@@ -241,6 +136,116 @@ export const useUserStore = defineStore('user', () => {
 });
 ```
 
+```typescript [types.d.ts]
+// types.d.ts 其他文件需要的数据类型约束
+// 登录表单数据结构
+interface ILoginForm {
+  email: string;
+  password: string;
+}
+
+// 更新用户密码
+interface IUpdatePasswordForm {
+  old_password: string;
+  new_password: string;
+  confirm_password: string;
+}
+
+// 用户对象
+interface IUserDto {
+  id: number;
+  username: string;
+  email: string;
+  avatar: string;
+  status: number;
+  created_at: string;
+  token?: string;
+  permissions?: IPermisssionDto[];
+  roles?: IRoleDto[];
+}
+
+// 创建用户信息
+type ICreateUserForm = Pick<IUserDto, 'username' | 'email' | 'password'> & {
+  confirm: string;
+  avatar?: string;
+};
+
+// 修改用户信息
+type IUpdateUserForm = Partial<IUserDto>;
+
+// 角色对象
+interface IRoleDto {
+  id: 1;
+  role_name: '超级管理员';
+  role_desc: '拥有所有权限';
+  permissions?: IPermisssionDto[];
+}
+
+// 权限对象
+interface IPermisssionDto {
+  id: number;
+  desc: string;
+  type: number;
+  method: string | null;
+  icon: string;
+  path: string;
+  status: number;
+  pid: number;
+}
+
+// 带有分页信息的响应数据
+interface PaginateResponse<T> {
+  count: number;
+  rows: T[];
+}
+
+// 分页参数
+interface IPagination {
+  page: number;
+  size: number;
+}
+
+// 搜索参数
+interface ISearchParams extends IPagination {
+  type?: number | string;
+  content?: string;
+}
+
+// 获取用户接口的响应数据
+type IGetUsersResponse = PaginateResponse<IUserDto>;
+```
+
+```typescript [services/index.ts]
+// services/index.ts services导出总出口, 这样的好处是在导入时
+// 不需要再 @/services/xxx 可以直接 @services
+export * as userService from './user';
+```
+
+```typescript [services/user.ts]
+// services/user.ts 是和后端交互的接口
+export function login(data: ILoginForm): Promise<IUserDto> {
+  return http.post('/api/auth/login', data);
+}
+
+export function updatePassword(data: IUpdatePasswordForm): Promise<void> {
+  return http.patch('/api/users/update_password', data);
+}
+
+export function getUsers(params: ISearchQuery): Promise<IGetUsersResponse> {
+  return http.get('/api/users', { params });
+}
+
+export function createUser(data: ICreateUserForm): Promise<IUserDto> {
+  return http.post('/api/users', data);
+}
+
+export function updateUser(id: number, data: IUpdateUserForm): Promise<void> {
+  return http.patch(`/api/users/${id}`, data);
+}
+```
+
+:::
+
 ## 测试 store 业务逻辑
 
 ```typescript
@@ -250,6 +255,7 @@ import { useUserStore } from '@/store/user';
 import { hasToken, removeToken, saveToken } from '@/utils/token';
 import { setActivePinia, createPinia } from 'pinia';
 
+// 模拟接口响应
 vi.mock('@/services', () => {
   return {
     userService: {
@@ -336,7 +342,8 @@ describe('user store', () => {
           store.searchParams.size += 1;
         }
         return Promise.resolve();
-        // 因为 watch 触发 reactive 的依赖是异步触发的, 所以应该 await
+        // 因为 watch 触发 reactive 的依赖是异步触发的,
+        // 所以应该返回一个Promise
       }
 
       vi.spyOn(userService, 'getUsers');

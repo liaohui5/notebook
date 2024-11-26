@@ -2,7 +2,9 @@
 
 所谓状态验证, 就是验证程序执行后, 判断程序执行的结果, 或者改变的变量
 
-```typescript
+::: code-group
+
+```typescript [源码]
 // 计算平均值: 测试返回值是否正确
 export function mean(nums: number[]) {
   let sum = 0;
@@ -23,7 +25,7 @@ export function incrementId(initValue = 0): void {
 }
 ```
 
-```typescript
+```typescript [单元测试]
 import { mean, $id, incrementId } from '@/main';
 
 describe('状态验证', () => {
@@ -41,9 +43,11 @@ describe('状态验证', () => {
     incrementId();
     expect($id).toBe(6);
   });
-  // 调用实例方法, 改变类的属性, 也可以这样 验证状态
+  // 对象调用方法, 改变实例的属性, 也可以这样 验证状态
 });
 ```
+
+:::
 
 ## 行为验证
 
@@ -51,25 +55,62 @@ describe('状态验证', () => {
 
 所以, 应该优先使用状态验证, 如果状态验证不太好测试, 才考虑用行为验证
 
-```typescript
-// main.ts
-import axios from 'axios';
+::: code-group
+
+```typescript [源码]
+import axios from "axios";
+import * as loading from "./loading";
+
+export const setUserNickname = () => {
+  return new Promise((resolve) => {
+    loading.showLoading();
+    resolve("mock-response");
+    loading.closeLoading();
+  });
+};
+
 export function getUsers(params = { page: 1, size: 10 }) {
-  // params 默认值: page 当前页, size: 每页多少�数据
-  return axios.get('/api/users', { params });
+  // params 默认值: page 当前页, size: 每页多少个数据
+  return axios.get("/api/users", { params });
 }
 ```
 
-```typescript
-// main.spec.ts
-import axios from 'axios';
+```typescript [单元测试]
+import * as loading from "@/loading";
+import { getUsers, setUserNickname } from "@/user";
+import axios from "axios";
 
-describe('行为验证', () => {
-  it('验证函数是否被调用, 和调用时的函数', async () => {
-    vi.spyOn(axios, 'get');
+describe("验证程序行为", () => {
+  it("发送请求时应该显示loading, 请求结束时应该关闭loading", async () => {
+    // 对于这个 setUserNickname 方法来说, 他依赖的 loading 模块中的
+    // showLoading closeLoading 方法是如何实现的并不重要, 重要的是:
+    // 我只要知道调用 setUserNickname 时会调用 showLoading 和
+    // closeLoading 就足够了, 因为 loading 这些方法的逻辑应该
+    // 在它自己的单元测试中去测试
+
+    // 模拟 loading 模块的方法
+    vi.spyOn(loading, "showLoading");
+    vi.spyOn(loading, "closeLoading");
+
+    // 初始状态下，这两个方法不应该被调用
+    expect(loading.showLoading).not.toHaveBeenCalled();
+    expect(loading.closeLoading).not.toHaveBeenCalled();
+
+    await setUserNickname();
+
+    // 验证 loading 方法被正确调用
+    expect(loading.showLoading).toHaveBeenCalled();
+    expect(loading.closeLoading).toHaveBeenCalled();
+  });
+
+  it("发送请求时应该可以使用分页参数来获取数据", () => {
+    // 验证调用函数时候的参数是否正确
+    vi.spyOn(axios, "get").mockImplementation(() => {
+      return Promise.resolve();
+    });
     getUsers({ page: 2, size: 15 });
 
-    expect(axios.get).toBeCalledWith('/api/users', {
+    expect(axios.get).toBeCalledWith("/api/users", {
       params: {
         page: 2,
         size: 15,
@@ -79,12 +120,15 @@ describe('行为验证', () => {
 });
 ```
 
+:::
+
 ## 异步代码验证
 
 - JS 中异步代码主要是 定/超时器 和 Promise, 其他的用的相对较少
 
-```typescript
-// main.ts
+::: code-group
+
+```typescript [源码]
 export function delay(cb: CallableFunction, wait: number, ...args: any[]) {
   setTimeout(() => cb(...args), wait);
 }
@@ -100,8 +144,7 @@ export function commitment(isResolved: boolean) {
 }
 ```
 
-```typescript
-// main.spec.ts
+```typescript [单元测试]
 import { delay, commitment } from '@/main';
 
 describe('异步代码验证', () => {
@@ -143,10 +186,13 @@ describe('异步代码验证', () => {
 });
 ```
 
+:::
+
 ## 异常验证
 
-```typescript
-// main.ts
+::: code-group
+
+```typescript [源码]
 export function divide(dividend: number, divisor: number) {
   if (divisor === 0) {
     throw new RangeError('divisor not can be zero');
@@ -155,8 +201,7 @@ export function divide(dividend: number, divisor: number) {
 }
 ```
 
-```typescript
-// main.spec.ts
+```typescript [单元测试]
 import { divide } from '@/main';
 
 describe('验证代码异常', () => {
@@ -183,6 +228,8 @@ describe('验证代码异常', () => {
 });
 ```
 
+:::
+
 ## 快照验证
 
 所谓的快照验证就是 `第一次执行测试生成快照(字符串)`, `后面执行测试的时候将程序生成的字符串结果和快照对比是否有改变`
@@ -193,8 +240,9 @@ describe('验证代码异常', () => {
 - toMatchFileSnapshot: 生成快照文件, 但是可以指定文件名(如: `xxx.json`), 可以支持 IDE 语法高亮, 便于开发时人查看和比对
 - toMatchInlineSnapshot: 在测试用例中生成快照字符串(如果字符串不是很多, 推荐使用这个方法, 不会生成新的文件, 很方便)
 
+::: code-group
+
 ```typescript
-// main.spec.ts
 export function genConfig() {
   return {
     // api 请求地址
@@ -229,5 +277,7 @@ describe('快照验证', () => {
   });
 });
 ```
+
+:::
 
 ![snapshot](https://raw.githubusercontent.com/liaohui5/images/main/images/20230914001307.png)

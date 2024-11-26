@@ -6,8 +6,10 @@
 - router/guards: 存放路由的所有路由守卫
 - hooks/goto: 存放所有与页面中跳转相关的逻辑
 
-```typescript
-// index.ts
+
+::: code-group
+
+```typescript [router/index.ts]
 import type { App } from 'vue';
 import { Router, createRouter, createWebHashHistory } from 'vue-router';
 import { routes } from './routes';
@@ -53,8 +55,7 @@ app.mount();
 */
 ```
 
-```typescript
-// consts.ts
+```typescript [router/consts.ts]
 export const enum RouteNames {
   LOGIN = 'Login',
   HOME = 'Home',
@@ -65,8 +66,7 @@ export const enum RouteNames {
 }
 ```
 
-```typescript
-// routes.ts
+```typescript [router/routes.ts]
 import type { RouteRecordRaw } from 'vue-router';
 import { RouteNames } from './const';
 
@@ -115,8 +115,7 @@ export const routes: Array<RouteRecordRaw> = [
 ];
 ```
 
-```typescript
-// guards.ts
+```typescript [router/guards.ts]
 import type { Router } from 'vue-router';
 import { hasToken } from '@/utils/token';
 import { RouteNames } from '@/router';
@@ -147,6 +146,8 @@ export function setupRouterGuards(router: Router) {
   checkLogin(router);
 }
 ```
+
+:::
 
 ## 测试路由守卫
 
@@ -244,8 +245,9 @@ describe('router', () => {
 
 必须应该封装一个 `goto.ts` 来做这个事情, 统一测试/管理跳转页面的逻辑
 
-```typescript
-// goto.ts
+::: code-group
+
+```typescript [源码]
 import { getRouterInstance } from '@/router';
 import { RouteNames } from '@/router/const';
 import { useRouter } from 'vue-router';
@@ -285,8 +287,7 @@ export function redirectToLogin(): void {
 }
 ```
 
-```typescript
-// goto.spec.ts
+```typescript [单元测试]
 import { mount, config } from "@vue/test-utils";
 import {
   createRouterMock,
@@ -379,3 +380,5 @@ describe("goto", () => {
   });
 });
 ```
+
+:::

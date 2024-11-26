@@ -1,6 +1,8 @@
 ## 按照功能拆分模块
 
-```typescript
+::: code-group
+
+```typescript [创建实例添加全局拦截器]
 // utils/http.ts 创建实例, 增加全局的拦截器
 import axios, { type AxiosError, type AxiosInstance, type AxiosResponse } from 'axios';
 import { getToken, hasToken } from './token';
@@ -46,7 +48,7 @@ http.interceptors.response.use(
 );
 ```
 
-```typescript
+```typescript [处理token]
 // utils/token.ts 处理 token 相关内容
 export const TOKEN_KEY = '__user_token__';
 
@@ -67,7 +69,7 @@ export function removeToken(): void {
 }
 ```
 
-```typescript
+```typescript [处理错误消息]
 // utils/httpErrorHandler.ts HTTP 相关错误处理
 import { redirectToLogin } from '@/hooks/goto';
 import { showErrorMsg } from '@/utils/msgs';
@@ -99,6 +101,8 @@ export function errorHandler(statusCode: number, data?: { msg: string }): void {
   }
 }
 ```
+
+:::
 
 ## 测试 axios 全局拦截器
 
