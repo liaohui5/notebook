@@ -69,6 +69,10 @@ console.log(obj1.name === obj2.name); // false, 证明修改的不是同一个�
 [阅读MDN文档](https://developer.mozilla.org/zh-CN/docs/Web/API/Window/structuredClone)
 
 ```js
+function deepClone(origin) {
+  return structuredClone(origin);
+}
+
 const obj1 = { id: 1001, name: "Jerry" };
 const obj2 = structuredClone(obj1);
 console.log(obj1 === obj2, obj1, obj2); // false

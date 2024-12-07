@@ -1,19 +1,7 @@
+import { autoGenSidebars } from '../utils/gen-sidebar';
+
 export default {
-  '/vue/base/': [
-    { text: '1.邂逅 Vue.js', link: '/vue/base/index' },
-    { text: '2.Vue.js 基本使用', link: '/vue/base/2.base-use' },
-    { text: '3.Vue.js 单元测试', link: '/vue/base/3.unit-test' },
-    { text: '4.深入响应式原理', link: '/vue/base/4.deep-reactive' },
-    { text: '5.深入模板处理', link: '/vue/base/5.deep-template' },
-    { text: '6.深入 diff 算法', link: '/vue/base/6.deep-diff' },
-    { text: '7.自定义指令', link: '/vue/base/7.custom-directives' },
-    { text: '8.插件化开发', link: '/vue/base/8.vue-plugin-dev' },
-    { text: '9.render & jsx', link: '/vue/base/9.render-jsx' },
-    { text: '10.配置', link: '/vue/base/10.config' },
-    { text: '11.派发器思想', link: '/vue/base/11.design-dispatcher' },
-    { text: '12.composition-api', link: '/vue/base/12.composition-api' },
-    { text: '13.vue3 进阶 API', link: '/vue/base/13.vue3-advance-api' },
-  ],
+  '/vue/base/': autoGenSidebars('/vue/base/'),
   '/vue/mini-vue/': [
     {
       text: '准备',

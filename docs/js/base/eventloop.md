@@ -240,7 +240,10 @@ console.log(1);
 
 实现一个异步队列, 让下列代码能够按照顺序正确执行
 
-```javascript
+::: code-group
+
+```javascript [实现思路及练习]
+// 请实现这个代码, 让下列函数依次执行
 new Queue()
   .addTask(2000, () => {
     console.log('1');
@@ -283,38 +286,101 @@ class Queue {
 // 也就是说, 所谓的 "任务" 必须是一个返回 promise 的函数,
 // 让我自己来控制这个 任务函数 何时执行, 这样才能控制 promise
 // executor 何时执行
+```
+
+```javascript [简单异步队列封装]
+// 判断是否是一个函数
+const isCallable = (fn) => typeof fn === "function";
+
+/**
+ * @module 异步队列
+ */
 class AsyncQueue {
-  constructor() {
-    this.tasks = [];
-  }
+	constructor() {
+		this.tasks = [];
+		this.isRunning = false;
+	}
 
-  addTask(promiseFunc) {
-    this.tasks.push(promiseFunc);
-    return this;
-  }
+	_enqueue(taskFunc) {
+		if (!isCallable(taskFunc)) {
+			throw new TypeError("[asyncQueue addTask]task must be a function");
+		}
+		this.tasks.push(taskFunc);
+	}
 
-  async run() {
-    for (const task of this.tasks) {
-      await task();
-    }
-  }
+	_dequeue() {
+		if (this.tasks.length === 0) {
+			return;
+		}
+		return this.tasks.shift();
+	}
+
+	addTask(taskFunc) {
+		this._enqueue(taskFunc);
+	}
+
+	clear() {
+		this.tasks = [];
+	}
+
+	errorHandler() {
+		console.error("[asyncQueue errorHandler]task error:", e);
+	}
+
+	setErrorHandler(handler) {
+		if (isCallable(handler)) {
+			this.errorHandler = handler;
+		}
+	}
+
+	async _run() {
+		let task = this._dequeue();
+		while (task) {
+			await task();
+			task = this._dequeue();
+		}
+	}
+
+	async execute() {
+		if (this.isRunning || this.tasks.length === 0) {
+			return;
+		}
+
+		this.isRunning = true;
+
+		try {
+			await this._run();
+		} catch (e) {
+			isCallable(this.errorHandler) && this.errorHandler(e);
+		} finally {
+			this.isRunning = false;
+		}
+	}
 }
 
-const q = new AsyncQueue();
-'12345'.split('').forEach((item) => {
-  q.addTask(() /* 返回异步任务的函数 */ => {
-    return new Promise((resolve) => {
-      const sec = Math.ceil(Math.random() * 5) * 1000;
-      setTimeout(() => {
-        console.log(`item=${item}, sec=${sec}`);
-        resolve();
-      }, sec);
-    });
-  });
+const queue = new AsyncQueue();
+
+// 创建异步任务, 输出传入的 str 和 index
+const createAsyncTask = (str, index) => () => {
+	return new Promise((resolve) => {
+		const waitSecs = Math.ceil(Math.random() * 3);
+		setTimeout(() => {
+			console.log(`${index}:${str}(${waitSecs}s)`);
+			resolve();
+		}, waitSecs * 1000);
+	});
+};
+
+// 添加一些异步任务
+"abcde".split("").forEach((char, index) => {
+	queue.addTask(createAsyncTask(char, index));
 });
 
-q.run();
+// 运行查看输出
+queue.execute();
 ```
+
+:::
 
 其实由上面的代码可知: 实现异步任务队列的关键就是 `每个任务必须是一个返回 promise 的函数`
 任务为什么必须是一个返回 `promise`的函数呢? `为了控制 promise executor 的执行时机`
