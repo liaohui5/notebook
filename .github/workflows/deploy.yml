@@ -20,32 +20,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: download codes
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: install pnpm
-        uses: pnpm/action-setup@master
+        uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: 9
 
       - name: install node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           cache: pnpm
-
-      - name: config github pages
-        uses: actions/configure-pages@v3
-
-      - name: install dependencies
-        run: pnpm install
 
       - name: biuld with VitePress
         run: |
+          pnpm install
           pnpm docs:build
           touch docs/.vitepress/dist/.nojekyll
 
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5.0.0
+
       - name: upload artifacts
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/upload-pages-artifact@v3
         with:
           path: docs/.vitepress/dist
 
@@ -56,7 +54,7 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
