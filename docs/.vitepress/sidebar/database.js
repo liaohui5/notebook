@@ -1,24 +1,24 @@
 export default {
-  '/database/': [
+  "/database/": [
     {
-      text: '数据库概念学习',
-      link: '/database/index.md',
+      text: "数据库概念学习",
+      link: "/database/index.md",
     },
     {
-      text: 'MySQL 学习',
-      link: '/database/mysql',
+      text: "MySQL 学习",
+      link: "/database/mysql",
     },
     {
-      text: 'MongoDB 学习',
-      link: '/database/mongo',
+      text: "MongoDB 学习",
+      link: "/database/mongo",
     },
     {
-      text: 'Redis 学习',
-      link: '/database/redis',
+      text: "Redis 学习",
+      link: "/database/redis",
     },
     {
-      text: 'SQLite 学习',
-      link: '/database/sqlite',
+      text: "SQLite 学习",
+      link: "/database/sqlite",
     },
   ],
 };

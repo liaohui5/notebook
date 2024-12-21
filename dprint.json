@@ -1,0 +1,36 @@
+{
+  "incremental": true,
+  "includes": [
+    "**/*.{vue,js,ts,jsx,tsx,json,yaml,yml,html,css,scss,sass,less,sss,svg,xml}"
+  ],
+  "typescript": {
+    "lineWidth": 120,
+    "quoteStyle": "alwaysDouble",
+    "quoteProps": "asNeeded"
+  },
+  "markup": {
+    "printWidth": 120
+  },
+  "json": {},
+  "markdown": {},
+  "toml": {},
+  "dockerfile": {},
+  "ruff": {},
+  "jupyter": {},
+  "malva": {},
+  "yaml": {},
+  "excludes": ["**/node_modules", "**/target", "**/*-lock.json"],
+  "plugins": [
+    "https://plugins.dprint.dev/typescript-0.93.2.wasm",
+    "https://plugins.dprint.dev/json-0.19.4.wasm",
+    "https://plugins.dprint.dev/markdown-0.17.8.wasm",
+    "https://plugins.dprint.dev/toml-0.6.3.wasm",
+    "https://plugins.dprint.dev/dockerfile-0.3.2.wasm",
+    "https://plugins.dprint.dev/ruff-0.3.9.wasm",
+    "https://plugins.dprint.dev/jupyter-0.1.5.wasm",
+    "https://plugins.dprint.dev/g-plane/malva-v0.11.0.wasm",
+    "https://plugins.dprint.dev/g-plane/markup_fmt-v0.15.1.wasm",
+    "https://plugins.dprint.dev/g-plane/pretty_yaml-v0.5.0.wasm",
+    "https://plugins.dprint.dev/malobre/vue-v0.5.0.wasm"
+  ]
+}

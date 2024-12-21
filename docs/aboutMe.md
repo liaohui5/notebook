@@ -12,4 +12,19 @@ layout: page
 
 -->
 
-关于我页面, 还未完成...
+<div>
+  <div>
+    关于我页面, 还未完成... {{count}}
+  </div>
+  <button @click="increment">increment</button>
+</div>
+
+<script setup>
+import { ref } from 'vue'
+
+const count = ref(0)
+function increment() {
+  count.value++;
+}
+</script>
+
