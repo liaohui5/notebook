@@ -102,7 +102,66 @@ Cat.prototype.catchMouse = function () {
 - super.xxx: 访问父类的方法/属性(包括静态方法)
 
 ```js
+class Parent {
+  constructor(name) {
+    this.name = name;
+  }
 
+  sayName() {
+    console.log("my name is ", this.name);
+  }
+
+  static target = "everyone";
+  static hello() {
+    console.log(`hello ${Parent.target}`);
+  }
+}
+
+class Child extends Parent {
+  constructor(name, age) {
+    super(name);
+    this.age = age;
+  }
+
+  static hi() {
+    // 在静态方法中可以访问父类的静态方法和静态属性
+    super.hello();
+    console.log(`hi ${super.target}`);
+  }
+
+  intro() {
+    // 在原型方法中可以访问父类的普通属性和方法
+    super.sayName();
+    console.log(`I am ${this.age} years old`);
+  }
+}
+
+const c = new Child("tom", 20);
+Child.hi();
+c.intro();
 ```
 
-## \# 私有属性
+## \# 定义私有属性
+
+```js
+class Demo {
+  #age = 10; // 这样定义的属性, 只能在 Demo 这个类中使用
+
+  getAge() {
+    return this.#age;
+  }
+
+  setAge(age) {
+    this.#age = age;
+  }
+}
+
+const d = new Demo();
+
+console.log(d.getAge()); // 可以获取
+// console.log(d.#age); // 不能获取: Private field '#age' must be declared in an enclosing class
+
+d.setAge(20); // 可以设置
+console.log(d.getAge()); // 获取到 20
+// d.#age = 30; // 不能设置:  Private field '#age' must be declared in an enclosing class
+```
