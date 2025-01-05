@@ -3,9 +3,9 @@
 layout: home
 
 hero:
-  name: '学习笔记'
-  text: '好记性不如烂笔头'
-  tagline: '个人的学习笔记总结, 记录学习过的知识输出成文档'
+  name: 学习笔记
+  text: 好记性不如烂笔头
+  tagline: 个人的学习笔记总结, 记录学习过的知识输出成文档
   image:
     src: /logo.svg
     alt: notebook
@@ -14,7 +14,7 @@ hero:
       text: 关于我
       link: /aboutMe
     - theme: alt
-      text: 'Github'
+      text: Github
       link: https://github.com/liaohui5/notebook
 
 features:
