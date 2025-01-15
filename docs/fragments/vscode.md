@@ -5,131 +5,90 @@
 
 ## 字体推荐
 
-这些字体很适合编程, 很好的区分了 `0` 和 `O`, `i` 和 `l` 等不容易区分的字符
+- [nerdfonts](https://www.nerdfonts.com/font-downloads)
+- [programmingfonts](https://www.programmingfonts.org/#hack) 在线预览字体效果
 
-- [Hack](https://github.com/source-foundry/Hack)
-- [victor-mono](https://rubjo.github.io/victor-mono/)
-- [JetBrainsMono](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/JetBrainsMono/Ligatures)
-- [Hack Nerd Font Mono](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts/Hack)
-- [Maple Nerd Font](https://gitee.com/subframe7536/Maple/releases/tag/v5.5)
-- [Operator Mono SSM Nerd Font Lig](https://github.com/liaohui5/Operator-Mono-SSm-Nerd-Lig)
-- [Monaco Nerd Font Complete Mono](https://github.com/Karmenzind/monaco-nerd-fonts)
-- [More Nerd Fonts](https://github.com/ryanoasis/nerd-fonts#patched-fonts)
+## 设置
 
-## VSCodeVim 插件使用
-
-### 为什么在 IDE 中使用 vim
-
-鱼和熊掌: `vim: 快捷键强大+文本操作效率高` + `ide: 好看+开箱即用, 不用各种复杂的配置`
-
-### 安装 vim 插件
-
-- [vim](https://marketplace.visualstudio.com/items?itemName=vscodevim.vim) 或 [cvim](https://marketplace.visualstudio.com/items?itemName=cuixiaorui.cvim)
-- [Vim Search and Replace](https://github.com/nilehmann/vscode-vim-search-and-replace)
-
-### vim 搜索替换
-
-可以使用 `vim` 插件自带的, 但是感觉 `vim` 美中不足的就是 `vscode` 的状态栏是在太小了,
-可以使用 `Vim Search and Replace ` 这个插件来代替 `vim` vscode 的状态栏太小的问题
-
-### easymotion 快速移动
-
-- `s+[搜索关键字]`: 搜索移动
-- `<leader>j`: 向下移动行
-- `<leader>k`: 向上移动行
-- `leader键` 默认是 `\`, 也就是说如果想向上移动就 `\\k`, 但是我习惯修改为 `<Space>`
-
-### camelCaseMotion 大小写单词移动
-
-- `<leader>w`: 向后移动一个单词(下一个单词的第一个字符) `helloWorld` 在 `h` 处按下就移动到 `W` 位置
-- `<leader>e`: 向后移动一个单词(当前单词的最末尾字符) `helloWorld` 在 `h` 出按下就移动到 `o` 位置
-- `<leader>b`: 向前移动一个单词(移动到当前单词的第一个字符) `helloWorld` 在 `d` 处按下就移动到 `W` 位置
-
-### vim-surround 快速修改环绕字符
-
-| 命令        | 说明                              |
-| :---------- | :-------------------------------- |
-| ds \<char\> | 删除指定环绕字符                  |
-| cs \<char\> | 修改指定环绕字符                  |
-| S \<chars\> | 添加指定的环绕字符(visual 模式下) |
-
-所谓 `环绕字符` 就是 `""` `()` `[]` `{}` 这样的成对出现包裹中间内容的字符
-
-假如说目标文本是这样的: `"<h2>hell</h2>"`, 将光标移动到 `hello` 任意字符上(normal 模式下)
-
-- `ds "`: 删除两边的 "
-- `cs " '`: 将俩边的 `"` 修改为 `'`
-- visual 模式下选中 `hello` 这个字符再执行: `S <h2>` 就可以添加 \<h2\>hello\<\/h2\>
-
-### 类似 VIM 的 which-key 插件使用
-
-- 快捷键菜单 [which-key](https://marketplace.visualstudio.com/items?itemName=VSpaceCode.whichkey)
-- 快捷键菜单配置项目, 如 lunarVIM 那样的预配置项目 [vspacecode](https://marketplace.visualstudio.com/items?itemName=VSpaceCode.vspacecode)
-- [vspacecode](https://vspacecode.github.io/docs/) 说明文档
-
-## 代码风格控制
-
-### EditorConfig
-
-> 注意: 不同编辑器需要下载对应的插件
-
-- [官方文档](https://editorconfig.org/)
-- [github 选项参考](https://github.com/editorconfig/editorconfig/wiki/EditorConfig-Properties)
-- [vscode 语法支持插件](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
-- [vscode 一键生成配置文件插件](https://marketplace.visualstudio.com/items?itemName=nepaul.editorconfiggenerator)
-
-```ini
-# 控制 .editorconfig 是否生效的字段
-root = true
-
-# 缩进风格：空格
-indent_style = space
-
-# 缩进大小2
-indent_size = 2
-
-# 换行符lf
-end_of_line = lf
-
-# 字符集utf-8
-charset = utf-8
-
-# 是否删除行尾的空格
-trim_trailing_whitespace = true
-
-# 是否在文件的最后插入一个空行
-insert_final_newline = true
-
-# 一行最大字符数 off 关闭
-max_line_length = off
-
-# 单独控制 不同类型文件的 格式化规则
-[*.php]
-indent_size = 4
-
-[*.md]
-insert_final_newline = false
-```
-
-### prettier
-
-[Prettier](https://prettier.io) 是一个 JavaScript 代码格式化工具，可以让代码更符合一致的风格和格式,
-[vscode插件](https://github.com/prettier/prettier-vscode) 支持
-
-```js
-// 配置文件名: prettier.config.mjs
-// 配置项参考: https://prettier.io/docs/en/options
-/* prettier-ignore */
-export default {
-  printWidth: 120,         // 一行多少个字符
-  tabWidth: 2,             // 一个 tab 多少个空格
-  useTabs: false,          // 是否使用空格缩进
-  semi: true,              // 是否在语句最后添加分号
-  singleQuote: true,       // 使用单引号
-  trailingCommas: 'all',   // none | all | es5 是否在行尾添加逗号
-  bracketSpacing: true,    // 在 () {} 前后添加空格
-  alwaysParens: true,      // 给箭头函数参数添加()
-};
+```json
+{
+  "window.commandCenter": false,
+  "editor.fontSize": 18,
+  "editor.fontLigatures": true,
+  "editor.fontFamily": "'Hack Nerd Font Mono'",
+  "editor.fontWeight": 300,
+  "terminal.integrated.fontFamily": "'Hack Nerd Font Mono'",
+  "terminal.integrated.fontSize": 16,
+  "editor.codeLens": false,
+  "editor.stickyScroll.enabled": false,
+  "editor.accessibilitySupport": "off",
+  "editor.wordWrap": "off",
+  "editor.cursorWidth": 1,
+  "editor.lineHeight": 1.4,
+  "breadcrumbs.enabled": false,
+  "editor.minimap.enabled": true,
+  "editor.minimap.maxColumn": 100,
+  "editor.minimap.renderCharacters": false,
+  "editor.minimap.showSlider": "always",
+  "editor.scrollbar.horizontal": "hidden",
+  "editor.scrollbar.vertical": "hidden",
+  "editor.scrollbar.horizontalScrollbarSize": 0,
+  "editor.scrollbar.verticalScrollbarSize": 0,
+  "editor.matchBrackets": "never",
+  "editor.occurrencesHighlight": "singleFile",
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "git.autofetch": true,
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false,
+  "explorer.compactFolders": false,
+  "files.autoSave": "onFocusChange",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "extensions.ignoreRecommendations": true,
+  "update.mode": "start",
+  "workbench.iconTheme": "material-icon-theme",
+  "workbench.colorTheme": "Monokai",
+  "workbench.settings.editor": "json",
+  "workbench.settings.useSplitJSON": true,
+  "material-icon-theme.hidesExplorerArrows": true,
+  "workbench.startupEditor": "none",
+  "extensions.experimental.affinity": {
+    "asvetliakov.vscode-neovim": 1
+  },
+  "editor.defaultFormatter": "biomejs.biome",
+  "editor.codeActionsOnSave": {
+    "source.organizeImports.biome": "explicit"
+  },
+  "markdown-preview-github-styles.colorTheme": "light",
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[handlebars]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[less]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown.mdx]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "redhat.telemetry.enabled": false
+}
 ```
 
 ## 调试 vue/react 项目
@@ -149,7 +108,7 @@ export default {
 // vue-cli: vue.config.js
 module.exports = {
   configureWebpack: {
-    devtool: 'source-map',
+    devtool: "source-map",
   },
 };
 
@@ -249,7 +208,10 @@ npm i nodemon -D
       "program": "${workspaceFolder}/bin/www",
       "restart": true,
       "console": "integratedTerminal",
-      "skipFiles": ["${workspaceRoot}/node_modules/**/*.js", "<node_internals>/**/*.js"]
+      "skipFiles": [
+        "${workspaceRoot}/node_modules/**/*.js",
+        "<node_internals>/**/*.js"
+      ]
     }
   ]
 }
@@ -290,183 +252,3 @@ npm i nodemon -D
 ## 开发 vscode 插件
 
 推荐阅读[快速开始](https://liiked.github.io/VS-Code-Extension-Doc-ZH/#/get-started/your-first-extension)
-
-
-## 配置
-
-```jsonc
-{
-  // 编辑器 & 终端字体设置
-  "editor.fontSize": 16,
-  "editor.fontLigatures": true,
-  "editor.fontFamily": "'JetBrainsMono Nerd Font Mono', 'OperatorMono Nerd Font Mono', 'Maple Mono NF', 'Hack Nerd Font Mono'",
-  "editor.fontWeight": 300,
-  "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font Mono'",
-  "terminal.integrated.fontSize": 14,
-  // 不开启固定滚动
-  "editor.stickyScroll.enabled": false,
-  // 不要开启声音提示
-  "editor.accessibilitySupport": "off",
-  // 不要自动换行
-  "editor.wordWrap": "off",
-  // 光标宽度  
-  "editor.cursorWidth": 1,
-  // 行高
-  "editor.lineHeight": 1.4,
-  // 是否开启: 顶部命令中心输入框
-  "window.commandCenter": false,
-  // 是否开启: 面包屑导航  
-  "breadcrumbs.enabled": false,
-  // 是否开启: 代码小地图
-  "editor.minimap.enabled": true,
-  // 代码小地图最大宽度 & 是否渲染字符 & 总是显示当前位置滑块
-  "editor.minimap.maxColumn": 100,
-  "editor.minimap.renderCharacters": false,
-  "editor.minimap.showSlider": "always",
-  // 不要显示滚动条
-  "editor.scrollbar.horizontal": "hidden",
-  "editor.scrollbar.vertical": "hidden",
-  "editor.scrollbar.horizontalScrollbarSize": 0,
-  "editor.scrollbar.verticalScrollbarSize": 0,
-  // 是否允许 hover & 多少毫秒秒后显示
-  "editor.hover.enabled": true,
-  "editor.hover.sticky": true,
-  "editor.hover.delay": 1500,
-  // 多少毫秒后显示代码提示 & 多个窗口共享提示 & 代码提示的内容
-  "editor.quickSuggestionsDelay": 100,
-  "editor.suggest.shareSuggestSelections": true,
-  "editor.quickSuggestions": {
-    "other": "on", // 其他(snippets + lsp)
-    "strings": "on", // 代码中的字符串
-    "comments": "off" // 注释内容
-  },
-  // 匹配括号高亮 && 匹配当前光标所在位置单词高亮
-  "editor.matchBrackets": "never",
-  "editor.occurrencesHighlight": "singleFile",
-  // 同步 Git 前请先确认 && 允许直接提交(git -am) && 自动拉取代码
-  "git.confirmSync": false,
-  "git.enableSmartCommit": true,
-  "git.autofetch": true,
-  // 文件删除确认 && 拖放文件确认 && 自动合并目录/文件显示
-  "explorer.confirmDelete": false,
-  "explorer.confirmDragAndDrop": false,
-  "explorer.compactFolders": false,
-  // 光标变化就自动保存文件
-  "files.autoSave": "onFocusChange",
-  // 在侧边栏修改文件名时,代码自动跟新路径
-  "javascript.updateImportsOnFileMove.enabled": "always",
-  // 忽略插件提示
-  "extensions.ignoreRecommendations": true,
-  // 更新模式: 启动的时候检查
-  "update.mode": "start",
-  // 打开设置使用左右json
-  "workbench.settings.editor": "json",
-  "workbench.settings.useSplitJSON": true,
-  // 在启动时不自动打开任何文件
-  "workbench.startupEditor": "none",
-  "extensions.experimental.affinity": {
-    "asvetliakov.vscode-neovim": 1
-  },
-  // 主题配色
-  "workbench.colorTheme": "Monokai",
-  // 图标主题, 需要安装插件
-  "workbench.iconTheme": "material-icon-theme",
-  "material-icon-theme.hidesExplorerArrows": true,
-}
-```
-
-## 快捷键配置
-
-```jsonc
-[
-  {
-    // 搜索文件快速打开
-    "key": "ctrl+p",
-    "command": "workbench.action.quickOpen"
-  },
-  {
-    // 在编辑器/任意输入框没有焦点的时: 获取焦点
-    "key": "escape",
-    "command": "workbench.action.focusFirstEditorGroup",
-    "when": "!editorTextFocus && !textInputFocus && !editorFocus && !inputFocus"
-  },
-  {
-    // 切换 命令行
-    "key": "ctrl+x",
-    "command": "workbench.action.terminal.toggleTerminal",
-    "when": "terminal.active"
-  },
-  {
-    // 切换侧边栏显示
-    "key": "ctrl+e",
-    "command": "workbench.view.explorer",
-    "when": "editorTextFocus"
-  },
-  {
-    // 切换侧边栏显示
-    "key": "ctrl+e",
-    "command": "workbench.action.toggleSidebarVisibility",
-    "when": "!editorTextFocus"
-  },
-  {
-    // 显示代码提示
-    "key": "ctrl+o",
-    "command": "editor.action.triggerSuggest",
-    "when": "!suggestWidgetVisible && editorTextFocus && neovim.mode == 'insert'"
-  },
-  {
-    // 代码提示显示时: 选中上一个代码提示
-    "key": "ctrl+k",
-    "command": "selectPrevSuggestion",
-    "when": "suggestWidgetVisible && suggestWidgetMultipleSuggestions"
-  },
-  {
-    // 代码提示显示时: 选中下一个代码提示
-    "key": "ctrl+j",
-    "command": "selectNextSuggestion",
-    "when": "suggestWidgetVisible && suggestWidgetMultipleSuggestions"
-  },
-  {
-    // 在显示搜索文件输入框时: 选中上一个
-    "key": "ctrl+k",
-    "command": "workbench.action.quickOpenSelectPrevious",
-    "when": "inQuickOpen"
-  },
-  {
-    // 在显示搜索文件输入框时: 选中下一个
-    "key": "ctrl+j",
-    "command": "workbench.action.quickOpenSelectNext",
-    "when": "inQuickOpen"
-  },
-  {
-    // 在展开 snippets 后, 可以跳到上一个位置
-    "key": "ctrl+h",
-    "command": "jumpToPrevSnippetPlaceholder",
-    "when": "editorTextFocus && hasPrevTabstop && inSnippetMode"
-  },
-  {
-    // 在展开 snippets 后, 可以跳到下一个位置
-    "key": "ctrl+l",
-    "command": "jumpToNextSnippetPlaceholder",
-    "when": "editorTextFocus && hasNextTabstop && inSnippetMode"
-  },
-  {
-    // 当 codeAction 菜单显示的时候 c-k 选中上一个
-    "key": "ctrl+k",
-    "when": "codeActionMenuVisible",
-    "command": "selectPrevCodeAction"
-  },
-  {
-    // 当 codeAction 菜单显示的时候 c-j 选择下一个
-    "key": "ctrl+j",
-    "when": "codeActionMenuVisible",
-    "command": "selectNextCodeAction"
-  },
-  {
-    // 当 codeAction 菜单显示的时候 c-l 确认选择
-    "key": "ctrl+l",
-    "command": "acceptSelectedCodeAction",
-    "when": "codeActionMenuVisible"
-  }
-]
-```

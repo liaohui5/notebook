@@ -4,7 +4,7 @@ export default {
   items: [
     {
       text: "前端网络基础",
-      link: "/fragments/network/",
+      link: "/fragments/network",
     },
     {
       text: "softwares",
