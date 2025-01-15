@@ -2,7 +2,7 @@
 
 同大多数编程语言一样, 数组是多个数据的容器对象, 用于描述一系列有序数据的组合
 
-## 创建数组
+### 创建数组
 
 ```js
 // 创建数组
@@ -13,7 +13,7 @@ const books = [];
 const week = new Array(5);
 ```
 
-## 遍历数组
+### 遍历数组
 
 ```js
 // for/while遍历
@@ -29,3 +29,7 @@ for (let item of strs) {
   console.log(item);
 }
 ```
+
+<!-- @include: ./array/基础学习.md -->
+<!-- @include: ./array/数组方法.md -->
+<!-- @include: ./array/数组去重.md -->
