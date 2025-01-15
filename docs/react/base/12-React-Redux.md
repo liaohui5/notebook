@@ -522,7 +522,7 @@ export default reducer;
 
 ## 自定义 redux 中间件
 
-- 定义中间件, [中间件的原理图](/react/base/react-redux?id=redux-thunk-中间件)
+- 定义中间件
 
 ```js
 /**

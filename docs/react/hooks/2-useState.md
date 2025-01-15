@@ -24,4 +24,4 @@ export default App;
 
 ## hooks 设置 state 的方法是否是异步?
 
-这个设置 state 的方法本质上是用的 setState 来实现的, 所以和 [setState 特性](/react/base/jsx.html#setstate-是同步还是异步)一致
+这个设置 state 的方法本质上是用的 setState 来实现的, 所以和 [setState 特性](/react/base/1-jsx语法.html#setstate-是同步还是异步)一致

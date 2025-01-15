@@ -1,7 +1,9 @@
 ## 回顾类组件中使用 Context
-- [类组件使用 Context](/react/base/props?id=context-provider-consumer)
+
+- [类组件使用 Context](/react/base/3-组件通信?id=context-provider-consumer)
 
 ## 基本使用
+
 简单而言,useContenxt 就是可以把 Provider 中提供的数据直接获取到
 
 ```jsx
@@ -17,7 +19,7 @@ const Home = () => {
       <p>home</p>
       <p>id: {user.id}</p>
       <p>username: {user.username}</p>
-      
+
       {/* 使用 Consumer 的方式获取:
         <UserCtx.Consumer>
         {(user) => {
@@ -46,5 +48,3 @@ const App = () => {
 
 export default App;
 ```
-
-

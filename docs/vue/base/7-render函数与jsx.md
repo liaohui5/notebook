@@ -58,7 +58,7 @@ template 是直接使用模板, 在模板中可以通过 this 来访问组件实
 ```js
 // Vue2: h函数是 render 函数的形参, 可以自己任意命名
 render (h) {
-  // h函数语法: 
+  // h函数语法:
   // h(标签名, 数据对象, 子节点)
   // 1. 如果子节点是 元素节点: 就必须用数组 [子节点] 语法, 如果子节点是文本节点, 可以直接写
   // 2. 数据对象: https://cn.vuejs.org/v2/guide/render-function.html#%E6%B7%B1%E5%85%A5%E6%95%B0%E6%8D%AE%E5%AF%B9%E8%B1%A1
@@ -86,83 +86,62 @@ export default {
     },
   },
   render(h) {
-    return h(
-      "div",
-      { class: "login-form-card" },
-      [
-        h(
-          "div",
-          { class: "card-title" },
-          this.$slots.title, // 插槽
-        ),
-        h(
-          "form",
-          {
-            attrs: { action: this.actionUrl },
-            class: "card-content"
-          },
-          [
+    return h("div", { class: "login-form-card" }, [
+      h(
+        "div",
+        { class: "card-title" },
+        this.$slots.title // 插槽
+      ),
+      h(
+        "form",
+        {
+          attrs: { action: this.actionUrl },
+          class: "card-content",
+        },
+        [
+          h("div", { class: "form-item" }, [
+            h("input", {
+              attrs: {
+                type: "text",
+                name: "email",
+                placeholder: "请输入邮箱",
+                // v-model: 本质就是 value + oninput
+                value: this.loginForm.email,
+              },
+              on: {
+                input: (e) => (this.loginForm.email = e.target.value),
+              },
+            }),
+          ]),
+          h("div", { class: "form-item" }, [
+            h("input", {
+              attrs: {
+                type: "password",
+                name: "password",
+                placeholder: "请输入密码",
+                value: this.loginForm.password,
+              },
+              on: {
+                input: (e) => (this.loginForm.password = e.target.value),
+              },
+            }),
+          ]),
+          h("div", { class: "form-item" }, [
             h(
-              "div",
-              { class: "form-item" },
-              [
-                h(
-                  "input",
-                  {
-                    attrs: {
-                      type: "text",
-                      name: "email",
-                      placeholder: "请输入邮箱",
-                      // v-model: 本质就是 value + oninput
-                      value: this.loginForm.email,
-                    },
-                    on: {
-                      input: (e) => this.loginForm.email = e.target.value
-                    }
-                  }
-                )
-              ]
+              "button",
+              {
+                class: "submit-btn",
+                attrs: { type: "button" },
+                on: {
+                  click: this.onSubmit,
+                },
+              },
+              this.btnText
             ),
-            h(
-              "div",
-              { class: "form-item" },
-              [
-                h(
-                  "input", {
-                    attrs: {
-                      type: "password",
-                      name: "password",
-                      placeholder: "请输入密码",
-                      value: this.loginForm.password,
-                    },
-                    on: {
-                      input: (e) => this.loginForm.password = e.target.value
-                    }
-                  }
-                )
-              ]
-            ),
-            h(
-              "div",
-              { class: "form-item" },
-              [
-                h(
-                  "button",
-                  {
-                    class: "submit-btn",
-                    attrs: { type: "button" },
-                    on: {
-                      click: this.onSubmit,
-                    }
-                  },
-                  this.btnText
-                )
-              ]
-            ),
-          ]
-        ),
-      ]
-    );
+          ]),
+        ]
+      ),
+    ]);
   },
 };
 ```
@@ -170,6 +149,7 @@ export default {
 ### Vue3 实现
 
 > Vue3 render 语法
+
 ```js
 
 // Vue3: h函数是从vue中导出的
@@ -195,70 +175,56 @@ export default {
       password: "",
     },
   }),
-  emits: ['submit'], // emit 必须申明
+  emits: ["submit"], // emit 必须申明
   methods: {
     onSubmit() {
       console.log(this.loginForm);
-      this.$emit('submit', this.loginForm);
+      this.$emit("submit", this.loginForm);
     },
   },
   render() {
-    return h(
-      "div",
-      { class: "form-card" },
-      [
-        h("div", { class: "card-title" }, this.$slots.title()), // 插槽
+    return h("div", { class: "form-card" }, [
+      h("div", { class: "card-title" }, this.$slots.title()), // 插槽
+      h("form", { action: this.actionUrl, class: "card-content" }, [
         h(
-          "form",
-          { action: this.actionUrl, class: "card-content" },
-          [
-            h(
-              "div",
-              { class: "form-item" },
-              h(
-                "input",
-                {
-                  type: "text",
-                  name: "email",
-                  placeholder: "请输入邮箱",
-                  value: this.loginForm.email,
-                  onInput: ($event) => (this.loginForm.email = $event.target.value),
-                }
-              )
-            ),
-            h(
-              "div",
-              { class: "form-item" },
-              h(
-                "input",
-                {
-                  type: "password",
-                  name: "password",
-                  placeholder: "请输入密码",
-                  // 处理: v-model
-                  value: this.loginForm.password,
-                  onInput: (e) => (this.loginForm.password = e.target.value),
-                }
-              )
-            ),
-            h(
-              "div",
-              { class: "form-item" },
-              h(
-                "button",
-                {
-                  type: "button",
-                  class: "submit-btn",
-                  // 处理事件
-                  onClick: () => this.onSubmit(),
-                },
-                this.btnText
-              )
-            ),
-          ]
+          "div",
+          { class: "form-item" },
+          h("input", {
+            type: "text",
+            name: "email",
+            placeholder: "请输入邮箱",
+            value: this.loginForm.email,
+            onInput: ($event) => (this.loginForm.email = $event.target.value),
+          })
         ),
-      ]
-    );
+        h(
+          "div",
+          { class: "form-item" },
+          h("input", {
+            type: "password",
+            name: "password",
+            placeholder: "请输入密码",
+            // 处理: v-model
+            value: this.loginForm.password,
+            onInput: (e) => (this.loginForm.password = e.target.value),
+          })
+        ),
+        h(
+          "div",
+          { class: "form-item" },
+          h(
+            "button",
+            {
+              type: "button",
+              class: "submit-btn",
+              // 处理事件
+              onClick: () => this.onSubmit(),
+            },
+            this.btnText
+          )
+        ),
+      ]),
+    ]);
   },
 };
 ```
@@ -281,12 +247,11 @@ export default {
 
 ### JSX 语法
 
-建议直接 [看 React 的笔记](/react/base/jsx),
+建议直接 [看 React 的笔记](/react/base/1-jsx语法),
 因为 JSX 语法但是差不多的, 细微的区别直接看文档就好了
-
 
 ### 在 Vue 中使用 JSX 语法
 
-+ [Vue2 使用 babel-plugin-transform-vue-jsx](https://github.com/vuejs/babel-plugin-transform-vue-jsx)
+- [Vue2 使用 babel-plugin-transform-vue-jsx](https://github.com/vuejs/babel-plugin-transform-vue-jsx)
 
-+ [Vue3 使用babel-plugin-jsx](https://github.com/vuejs/babel-plugin-jsx)
+- [Vue3 使用 babel-plugin-jsx](https://github.com/vuejs/babel-plugin-jsx)
