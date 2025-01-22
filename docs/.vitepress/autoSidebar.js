@@ -69,6 +69,7 @@ export default function VitePluginVitePressAutoSidebar(opt = {}) {
     },
     config(config) {
       config.vitepress.site.themeConfig.sidebar = sidebarGenerator(opt.sidebarPaths);
+      log(">>>config", config);
       log("injected sidebar data successfully");
       return config;
     },
