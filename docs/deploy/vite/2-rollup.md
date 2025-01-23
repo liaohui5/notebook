@@ -577,7 +577,7 @@ export default defineConfig({
 }
 ```
 
-```安装依赖
+```sh [安装依赖]
 pnpm i @rollup/plugin-typescript -D
 ```
 
