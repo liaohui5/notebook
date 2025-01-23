@@ -1,7 +1,8 @@
 import markdownItCheckBox from "markdown-it-todo-lists";
 import { defineConfig } from "vitepress";
 import nav from "./nav";
-import AutoSidebar from "./autoSidebar";
+import sidebar from "./sidebar";
+// import AutoSidebar from "./autoSidebar";
 
 // head 标签中的内容
 const head = [
@@ -23,7 +24,7 @@ export default defineConfig({
   themeConfig: {
     nav,
     logo: "/logo.svg",
-
+    sidebar,
     outline: "deep",
 
     search: {
@@ -60,39 +61,5 @@ export default defineConfig({
     ssr: {
       noExternal: ["@nolebase/vitepress-plugin-enhanced-readabilities"],
     },
-
-    plugins: [
-      AutoSidebar({
-        sidebarPaths: [
-          "/css/",
-          "/database/",
-          "/js/base",
-          "/js/oop/",
-          "/js/dom/",
-          "/js/magic/",
-          "/js/builtin/",
-          "/js/webapi/",
-          "/js/nodejs/",
-          "/js/ts/base/",
-          "/js/tests/",
-          "/js/design-patterns/",
-          "/js/algorithms",
-          "/vue/base/",
-          "/vue/mini-vue/",
-          "/react/base/",
-          "/react/hooks/",
-          "/clang/",
-          "/rust/base/",
-          "/rust/libs/",
-          "/rust/async/",
-          "/deploy/cicd",
-          "/deploy/server/",
-          "/deploy/docker/",
-          "/deploy/webpack/",
-          "/deploy/vite/",
-          "/deploy/python/",
-        ],
-      }),
-    ],
   },
 });

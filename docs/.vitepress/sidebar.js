@@ -1,4 +1,35 @@
 import fs from "node:fs";
+const sidebars = [
+  "/css/",
+  "/database/",
+  "/js/base",
+  "/js/oop/",
+  "/js/dom/",
+  "/js/magic/",
+  "/js/builtin/",
+  "/js/webapi/",
+  "/js/nodejs/",
+  "/js/ts/base/",
+  "/js/tests/",
+  "/js/design-patterns/",
+  "/js/algorithms",
+  "/vue/base/",
+  "/vue/mini-vue/",
+  "/react/base/",
+  "/react/hooks/",
+  "/clang/",
+  "/rust/base/",
+  "/rust/libs/",
+  "/rust/async/",
+  "/deploy/cicd",
+  "/deploy/server/",
+  "/deploy/docker/",
+  "/deploy/webpack/",
+  "/deploy/vite/",
+  "/deploy/python/",
+];
+const sidebar = sidebarGenerator(sidebars);
+export default sidebar;
 
 // 根据文件名生成序号(用于排序)
 function getOrderBy(fileName) {
@@ -30,6 +61,11 @@ function autoGenSidebars(filePath) {
       continue;
     }
 
+    const fileStat = fs.statSync(`${targetPath}/${item}`);
+    if (!fileStat.isFile()) {
+      continue;
+    }
+
     const text = item.slice(0, -3); // without ".md"
     result.push({
       text,
@@ -46,41 +82,4 @@ function sidebarGenerator(sidebarPaths = []) {
     sidebars[path] = autoGenSidebars(path);
   }
   return sidebars;
-}
-
-const log = console.log;
-
-let isGenerated = false;
-export default function VitePluginVitePressAutoSidebar(opt = {}) {
-  return {
-    name: "vite-plugin-vitepress-auto-sidebar",
-    configureServer({ watcher, restart }) {
-      const fsWatcher = watcher.add("*.md");
-      fsWatcher.on("all", async (event, path) => {
-        console.log("### sidebar should updated ###");
-        // 由于重启失败(递归的读取文件目录,时间较长), 所以需要手动重启
-        // if (event !== "change") {
-        //   log(`${event} ${path}`);
-        //   try {
-        //     await restart();
-        //     log("update sidebar...");
-        //   } catch (e) {
-        //     log(`${event} ${path}`);
-        //     log("update sidebar failed");
-        //   }
-        // }
-      });
-    },
-    config(config) {
-      // 应该哪个目录的sidbar变化话就更新哪个, 不要全部一起更新
-      // log(">>> config", config);
-      if (isGenerated) {
-        return config;
-      }
-      config.vitepress.site.themeConfig.sidebar = sidebarGenerator(opt.sidebarPaths);
-      isGenerated = true;
-      log("injected sidebar data successfully");
-      return config;
-    },
-  };
 }

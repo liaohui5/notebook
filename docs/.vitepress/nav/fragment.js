@@ -3,6 +3,10 @@ export default {
   text: "Fragments",
   items: [
     {
+      text: "开源协议了解",
+      link: "/fragments/licenses",
+    },
+    {
       text: "前端网络基础",
       link: "/fragments/network",
     },
@@ -21,6 +25,10 @@ export default {
     {
       text: "Zed",
       link: "/fragments/zed",
+    },
+    {
+      text: "Raycast",
+      link: "/fragments/raycast",
     },
     {
       text: "dotfiles",

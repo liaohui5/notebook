@@ -10,7 +10,7 @@ export default {
           link: "/deploy/webpack/",
         },
         {
-          text: "vite",
+          text: "vite & rollup",
           link: "/deploy/vite/",
         },
       ],
