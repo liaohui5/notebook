@@ -67,6 +67,23 @@ export default defineConfig({
 });
 ```
 
+## 环境变量
+
+使用 `import.meta.env` 来获取所有的环境变量
+
+```js
+// 可以结合 zod 来校验 env
+console.log(import.meta.env);
+```
+
+## glob 导入
+
+[glob 导入](https://cn.vitejs.dev/guide/features.html#glob-import)
+
+```js
+const dataModules = import.meta.glob("./datas/*.json");
+```
+
 ## 一些有用的插件配置
 
 ### 注入替换字符
@@ -117,11 +134,11 @@ npm i vite-plugin-replace -D
 
 ### 自动导入插件配置
 
-- [自动导入一些API](https://github.com/unplugin/unplugin-auto-import)
-- [自动导入UI组件库](https://github.com/unplugin/unplugin-vue-components#importing-from-ui-libraries)
+- [自动导入一些 API](https://github.com/unplugin/unplugin-auto-import)
+- [自动导入 UI 组件库](https://github.com/unplugin/unplugin-vue-components#importing-from-ui-libraries)
 
 不要自动导入太多东西, 只将一些特别常用的库设置为自动导入即可(如: vue composition api) `ref reactive cmoputed`
-因为这种的一看就知道这个API是做什么用的, 如果滥用这个插件, 就会导致看代码的时候不知道方法是从哪里来的, 还需要去看配置文件
+因为这种的一看就知道这个 API 是做什么用的, 如果滥用这个插件, 就会导致看代码的时候不知道方法是从哪里来的, 还需要去看配置文件
 
 ::: code-group
 
@@ -220,7 +237,7 @@ export default defineConfig({
 > 为什么要使用多页应用的开发方式?
 
 虽然大多数情况下, 单页应用已经足够解决问题了, 但是, 单页应用有个很明显的缺陷, 那就是 SEO 不够友好,
-因为所有东西都是js动态生成的, 而搜索引擎的爬虫是不会去执行js的, 但是有的时候, `需要写一些静态的
+因为所有东西都是 js 动态生成的, 而搜索引擎的爬虫是不会去执行 js 的, 但是有的时候, `需要写一些静态的
 "企业官网" 这种多个页面的某一部分高度相似, 而且需要控制不同页面的 title meta 标签, 并且不能是用js动态生成的`
 那么就需要用一些工具手动来实现 "组件化"
 
@@ -231,7 +248,7 @@ export default defineConfig({
 
 > "组件化"
 
-注意: 这里的组件化, 并不是和 vue 或 react 中的组件一样, 直接使用虚拟DOM去实现的,
+注意: 这里的组件化, 并不是和 vue 或 react 中的组件一样, 直接使用虚拟 DOM 去实现的,
 只是利用模板引擎的导入功能然后编译实现复用(相当于复制多份)
 
 > PUG 模板引擎学习
