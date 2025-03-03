@@ -31,6 +31,10 @@ export default {
       link: "/fragments/raycast",
     },
     {
+      text: "AI",
+      link: "/fragments/ai",
+    },
+    {
       text: "dotfiles",
       link: "https://github.com/liaohui5/dotfiles",
     },
