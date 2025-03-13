@@ -3,12 +3,6 @@
 Rollup 是一个现代的 JavaScript 模块打包工具, 特别适合用于构建库(library)
 它专注于生成更小、更高效的代码, 并且支持 ES6 模块(ESM), 且支持多个模块化打包规范(cjs/esm/amd/umd/iife), 特别适合用来打包 JS 工具库代码(因为可能要兼容多种运行环境)
 
-## 安装
-
-```sh
-pnpm i -g rollup
-```
-
 ## 快速开始
 
 ::: code-group
@@ -46,15 +40,15 @@ touch src/index.js
 
 // 注意了: 如果要使用 esm, 要么在 package.json 中指定 "type": "module"
 // 要么就使用 .mjs 作为配置文件的后缀
-export defualt {
-	// 输入(要打包的文件入口)
-	input: "./src/index.js",
+export default {
+  // 输入(要打包的文件入口)
+  input: "./src/index.js",
 
-	// 输出(打包好的结果, 可以是多个(使用数组语法))
-	output: {
-		file: "./dist/index.js",
-		format: "esm", // 指定输出的模块规范: cjs/esm/amd/umd/iife
-	}
+  // 输出(打包好的结果, 可以是多个(使用数组语法))
+  output: {
+    file: "./dist/index.js",
+    format: "esm", // 指定输出的模块规范: cjs/esm/amd/umd/iife
+  },
 
   // 打包多个结果
   // output: [
@@ -71,7 +65,7 @@ export defualt {
   //     format: "iife",
   //   },
   // ]
-}
+};
 ```
 
 ```js [src/index.js]
@@ -518,12 +512,12 @@ export default defineConfig({
     "esModuleInterop": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
+      "@/*": ["./src/*"]
     },
     "declaration": true, // 是否生成 .d.ts 类型声明文件
     "outDir": "./dist/",
-    "skipLibCheck": true,
-  },
+    "skipLibCheck": true
+  }
 }
 ```
 
@@ -570,15 +564,15 @@ export default defineConfig({
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "dev": "rollup -w -c rollup.config.ts --configPlugin @rollup/plugin-typescript",
-    "build": "rollup -c rollup.config.ts --configPlugin @rollup/plugin-typescript",
-  },
+    "dev": "rollup -w -c rollup.config.ts --configPlugin rollup-plugin-typescript2",
+    "build": "rollup -c rollup.config.ts --configPlugin rollup-plugin-typescript2"
+  }
   // ...
 }
 ```
 
 ```sh [安装依赖]
-pnpm i @rollup/plugin-typescript -D
+pnpm install rollup-plugin-typescript2 typescript -D
 ```
 
 :::
