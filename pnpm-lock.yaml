@@ -18,7 +18,7 @@ importers:
         specifier: 1.78.0
         version: 1.78.0
       vitepress:
-        specifier: ^1.5.0
+        specifier: ^1
         version: 1.5.0(@algolia/client-search@5.19.0)(less@4.2.1)(postcss@8.5.1)(sass@1.78.0)(search-insights@2.14.0)(typescript@5.7.3)
 
 packages:
@@ -694,7 +694,7 @@ packages:
     engines: {node: '>=6'}
 
   mark.js@8.11.1:
-    resolution: {integrity: sha1-GA8fnr74sOY45BZq1S24eb6y/8U=}
+    resolution: {integrity: sha512-1I+1qpDt4idfgLQG+BNWmrqku+7/2bi5nLf4YwF8y8zXvmfiTBY3PV3ZibfrjBueCByROpuBjLLFCajqkgYoLQ==}
 
   markdown-it-todo-lists@0.1.7:
     resolution: {integrity: sha512-RhUaWV5tB9lEQHTkJdaeGtmywxS55rra9EmuOzO7chm6+C50kMZ1C/2ggRaI2pdpXNijOvES0Ta2AgULE59Vpw==}
