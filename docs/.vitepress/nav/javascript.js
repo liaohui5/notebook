@@ -31,12 +31,8 @@ export default {
           link: "/js/builtin/",
         },
         {
-          text: "Web API",
-          link: "/js/webapi/",
-        },
-        {
-          text: "NodeJS",
-          link: "/js/nodejs/",
+          text: "Web API & NodeJS",
+          link: "/js/api/",
         },
       ],
     },
