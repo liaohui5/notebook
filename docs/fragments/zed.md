@@ -3,7 +3,6 @@
 - [zed.dev](https://zed.dev/)
 - [github](https://github.com/zed-industries/zed)
 
-
 ## 设置
 
 注意可能需要手动下载主题
@@ -18,20 +17,29 @@
 // custom settings, run `zed: open default settings` from the
 // command palette
 {
-  "ui_font_size": 16,
-  "buffer_font_size": 16,
-  "theme": {
-    "mode": "system",
-    "light": "KTRZ Monokai",
-    "dark": "KTRZ Monokai"
+  // auto save & auto format
+  "icon_theme": "Material Icon Theme", // 图标主题, 需要安装插件
+  "format_on_save": "off",
+  "autosave": "on_focus_change",
+  "extend_comment_on_newline": false,
+
+  // disable soft wrap
+  "show_wrap_guides": false,
+  "soft_wrap": "none",
+
+  // ai auto completion
+  "edit_predictions_disabled_in": ["comment"],
+  "features": {
+    "edit_prediction_provider": "supermaven",
   },
 
-  // font
-  "buffer_font_family": "JetBrainsMono Nerd Font Mono",
-  "ui_font_family": "JetBrainsMono Nerd Font Mono",
-
-  // auto save
-  "autosave": "on_focus_change",
+  // git
+  "git": {
+    "git_gutter": "tracked_files",
+    "inline_blame": {
+      "enabled": false,
+    },
+  },
 
   // vim
   "vim_mode": true,
@@ -39,8 +47,46 @@
     "use_system_clipboard": "always",
     "use_multiline_find": true,
     "use_smartcase_find": true,
-    "custom_digraphs": {}
-  }
+    "custom_digraphs": {},
+  },
+
+  // font
+  "buffer_font_family": "Hack Nerd Font Mono",
+  "ui_font_family": "Hack Nerd Font Mono",
+  "buffer_line_height": "standard",
+  "ui_font_size": 16,
+  "buffer_font_size": 18,
+
+  // theme
+  "theme": {
+    "mode": "system",
+    "light": "One Dark",
+    "dark": "One Dark",
+  },
+
+  // tabs
+  "tabs": {
+    "file_icons": true,
+    "git_status": true,
+    "show_close_button": "always",
+  },
+
+  // scrollbar
+  "scrollbar": {
+    "show": "never",
+  },
+
+  // status bar
+  "toolbar": {
+    "breadcrumbs": false,
+    "quick_actions": false,
+  },
+
+  // telemetry
+  "telemetry": {
+    "diagnostics": false,
+    "metrics": false,
+  },
 }
 ```
 
@@ -58,79 +104,113 @@
   {
     "bindings": {
       "ctrl-j": "menu::SelectNext",
-      "ctrl-k": "menu::SelectPrev"
-    }
+      "ctrl-k": "menu::SelectPrevious",
+    },
   },
   {
     "context": "VimControl && !menu",
     "bindings": {
       "ctrl-p": "file_finder::Toggle",
+      "shift-l": "pane::ActivateNextItem",
+      "shift-h": "pane::ActivatePreviousItem",
       "space o u": "editor::OpenUrl",
       "space f s": "workspace::Save",
-      "$": ["workspace::SendKeystrokes", "end h"],
-
-      // bufferline
-      "shift-l": "pane::ActivateNextItem",
-      "shift-h": "pane::ActivatePrevItem",
-      "space b d": ["pane::CloseActiveItem", { "saveIntent": "saveAll" }],
+      "space c a": "editor::ToggleCodeActions",
+      "space b d": "pane::CloseActiveItem",
       "space b o": "workspace::CloseInactiveTabsAndPanes",
+      "space s s": "outline_panel::ToggleFocus",
+      "space f f": "editor::Format",
+      "space r n": "editor::Rename",
+      "space q l": "projects::OpenRecent",
+      "space r r": "buffer_search::DeployReplace",
+
+      // toggle panels
+      "ctrl-e": "project_panel::ToggleFocus",
+      "ctrl-g": "git_panel::ToggleFocus",
+      "ctrl-x": "workspace::ToggleBottomDock",
+      "space a": "assistant::ToggleFocus",
+
+      // tabs
+      "space b h": ["pane::CloseItemsToTheLeft", { "close_pinned": false }],
+      "space b l": ["pane::CloseItemsToTheRight", { "close_pinned": false }],
+      "space b shift-h": "pane::SwapItemLeft",
+      "space b shift-l": "pane::SwapItemRight",
 
       // scroll
       "ctrl-d": ["workspace::SendKeystrokes", "5 j z z"],
       "ctrl-u": ["workspace::SendKeystrokes", "5 k z z"],
-
-      // toggle file expleror
-      "ctrl-e": "workspace::ToggleLeftDock",
-
-      // toggle terminal in editor
-      "ctrl-x": "workspace::ToggleBottomDock"
-    }
+    },
   },
   {
     // toggle terminal in terminal
     "context": "Workspace",
     "bindings": {
-      "ctrl-x": "workspace::ToggleBottomDock"
-    }
+      "ctrl-x": "workspace::ToggleBottomDock",
+    },
   },
   {
     "context": "VimControl && vim_mode == normal",
     "bindings": {
-      // for normal mode comment
+      "space q q": "zed::Quit",
+      "space f s": "workspace::Save",
       "ctrl-\\": ["workspace::SendKeystrokes", "g c c"],
-
-      // open project list
-      "space p l": "projects::OpenRecent"
-    }
+    },
   },
   {
     "context": "VimControl && vim_mode == visual",
     "bindings": {
-      // for visual mode comment
-      "ctrl-\\": ["workspace::SendKeystrokes", "g c"]
-    }
+      // for vim visual mode
+      "ctrl-\\": ["workspace::SendKeystrokes", "g c"],
+    },
+  },
+  {
+    "context": "vim_mode == insert",
+    "bindings": {
+      // for vim insert mode
+      "ctrl-o": "editor::ShowCompletions",
+      "ctrl-e": "editor::Cancel",
+      "ctrl-a": "assistant::InlineAssist",
+
+      // for snippets
+      "ctrl-h": "editor::Backtab",
+      "ctrl-l": "editor::Tab",
+    },
   },
   {
     // select code suggestion
     "context": "Editor && vim_mode == insert && (showing_code_actions || showing_completions)",
     "bindings": {
-      "ctrl-k": "editor::ContextMenuPrev",
-      "ctrl-j": "editor::ContextMenuNext"
-    }
+      "ctrl-k": "editor::ContextMenuPrevious",
+      "ctrl-j": "editor::ContextMenuNext",
+    },
+  },
+  {
+    "context": "Editor && edit_prediction",
+    "bindings": {
+      // confirm edit prediction
+      "tab": "editor::AcceptEditPrediction",
+      "enter": "editor::AcceptEditPrediction",
+    },
   },
   {
     // file explorer
     "context": "ProjectPanel && not_editing",
     "bindings": {
-      // toggle file expleror
-      "ctrl-e": "workspace::ToggleLeftDock",
       ":": "command_palette::Toggle",
+      "ctrl-e": "workspace::ToggleLeftDock",
+      "shift-a": "project_panel::NewDirectory",
       "a": "project_panel::NewFile",
-      "shift a": "project_panel::NewDirectory",
-      "x": "project_panel::Delete",
+      "o": "project_panel::OpenPermanent",
       "r": "project_panel::Rename",
-      "ctrl-f": "project_panel::RevealInFileManager"
-    }
-  }
+      "x": ["project_panel::Trash", { "skip_prompt": false }],
+      "d": "project_panel::Cut",
+      "y": "project_panel::Copy",
+      "shift-y": "workspace::CopyPath",
+      "ctrl-y": "workspace::CopyRelativePath",
+      "p": "project_panel::Paste",
+      // "ctrl-enter": "project_panel::OpenWithSystem",
+      "ctrl-enter": "project_panel::RevealInFileManager",
+    },
+  },
 ]
 ```
