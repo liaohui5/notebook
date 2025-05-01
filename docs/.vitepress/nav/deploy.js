@@ -3,7 +3,7 @@ export default {
   text: "Deploy",
   items: [
     {
-      text: "代码构建与组织架构",
+      text: "代码构建工具",
       items: [
         {
           text: "webpack",
@@ -13,14 +13,10 @@ export default {
           text: "vite & rollup",
           link: "/deploy/vite/",
         },
-        {
-          text: "monorepo 架构",
-          link: "/deploy/monorepo/",
-        },
       ],
     },
     {
-      text: "服务器部署",
+      text: "服务器应用部署",
       items: [
         {
           text: "linux 服务器部署",

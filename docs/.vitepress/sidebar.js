@@ -25,7 +25,6 @@ const sidebars = [
   "/deploy/docker/",
   "/deploy/webpack/",
   "/deploy/vite/",
-  "/deploy/monorepo/",
   "/deploy/python/",
 ];
 const sidebar = sidebarGenerator(sidebars);
