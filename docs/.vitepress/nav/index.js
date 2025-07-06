@@ -15,10 +15,10 @@ export default [
     text: "CSS",
     link: "/css/",
   },
-  // {
-  //   text: "Database",
-  //   link: "/database/",
-  // },
+  {
+    text: "Database",
+    link: "/database/",
+  },
   javascript,
   vue,
   react,
