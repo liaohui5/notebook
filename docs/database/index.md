@@ -1,7 +1,6 @@
 ## 什么是 SQL?
 
-SQL(Structured Query Language:结构化查询语言)是用于管理关系数据库管理系统(RDBMS), 如: MySQL/Postgres/SQLite/Oracle/DB2等,
-
+SQL(Structured Query Language:结构化查询语言)是用于管理关系数据库管理系统(RDBMS), 如: MySQL/Postgres/SQLite/Oracle/DB2 等,
 它是一种数据库系统通用命令式脚本语言, 各个不同的数据库可能实现略有差异
 
 ### SQL 命令分类
@@ -31,4 +30,6 @@ SQL(Structured Query Language:结构化查询语言)是用于管理关系数据�
 - [usql CLI 客户端](https://github.com/xo/usql)
 - [DBeaver GUI 客户端](https://dbeaver.io/)
 - [Sequel-Ace GUI 客户端, 仅支持 mysql MacOS](https://github.com/Sequel-Ace/Sequel-Ace)
-- [pgadmin GUI客户端, 仅支持 Postgres](https://github.com/pgadmin-org/pgadmin4)
+- [pgadmin GUI 客户端, 仅支持 Postgres](https://github.com/pgadmin-org/pgadmin4)
+- [Redis GUI 客户端](https://github.com/qishibo/AnotherRedisDesktopManager)
+- [Hexhub GUI 客户端: 支持 mysql/postgres/sqlite](https://www.hexhub.cn/)
