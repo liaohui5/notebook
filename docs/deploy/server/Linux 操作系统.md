@@ -77,3 +77,135 @@ man [command]
 
 - 安装 nginx
 - 修改配置文件
+
+## debian/ubuntu 配置网络
+
+因为如果使用默认的 dhcp 那么每次开机都不一样, 不利于用ssh远程链接
+
+```sh
+# 查看 ip 地址信息
+ip addr
+```
+
+### ubuntu18
+
+1. 创建 `/etc/netplan/01-network-config.yaml` 文件, 在其中添加如下配置
+
+```yaml
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    enp0s3:
+      dhcp4: false
+      addresses:
+        - 192.168.2.33/24
+      gateway4: 192.168.2.1
+      nameservers:
+        addresses:
+          - 114.114.114.114
+          - 114.114.115.115
+          - 8.8.8.8
+```
+
+### ubuntu22
+
+1. 创建 `/etc/netplan/01-network-config.yaml` 文件, 在其中添加如下配置
+
+```yaml
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    enp0s3: # 注意修改 enp0s3 为你的网卡名称(ip addr 可查看)
+      dhcp4: false
+      addresses:
+        - 192.168.2.11/24 # ip 地址
+      routes: # 注意这里和 ubuntu18 不一样, 不能再使用 gateway 字段
+        - to: default
+          via: 192.168.2.1 # gateway 地址
+      nameservers:
+        addresses: # dns
+          - 114.114.114.114
+          - 8.8.8.8
+```
+
+2. 应用配置文件
+
+```sh
+# 测试是否有错误, yaml 都是缩进, 容易出错
+netplan try
+
+# 应用配置文件
+netplan apply
+```
+
+### debian12
+
+创建 `/etc/network/interfaces.d/01-network-config` 文件, 在其中添加如下配置
+
+```sh
+# 注意: enp0s3 是网卡名称(ip addr 可查看),如果不是这个需要手动修改
+# 最好删除中文注释, 我这里是为了做笔记
+allow-hotplug enp0s3
+iface enp0s3 inet static
+    address 192.168.2.22  # ip
+    netmask 255.255.255.0 # 掩码
+    gateway 192.168.2.1   # gateway
+    dns-nameservers 114.114.114.114 223.5.5.5 8.8.8.8 # dns
+```
+
+```sh
+# 应用配置文件
+systemctl restart networking
+```
+
+## 配置 ssh 远程链接
+
+默认情况下, 可能没有安装 `openssl-server`
+
+### 安装 ssh 服务
+
+```sh
+# 注意如果速度慢可以换中国源, 所谓换源就是
+# 修改配置文件, 搜索一下就会了
+# 如果是 debian12 可能默认没有 sudo 命令
+sudo apt-get install openssh-server -y
+```
+
+### 修改配置文件
+
+```sh
+# 先备份防止修改错误
+cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
+vi /etc/ssh/sshd_config
+```
+
+配置文件内容如下, 可以搜索然后取消注释, 也可以直接覆盖
+原文件内容, 因为有备份, 所以不用怕
+
+```sh
+Port 22
+ListenAddress 0.0.0.0
+ListenAddress ::
+PermitRootLogin yes
+PasswordAuthentication yes
+```
+
+- Port: ssh 服务端口号
+- ListenAddress: 允许连接的 ip 地址
+- PermitRootLogin: 是否允许 root 用户登录
+- PasswordAuthentication: 是否允许密码验证
+
+```sh
+# 重启服务 & 查看服务状态
+systemctl restart sshd
+systemctl status sshd
+```
+
+此时, 如果都没有报错, 那么就可以用宿主机去链接测试了
+
+```sh
+# 注意换成你自己的ip
+ssh root@192.168.5.11
+```
