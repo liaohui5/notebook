@@ -10,6 +10,8 @@
 
 ## 跨操作系统
 
+- [RustDesk 开源远程控屏软件](https://github.com/rustdesk/rustdesk)
+
 - [轻量 http 客户端 httpie](https://httpie.io/download)
 
 - [邮件客户端 雷鸟](https://www.thunderbird.net/zh-CN/)
@@ -24,11 +26,15 @@
 
 - [代码编辑器 vscode](https://code.visualstudio.com/) [vscode-insiders](https://code.visualstudio.com/insiders/)
 
+- [轻量级编辑器 zed, 轻量级编辑器,速度非常快,社区活跃](https://zed.dev/)
+
 - [命令行编辑器 neovim 简称 nvim](https://github.com/neovim/neovim)
 
 - [nvim GUI 客户端 goneovim 开源免费](https://github.com/akiyosi/goneovim)
 
 - [nvim GUI 客户端 neovide 开源免费](https://github.com/neovide/neovide)
+
+- [hexhub 免费数据库客户端 MySQL/Postgres/SQLite, 非开源](https://www.hexhub.cn/)
 
 - [命令行软件 tabby(漂亮方便, 但是速度有点慢)](https://github.com/Eugeny/tabby)
 
@@ -59,8 +65,6 @@
 - [类似 Fidder 的开源抓包软件 lightproxy](https://github.com/alibaba/lightproxy)
 
 - [redis 开源图形化管理客户端 AnotherRedisDesktopManager](https://github.com/qishibo/AnotherRedisDesktopManager)
-
-- [redis 开源图形化管理客户端](https://github.com/RedisInsight/RedisInsight) 也可以使用 [brew 安装](https://formulae.brew.sh/cask/redisinsight)
 
 - [下载工具 motrix](https://motrix.app/)
 
@@ -93,6 +97,18 @@
 - [快速启动器 ueli](https://github.com/oliverschwendener/ueli)
 
 - [快速启动器 cerebro, 功能比较简单](https://cerebroapp.com/)
+
+- [Ente Auth 开源2fa二次认证密码管理工具](https://github.com/ente-io/ente)
+
+- [pgAdmin 开源 postgres 数据库客户端](https://github.com/pgadmin-org/pgadmin4)
+
+- [MongoDB Compass 开源 MongoDB 数据库客户端](https://github.com/mongodb-js/compass)
+
+- [usql 支持 PostgreSQL/MySQL/SQLServer/Oracle/SQLite3 等等数据库的命令行客户端](https://github.com/xo/usql)
+
+- [Cyberduck 非开源的 ftp/sftp/webdav 免费客户端](https://cyberduck.io/)
+
+- [Folo 信息聚合神器, 适合习惯使用 RSS 的用户](https://github.com/RSSNext/Folo)
 
 ## Windows
 
