@@ -1,11 +1,12 @@
+## 为什么不使用 rollup?
+
+最开始的时候 rollup 就是用来打包 js libary 的,
+随着社区的发展才逐渐支持 typescript 打包, 虽然支持但是打包配置比较复杂,
+打包速度也并不理想(如果不使用 swc 的话), 而且不支持打包 `.d.ts` 文件
+
 ## tsup 介绍
 
 [tsup](https://tsup.egoist.dev/) 对标 [rollup](https://rollupjs.org/) 是一个基于 [esbuild](https://esbuild.github.io/) 实现的 TypeScript 的打包工具
-
-1. 最开始的时候 rollup 就是用来打包 js libary 的, 随着社区的发展才逐渐支持 typescript 打包, 虽然支持, 但是打包速度并不理想(如果不使用 swc 的话), 而且不支持打包 `.d.ts` 文件
-2. esbuild 速度更快, 且支持打包 `.d.ts` 文件
-   - Q:既然如此为什么不直接使用 `vite` 来打包呢? 不也是基于 esbuild 的吗?
-   - A:因为 vite 比较适合用来打包整个项目, 虽然也能用来打包 libary, 但是需要很多配置 `build.lib` 选项, 而 tsup 配置则更简洁, 非常适合用来打包 `libary`
 
 ## 快速开始
 
