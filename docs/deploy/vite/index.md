@@ -55,7 +55,15 @@ vite 在开发环境使用了 esbuild 来将 js/ts 源码编译为 ast
 - [vite 生态](https://github.com/vitejs/awesome-vite)
 - [rolldown](https://rolldown.rs)
 
-## 打包器
+## 编译器
 
-- [esbuild](https://esbuild.github.io/)
-- [babel](https://babeljs.io/)
+或者应该叫 `转译器`
+
+- [babel](https://babeljs.io/) js实现, 由于速度的原因, 用的已经没有之前那么多了
+- [esbuild](https://esbuild.github.io/) go 实现
+- [oxc](https://oxc.rs/) Rust 实现
+- [swc](https://swc.rs/) Rust 实现
+
+## 打包工具
+
+![compiler](https://raw.githubusercontent.com/liaohui5/images/main/images/202507171707881.png)
