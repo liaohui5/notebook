@@ -2,10 +2,9 @@ import markdownItCheckBox from "markdown-it-todo-lists";
 import { defineConfig } from "vitepress";
 import nav from "./nav";
 import sidebar from "./sidebar";
-// import AutoSidebar from "./autoSidebar";
 
 // head 标签中的内容
-const head = [
+const head: Array<any> = [
   ["link", { rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
   ["link", { rel: "icon", type: "image/png", href: "/logo.png" }],
   ["link", { rel: "icon", type: "image/svg+xml", href: "/logo.svg" }],
