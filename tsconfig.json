@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "forceConsistentCasingInFileNames": true,
+    "target": "es2016",
+    "module": "es6",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "noEmit": true,
+    "noUnusedLocals": true,
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": {}
+  },
+  "exclude": ["**/dist/**", "**/.nuxt/**", "**/nuxt.d.ts", "**/examples/**", "**/docs/**", "**/playground/**"]
+}

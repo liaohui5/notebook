@@ -14,12 +14,13 @@
   },
   "devDependencies": {
     "@nolebase/vitepress-plugin-enhanced-readabilities": "^2.18.0",
+    "@types/node": "^24.1.0",
     "markdown-it-todo-lists": "^0.1.8",
     "sass": "1.78.0",
     "vitepress": "2.0.0-alpha.8"
   },
   "dependencies": {
-    "vue": "^3.5.18",
-    "vite": "npm:rolldown-vite@latest"
+    "vite": "npm:rolldown-vite@latest",
+    "vue": "^3.5.18"
   }
 }
