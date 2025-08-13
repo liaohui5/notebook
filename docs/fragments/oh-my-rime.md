@@ -15,15 +15,35 @@
 ::: code-group
 
 ```yaml [rime_mint.custom.yaml]
-#################################################################
-# 输入法方案配置, 可以覆盖 default.yaml
-# https://www.mintimate.cc/zh/guide/configurationOverride.html
-#################################################################
+#######################################
+# 用于覆盖输入法方案设置
+#######################################
 patch:
-  # 候选词数量
+  # 输入方案(只需要拼音输入法就行)
+  schema_list:
+    - rime_mint
+
+  # 候选词个数
   "menu/page_size": 9
 
-  # 覆盖 switches 默认使用英文标点符号
+  # 按键绑定
+  "key_binder/bindings":
+    - { when: composing, accept: Control+h, send: Left } # 前一个候选词
+    - { when: composing, accept: Control+l, send: Right } # 后一个候选词
+    - { accept: Control+k, send: Page_Up, when: paging } # 向上翻页(第一页时候无效)
+    - { accept: Control+j, send: Page_Down, when: has_menu } # 向下翻页
+
+  # 切换输入法快捷键
+  ascii_composer:
+    good_old_caps_lock: true
+    switch_key:
+      Caps_Lock: noop # commit_code | commit_text | clear
+      Shift_L: noop # commit_code | commit_text | inline_ascii | clear | noop
+      Shift_R: noop # commit_code | commit_text | inline_ascii | clear | noop
+      Control_L: noop # commit_code | commit_text | inline_ascii | clear | noop
+      Control_R: noop # commit_code | commit_text | inline_ascii | clear | noop
+
+  # 输入法默认状态(中文使用英文符号)
   switches:
     - name: ascii_mode
       reset: 0
@@ -34,68 +54,48 @@ patch:
     - name: full_shape
       states: [半角, 全角]
       reset: 0
+    - name: tone_display
+      states: [声杳, 声起]
+      reset: 0
     - name: transcription
       states: [简体, 繁体]
       reset: 0
     - name: ascii_punct
       states: ["。，", "．，"]
       reset: 1
+```
 
-  # 修改按键绑定
-  "key_binder/bindings":
-    - { when: composing, accept: Control+h, send: Left } # 前一个候选词
-    - { when: composing, accept: Control+l, send: Right } # 后一个候选词
-    - { accept: Control+k, send: Page_Up, when: paging } # 向上翻页(第一页时候无效)
-    - { accept: Control+j, send: Page_Down, when: has_menu } # 向下翻页
-
-  # 切换输入方案快捷键
+```yaml [default.custom.yaml]
+#######################################
+# 用于设置切换输入方案快捷键
+#######################################
+patch:
+  # 切换输入方案 & 输入法状态
   "switcher/hotkeys":
+    - F4
+    - Control+Shift+F4
     - Control+Shift+grave
-
-  # 定义切换到西文模式的快捷键
-  # 禁用切换输入法, 仅输入中文即可
-  ascii_composer:
-    switch_key:
-      Caps_Lock: noop # 按下 Caps Lock 会直接上屏
-      Control_L: noop # 按下左 Control 键不做任何操作
-      Control_R: noop # 按下右 Control 键不做任何操作
-      Shift_L: noop # 按下左 Shift 键会直接上屏
-      Shift_R: noop # 按下右 Shift 键会临时切换到西文模式
-    good_old_caps_lock: true # 启用经典的 Caps Lock 开启西文模式的方式
-
-  # 设置模糊音
-  "speller/algebra":
-    - erase/^xx$/ # 首选保留
-    - derive/^([zcs])h/$1/ # zh, ch, sh => z, c, s
-    - derive/^([zcs])([^h])/$1h$2/ # z, c, s => zh, ch, sh
-    - derive/([aei])n$/$1ng/ # en => eng, in => ing
-    - derive/([aei])ng$/$1n/ # eng => en, ing => in
-    - derive/([iu])an$/$lan/ # ian => iang, uan => uang
-    - derive/([iu])ang$/$lan/ # iang => ian, uang => uan
-    - derive/([aeiou])ng$/$1gn/ # dagn => dang
-    - derive/([dtngkhrzcs])o(u|ng)$/$1o/ # zho => zhong|zhou
-    - derive/ong$/on/ # zhonguo => zhong guo
-    - abbrev/^([a-z]).+$/$1/ #简拼（首字母）
-    - abbrev/^([zcs]h).+$/$1/ #简拼（zh, ch, sh）
-    - derive/v/u/ # u => ü
 ```
 
 ```yaml [squirrel.custom.yaml]
-################################################################
-# 输入的配置, 可以覆盖 default.yaml
-# https://www.mintimate.cc/zh/guide/configurationOverride.html
-################################################################
+#######################################
+# 用于设置样式
+#######################################
 patch:
-  # 横向布局
+  # 设置显示样式,如果皮肤有设置则使用皮肤的设置
   "style/color_scheme": mint_dark_blue
-  "style/horizontal": false
-  "style/candidate_list_layout": "linear"
-  "style/corner_radius": 4
-  "style/border_height": 4
-  "switcher/hotkeys":
-    - Control+Shift+grave
+  "style/candidate_list_layout": linear # stacked | linear 皮肤横竖排显示是调整这个
+  "style/text_orientation": horizontal # horizontal | vertical  文字方向
+  "style/corner_radius": 6 # 外边框 圆角大小
+  "style/border_height": 2 # 外边框 高度
+  "style/font_point": 18 # 候选词字体大小
+  "style/line_spacing": 6 # 行间距
+
+  # 修改皮肤样式设置(定义在 squirrel.yaml)
+  "preset_color_schemes/mint_dark_blue/inline_preedit": false
+  "preset_color_schemes/mint_dark_blue/translucency": false
   "preset_color_schemes/mint_dark_blue/hilited_candidate_back_color": 0xed9564
+  "preset_color_schemes/mint_dark_blue/line_spacing": 6
 ```
+
 :::
-
-
