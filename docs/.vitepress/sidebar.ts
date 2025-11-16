@@ -64,7 +64,7 @@ function autoGenSidebars(filePath: string) {
       result.push({
         text: "介绍",
         link: `${filePath}/index`,
-        sort: 0,
+        sort: -1,
       });
       continue;
     }
