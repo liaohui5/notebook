@@ -394,6 +394,86 @@ modB()
 
 :::
 
+## 面向对象
+
+```lua
+-- 定义类
+local Person = {}
+
+-- 定义构造函数
+function Person:new(name, age)
+  local instance = {};
+  setmetatable(instance, { __index = Person })
+  instance.name = name
+  instance.age = age
+  return instance
+end
+
+-- 定义方法
+function Person:sayHi()
+  print("hi, my name is" .. self.name, "my age is " .. self.age)
+end
+
+-- 实例化
+local p = Person:new("tom", 11);
+
+-- 调用实例方法
+p:sayHi();
+```
+
+### 继承
+
+```lua
+-- 父类
+local Person = {};
+function Person:new(name, age)
+    local instance = {
+        name = name,
+        age = age
+    };
+    setmetatable(instance, {
+        __index = Person
+    })
+    return instance
+end
+
+function Person:self_intro()
+    print("Hello, my name is ".. self.name.. " and I am ".. self.age.. " years old.")
+end
+
+-- 继承父类: 类似于 js 的组合继承
+-- 设置子类的 __index 和 metatable
+function __inherit(parentClass)
+    local childClass = {};
+    childClass.__index = childClass;
+    setmetatable(childClass, {
+        __index = parentClass
+    })
+    return childClass
+end
+
+-- 子类
+local Student = __inherit(Person)
+function Student:new(name, age, stu_no)
+    local instance = Person:new(name, age);
+    setmetatable(instance, Student)
+    instance.stu_no = stu_no; -- 学号
+    return instance
+end
+
+function Student:get_student_number()
+    print("my student number is " .. self.stu_no)
+end
+
+-- 实例化子类
+local s = Student:new("Tom", 18, 123456);
+
+-- 都能够正常执行证明已经继承了父类的方法
+s:get_student_number();
+s:self_intro();
+```
+
+
 ## 常用内置 API
 
 只会列举常用的 API, 更多 API 请查看 [Lua 5.3 文档](http://www.lua.org/manual/5.3/)

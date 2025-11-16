@@ -72,6 +72,9 @@
 
 - [类似 xshell 的开源远程 ssh 客户端 electerm](https://electerm.github.io/electerm/)
 
+- [类似 xshell 的开源远程 ssh 客户端 shell360](https://github.com/nashaofu/shell360)
+
+
 - [开源无广告视频播放器 VLCPlayer](https://www.videolan.org/vlc/)
 
 - [开源 MongoDB 图形化管理工具 mongotron](https://github.com/officert/mongotron)
