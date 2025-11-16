@@ -13,14 +13,14 @@
     "docs:preview": "vitepress preview docs"
   },
   "devDependencies": {
-    "@nolebase/vitepress-plugin-enhanced-readabilities": "^2.18.0",
-    "@types/node": "^24.1.0",
+    "@nolebase/vitepress-plugin-enhanced-readabilities": "^2.18.2",
+    "@types/node": "^24.10.1",
     "markdown-it-todo-lists": "^0.1.8",
     "sass": "1.78.0",
-    "vitepress": "2.0.0-alpha.8"
+    "vitepress": "^2.0.0-alpha.13"
   },
   "dependencies": {
-    "vite": "npm:rolldown-vite@latest",
-    "vue": "^3.5.18"
+    "vite": "npm:rolldown-vite@^7.2.5",
+    "vue": "^3.5.24"
   }
 }
