@@ -3,6 +3,7 @@ import fs from "node:fs";
 const sidebar = sidebarGenerator([
   "/css/",
   "/database/",
+  "/others/",
   "/js/base",
   "/js/oop/",
   "/js/dom/",

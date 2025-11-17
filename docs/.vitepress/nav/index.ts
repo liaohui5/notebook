@@ -1,5 +1,4 @@
 import deploy from "./deploy";
-import fragment from "./fragment";
 import javascript from "./javascript";
 import react from "./react";
 import vue from "./vue";
@@ -11,20 +10,27 @@ export default [
     link: "https://github.com/liaohui5",
   },
   {
-    text: "CSS",
-    link: "/css/",
+    text: "Others",
+    link: "/others/",
   },
   {
     text: "Database",
     link: "/database/",
   },
+  {
+    text: "CSS",
+    link: "/css/",
+  },
   javascript,
   vue,
   react,
   deploy,
-  fragment,
   {
     text: "Rust",
     link: "https://studyrust.netlib.re",
+  },
+  {
+    text: "dotfiles",
+    link: "https://github.com/liaohui5/dotfiles",
   },
 ];
