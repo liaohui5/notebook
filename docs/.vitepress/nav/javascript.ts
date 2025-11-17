@@ -18,6 +18,10 @@ export default {
           link: "/js/dom/",
         },
         {
+          text: "Canvas & SVG",
+          link: "/js/canvas/",
+        },
+        {
           text: "实用技巧",
           link: "/js/magic/",
         },
