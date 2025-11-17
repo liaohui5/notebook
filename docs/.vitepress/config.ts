@@ -3,23 +3,20 @@ import { defineConfig } from "vitepress";
 import nav from "./nav";
 import sidebar from "./sidebar";
 
-// head 标签中的内容
-const head: Array<any> = [
-  ["link", { rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
-  ["link", { rel: "icon", type: "image/png", href: "/logo.png" }],
-  ["link", { rel: "icon", type: "image/svg+xml", href: "/logo.svg" }],
-  ["meta", { name: "og:type", content: "website" }],
-  ["meta", { name: "og:locale", content: "zh-CN" }],
-  ["meta", { name: "og:site_name", content: "notebook" }],
-];
-
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  head,
   base: "/",
   title: "notebook",
   titleTemplate: "个人学习笔记",
   description: "notebook for myself",
+  head: [
+    ["link", { rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    ["link", { rel: "icon", type: "image/png", href: "/logo.png" }],
+    ["link", { rel: "icon", type: "image/svg+xml", href: "/logo.svg" }],
+    ["meta", { name: "og:type", content: "website" }],
+    ["meta", { name: "og:locale", content: "zh-CN" }],
+    ["meta", { name: "og:site_name", content: "notebook" }],
+  ],
   themeConfig: {
     nav,
     logo: "/logo.svg",
