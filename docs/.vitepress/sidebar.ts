@@ -7,7 +7,6 @@ const sidebar = sidebarGenerator([
   "/js/base",
   "/js/oop/",
   "/js/dom/",
-  "/js/canvas/",
   "/js/magic/",
   "/js/builtin/",
   "/js/api/",

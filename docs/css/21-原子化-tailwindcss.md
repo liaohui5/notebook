@@ -10,9 +10,9 @@ TailwindCSS 提供了诸如间距、尺寸、颜色、排版、动画等多种 C
 - [中文文档](https://www.tailwindcss.cn/docs/installation)
 - [在线练习](https://play.tailwindcss.com/)
 
-## 快速开始
+## 快速开始 v3.x 版本
 
-结合vite和vue [查看官网操作](https://www.tailwindcss.cn/docs/guides/vite#vue)
+结合 vite 和 vue [查看官网操作](https://www.tailwindcss.cn/docs/guides/vite#vue)
 
 ### 安装
 
@@ -38,7 +38,7 @@ pnpm tailwind init -p
 ```js [tailwind.config.js]
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
     extend: {},
   },
@@ -72,3 +72,59 @@ pnpm dev
 ```
 
 打开浏览器查看 `http://localhost:5173`
+
+## 快速开始 v4.x 版本
+
+### 安装
+
+```sh
+# 创建项目
+pnpm create vite tailwindcss-demo --template vue
+
+# 安装依赖
+cd tailwindcss-demo && pnpm install
+
+# 安装 tailwindcss 和 @tailwindcss/vite 插件
+pnpm install tailwindcss @tailwindcss/vite
+```
+
+### 修改配置文件
+
+::: code-group
+
+```js [vite.config.ts] {4,9}
+// https://vite.dev/config/
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
+import tailwindcss from "@tailwindcss/vite";
+
+export default defineConfig({
+  plugins: [
+    vue(),
+    tailwindcss(), // tailwindcss plugin
+  ],
+});
+```
+
+```css [src/style.css]
+@import "tailwindcss";
+```
+
+:::
+
+### 修改 App.vue
+
+```html
+<template>
+  <h1 class="text-3xl text-red-500 font-bold underline">Hello world!</h1>
+</template>
+<script setup></script>
+
+<style scoped></style>
+```
+
+### 查看效果
+
+```sh
+pnpm dev
+```
