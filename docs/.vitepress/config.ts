@@ -1,6 +1,6 @@
 import markdownItCheckBox from "markdown-it-todo-lists";
 import { defineConfig } from "vitepress";
-import nav from "./nav";
+import nav from "./navbar";
 import sidebar from "./sidebar";
 
 // https://vitepress.dev/reference/site-config

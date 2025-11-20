@@ -1,5 +1,3 @@
-
-
 ## 介绍
 
 万能胶水语言, 优雅小巧, 灵活强大, 执行效率最快的脚本语言
@@ -472,7 +470,6 @@ local s = Student:new("Tom", 18, 123456);
 s:get_student_number();
 s:self_intro();
 ```
-
 
 ## 常用内置 API
 
