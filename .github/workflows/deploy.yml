@@ -24,13 +24,15 @@ jobs:
 
       - name: install pnpm
         uses: pnpm/action-setup@v4
+        with:
+          version: 10
 
       - name: install node
         uses: actions/setup-node@v4
         with:
           cache: pnpm
 
-      - name: biuld with VitePress
+      - name: biuld with vitepress
         run: |
           pnpm install
           pnpm docs:build
