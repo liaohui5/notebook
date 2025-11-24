@@ -1,7 +1,3 @@
-import deploy from "./deploy";
-import react from "./react";
-import vue from "./vue";
-
 // https://vitepress.dev/reference/default-theme-config
 export default [
   {

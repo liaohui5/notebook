@@ -3,9 +3,14 @@
 JavaScript 本身是作为一种能够在浏览器中增强用户交互的脚本语言来使用, 随着社区的发展,
 Chrome浏览器的V8引擎单独移植出来,在此基础之上, 为其上层的JavaScnpr提供了友好的API, 且开源免费,
 使其能够与操作系统交互, 也就是所此时的 js 已经不仅仅是只 是用于浏览器增强用户交互, 还可以进行服务端编程,
-而这个运行环境就是知名的 [NodeJS](https://nodejs.org/)
+而这个运行环境就是知名的 [NodeJS](https://nodejs.org/), 再后来社区又诞生了[更多的运行环境](https://github.com/errilaz/awesome-js-runtimes)
+如比较知名的有:
 
-这也就是说, 同一份代码, 既可以在浏览器中运行, 也能脱离浏览器使用 node.js 环境来运行
+- [node](https://nodejs.org/)
+- [deno](https://deno.com/)
+- [bun](https://bun.com/)
+
+这也就是说, 同一份代码, 既可以在浏览器中运行, 也能脱离浏览器使用其他运行环境来运行
 
 这也同时带来了一个问题: 并不是所有的浏览器API在 Nodejs 中都支持
 
@@ -13,6 +18,8 @@ Chrome浏览器的V8引擎单独移植出来,在此基础之上, 为其上层的
 
 - 内置API: 不论在浏览器还是在nodejs环境中都可以使用的 API
 - 特定环境的API: 只有在特定环境才能使用的API, 比如在 nodejs 中才有的 `fs`, 只在浏览器中可使用的 `document` 等
+
+由于 `deno` 和 `bun` 都是后来者, 基本 `node` 的 api 在这些环境中都有兼容, 实在没有的, 就需要查看文档
 
 ## 内置 API
 
