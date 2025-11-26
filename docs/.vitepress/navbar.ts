@@ -128,13 +128,21 @@ export default [
             text: "CICD 持续集成",
             link: "/deploy/cicd/",
           },
-          {
-            text: "Python 脚本",
-            link: "/deploy/python/",
-          },
         ],
       },
     ],
+  },
+  {
+    text: "Python",
+    link: "https://python.liaohui5.cn",
+  },
+  {
+    text: "Java",
+    link: "https://java.liaohui5.cn",
+  },
+  {
+    text: "Go",
+    link: "https://golang.liaohui5.cn",
   },
   {
     text: "Rust",

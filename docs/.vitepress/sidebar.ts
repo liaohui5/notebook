@@ -22,7 +22,6 @@ const sidebar = sidebarGenerator([
   "/deploy/docker/",
   "/deploy/webpack/",
   "/deploy/vite/",
-  "/deploy/python/",
 ]);
 export default sidebar;
 
