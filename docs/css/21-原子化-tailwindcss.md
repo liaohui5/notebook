@@ -128,3 +128,11 @@ export default defineConfig({
 ```sh
 pnpm dev
 ```
+
+## 生态周边
+
+- [daisyUI](https://daisyui.com/docs/install/?lang=zh_hans)
+- [tailwindcss-animated](https://www.tailwindcss-animated.com/configurator.html)
+- [headlessui](https://headlessui.com/)
+- [vscode 插件](https://marketplace.visualstudio.com/items?itemName=bradlc.vscode-tailwindcss)
+- [awesome-tailwindcss](https://github.com/aniftyco/awesome-tailwindcss)
