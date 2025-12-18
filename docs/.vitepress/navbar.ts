@@ -3,18 +3,22 @@ export default [
   {
     text: "AboutMe",
     link: "https://github.com/liaohui5",
+    isAutoGenSidebar: true,
   },
   {
     text: "Others",
     link: "/others/",
+    isAutoGenSidebar: true,
   },
   {
     text: "Database",
     link: "/database/",
+    isAutoGenSidebar: true,
   },
   {
     text: "CSS",
     link: "/css/",
+    isAutoGenSidebar: true,
   },
   {
     // javascript //
@@ -26,22 +30,27 @@ export default [
           {
             text: "执行机制",
             link: "/js/base/",
+            isAutoGenSidebar: true,
           },
           {
             text: "运行环境与API",
             link: "/js/builtin/",
+            isAutoGenSidebar: true,
           },
           {
             text: "面向对象",
             link: "/js/oop/",
+            isAutoGenSidebar: true,
           },
           {
             text: "DOM & BOM",
             link: "/js/dom/",
+            isAutoGenSidebar: true,
           },
           {
             text: "实用技巧",
             link: "/js/magic/",
+            isAutoGenSidebar: true,
           },
         ],
       },
@@ -51,18 +60,22 @@ export default [
           {
             text: "TypeScript 类型约束",
             link: "/js/ts/",
+            isAutoGenSidebar: true,
           },
           {
             text: "JavaScript 单元测试",
             link: "/js/tests/",
+            isAutoGenSidebar: true,
           },
           {
             text: "JavaScript 设计模式",
             link: "/js/design-patterns/",
+            isAutoGenSidebar: true,
           },
           {
             text: "JavaScript 数据结构与算法",
             link: "/js/algorithms/",
+            isAutoGenSidebar: true,
           },
         ],
       },
@@ -75,10 +88,12 @@ export default [
       {
         text: "Vue 基本使用",
         link: "/vue/base/",
+        isAutoGenSidebar: true,
       },
       {
         text: "Vue 库核心原理",
         link: "/vue/core/",
+        isAutoGenSidebar: true,
       },
     ],
   },
@@ -89,10 +104,12 @@ export default [
       {
         text: "React 基础使用",
         link: "/react/base/",
+        isAutoGenSidebar: true,
       },
       {
         text: "React Hooks",
         link: "/react/hooks/",
+        isAutoGenSidebar: true,
       },
     ],
   },
@@ -106,10 +123,12 @@ export default [
           {
             text: "webpack",
             link: "/deploy/webpack/",
+            isAutoGenSidebar: true,
           },
           {
             text: "vite & rollup",
             link: "/deploy/vite/",
+            isAutoGenSidebar: true,
           },
         ],
       },
@@ -119,14 +138,17 @@ export default [
           {
             text: "linux 服务器部署",
             link: "/deploy/server/",
+            isAutoGenSidebar: true,
           },
           {
             text: "docker 容器化",
             link: "/deploy/docker/",
+            isAutoGenSidebar: true,
           },
           {
             text: "CICD 持续集成",
             link: "/deploy/cicd/",
+            isAutoGenSidebar: true,
           },
         ],
       },

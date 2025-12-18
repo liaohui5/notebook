@@ -1,7 +1,9 @@
 import markdownItCheckBox from "markdown-it-todo-lists";
 import { defineConfig } from "vitepress";
+import { genSidebarByNavs } from "./sidebar";
 import nav from "./navbar";
-import sidebar from "./sidebar";
+
+const sidebar = genSidebarByNavs(nav);
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
