@@ -168,7 +168,7 @@ export default [
   },
   {
     text: "Rust",
-    link: "https://studyrust.netlib.re",
+    link: "https://rust.liaohui5.cn",
   },
   {
     text: "dotfiles",
