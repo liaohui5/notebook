@@ -155,6 +155,10 @@ export default [
     ],
   },
   {
+    text: "PHP",
+    link: "https://php.liaohui5.cn",
+  },
+  {
     text: "Python",
     link: "https://python.liaohui5.cn",
   },
