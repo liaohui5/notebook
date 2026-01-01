@@ -1,3 +1,4 @@
+import tailwindcss from "@tailwindcss/vite";
 import markdownItCheckBox from "markdown-it-todo-lists";
 import { defineConfig } from "vitepress";
 import { genSidebarByNavs } from "./sidebar";
@@ -59,5 +60,8 @@ export default defineConfig({
     ssr: {
       noExternal: ["@nolebase/vitepress-plugin-enhanced-readabilities"],
     },
+
+    // @ts-ignore
+    plugins: [tailwindcss()],
   },
 });

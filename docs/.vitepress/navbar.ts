@@ -1,18 +1,13 @@
 // https://vitepress.dev/reference/default-theme-config
 export default [
-  {
-    text: "AboutMe",
-    link: "https://github.com/liaohui5",
-    isAutoGenSidebar: true,
-  },
+  // {
+  //   text: "AboutMe",
+  //   link: "https://github.com/liaohui5",
+  //   isAutoGenSidebar: true,
+  // },
   {
     text: "Others",
     link: "/others/",
-    isAutoGenSidebar: true,
-  },
-  {
-    text: "Database",
-    link: "/database/",
     isAutoGenSidebar: true,
   },
   {
@@ -153,6 +148,11 @@ export default [
         ],
       },
     ],
+  },
+  {
+    text: "DB",
+    link: "/database/",
+    isAutoGenSidebar: true,
   },
   {
     text: "PHP",
