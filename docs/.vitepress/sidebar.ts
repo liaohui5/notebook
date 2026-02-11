@@ -19,15 +19,6 @@ export function genSidebarByNavs(navs: Array<any>) {
   return sidebars;
 }
 
-// 根据传入的路径数组生成侧边栏配置
-export function sidebarGenerator(sidebarPaths: Array<string> = []) {
-  const sidebars = {};
-  for (const path of sidebarPaths) {
-    sidebars[path] = autoGenSidebars(path);
-  }
-  return sidebars;
-}
-
 // 根据文件名生成序号(用于排序)
 function getOrderBy(fileName: string) {
   const order = Number(fileName.slice(0, 2));
