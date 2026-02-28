@@ -1,10 +1,5 @@
 // https://vitepress.dev/reference/default-theme-config
 export default [
-  // {
-  //   text: "AboutMe",
-  //   link: "https://github.com/liaohui5",
-  //   isAutoGenSidebar: true,
-  // },
   {
     text: "Others",
     link: "/others/",
@@ -176,6 +171,6 @@ export default [
   },
   {
     text: "dotfiles",
-    link: "https://github.com/liaohui5/dotfiles",
+    link: "https://github.com/liaohui5/chezmoi",
   },
 ];
