@@ -221,10 +221,14 @@ auth required pam_google_authenticator.so
 ```
 
 3. 配置 SSH 守护进程开启 Challenge-Response
-   修改 `/etc/ssh/sshd_config` 文件, 确保这行没有被注释
+   修改 `/etc/ssh/sshd_config` 文件, 确保这些行存在并且值是这样的
 
 ```txt
+UsePAM yes
+KbdInteractiveAuthentication yes
+PasswordAuthentication yes
 ChallengeResponseAuthentication yes
+AuthenticationMethods keyboard-interactive
 ```
 
 4. 重启并使用另一个ssh客户测试

@@ -1,4 +1,4 @@
-onlyBuiltDependencies:
-  - '@tsparticles/engine'
-  - esbuild
-  - less
+allowBuilds:
+  '@tsparticles/engine': true
+  esbuild: true
+  less: true

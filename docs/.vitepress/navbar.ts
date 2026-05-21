@@ -169,8 +169,4 @@ export default [
     text: "Rust",
     link: "https://rust.liaohui5.cn",
   },
-  {
-    text: "dotfiles",
-    link: "https://github.com/liaohui5/chezmoi",
-  },
 ];

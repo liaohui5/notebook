@@ -63,5 +63,12 @@ export default defineConfig({
 
     // @ts-ignore
     plugins: [tailwindcss()],
+
+    // server
+    server: {
+      watch: {
+        usePolling: true,
+      },
+    },
   },
 });

@@ -1,7 +1,7 @@
 import DefaultTheme from "vitepress/theme";
 import { h } from "vue";
 import "./index.scss";
-import "./tailwind.css"
+import "./tailwind.css";
 
 import {
   NolebaseEnhancedReadabilitiesMenu,

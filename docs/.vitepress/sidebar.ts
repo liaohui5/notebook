@@ -1,4 +1,4 @@
-import fs from "node:fs";
+import fs from "fs";
 
 // 根据 nav 生成侧边栏
 const sidebars: Record<string, any> = {};
