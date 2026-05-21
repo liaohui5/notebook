@@ -185,27 +185,52 @@ vi /etc/ssh/sshd_config
 原文件内容, 因为有备份, 所以不用怕
 
 ```sh
-Port 22
-ListenAddress 0.0.0.0
-ListenAddress ::
-PermitRootLogin yes
-PasswordAuthentication yes
+Port 22                    # 服务监听的端口
+PermitRootLogin yes        # 是否允许 root 账号ssh远程登录
+PasswordAuthentication yes # 是否允许密码验证方式登录
 ```
-
-- Port: ssh 服务端口号
-- ListenAddress: 允许连接的 ip 地址
-- PermitRootLogin: 是否允许 root 用户登录
-- PasswordAuthentication: 是否允许密码验证
 
 ```sh
 # 重启服务 & 查看服务状态
-systemctl restart sshd
-systemctl status sshd
+sudo systemctl restart sshd
+sudo systemctl status sshd
 ```
 
-此时, 如果都没有报错, 那么就可以用宿主机去链接测试了
+此时, 如果都没有报错, 那么就可以用宿主机去链接测试了如 `ssh root@192.168.5.11`
+
+### 增加 mfa 多因子认证方式
+
+1. 安装软件并为当前账号生成MFA二维码账号信息
 
 ```sh
-# 注意换成你自己的ip
-ssh root@192.168.5.11
+# 安装认证软件
+sudo apt install libpam-google-authenticator
+
+# 为当前用户生成密钥
+google-authenticator
+
+# 此时会出现一个二维码: 请使用手机客户端扫描(Google Authenticator, Microsoft Authenticator, Authy/ente auth)
+# 然后会问一些问题, 全部输入 y 即可
 ```
+
+2. 配置 SSH 使用 PAM 进行 2FA 验证
+   修改 `/etc/pam.d/sshd` 文件, 在文件最顶端加入这行代码
+
+```txt
+auth required pam_google_authenticator.so
+```
+
+3. 配置 SSH 守护进程开启 Challenge-Response
+   修改 `/etc/ssh/sshd_config` 文件, 确保这行没有被注释
+
+```txt
+ChallengeResponseAuthentication yes
+```
+
+4. 重启并使用另一个ssh客户测试
+
+```txt
+sudo systemctl restart ssh
+```
+
+开源 ssh 客户端 [eleterm](https://github.com/electerm/electerm)
