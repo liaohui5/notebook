@@ -10,13 +10,13 @@
 实现这些 API, 只是体验尝试下 composition-api 的强大和灵活
 
 ```js
-import { ref } from 'vue'; // 注: 需要使用 ref API 来实现响应式
+import { ref } from "vue"; // 注: 需要使用 ref API 来实现响应式
 
 // 类似 react-hooks 的 useState
 export function useState(initValue) {
   const state = ref(initValue);
   const setState = function (newState) {
-    state.value = typeof newState === 'function' ? newState(state) : newState;
+    state.value = typeof newState === "function" ? newState(state) : newState;
   };
   return {
     state,
@@ -28,7 +28,7 @@ export function useState(initValue) {
 ## useReducer 实现
 
 ```js
-import { useState } from './useState'; // 注: 依赖于 useState
+import { useState } from "./useState"; // 注: 依赖于 useState
 
 export function useReducer(initState, reducer) {
   const [state, setState] = useState(initState);
@@ -40,7 +40,7 @@ export function useReducer(initState, reducer) {
 ## useReactive 实现
 
 ```js
-import { toRefs, reactive } from 'vue';
+import { toRefs, reactive } from "vue";
 
 export function useReactive(initState) {
   const state = reactive(initState);
@@ -49,14 +49,14 @@ export function useReactive(initState) {
   // stateRefs 方便setup函数直接解构返回 ...stateRefs
 
   const setState = (key, val) => {
-    if (Object.prototype.toString.call(key) === '[object Object]') {
+    if (Object.prototype.toString.call(key) === "[object Object]") {
       // 如果第一个参数是一个对象, 直接忽略第二个参数, 根据 key-value 对赋值更新
       for (const [k, v] of Object.entries(key)) {
         state[k] = v;
       }
     } else {
       // 如果第二个参数是一个函数, 先执行获得返回值, 然后赋值, 不是函数则直接赋值
-      const newValue = typeof val === 'function' ? val(state[key]) : val;
+      const newValue = typeof val === "function" ? val(state[key]) : val;
       state[key] = newValue;
     }
   };
@@ -90,30 +90,30 @@ export function useReactive(initState) {
 
 <script setup>
 // --- useState
-import { useState, useReducer, useReactive } from '@/hooks';
+import { useState, useReducer, useReactive } from "@/hooks";
 const [count, setCount] = useState(10);
 
 // --- useReducer
 const calcReducer = (num, setNum, { type, payload }) => {
   switch (type) {
-    case 'PLUS': // 加法
+    case "PLUS": // 加法
       setNum(num + payload);
       break;
-    case 'MINUS': // 减法
+    case "MINUS": // 减法
       setNum(num - payload);
       break;
     // 乘法
     // 除法
     // 取余
     default:
-      throw new Error('[reducer] unknown type: ' + type);
+      throw new Error("[reducer] unknown type: " + type);
   }
 };
 const [num, numDispatch] = useReducer(1, calcReducer);
 
 // --- useReactive
 const [info, setInfo] = useReactive({
-  name: 'initName',
+  name: "initName",
   age: 22,
 });
 </script>

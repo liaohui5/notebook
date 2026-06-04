@@ -37,12 +37,8 @@ const Home = () => {
       <p>home</p>
       <p>count:{state.count}</p>
       <p>
-        <button onClick={() => dispatch({ type: "increment", payload: 5 })}>
-          加5
-        </button>
-        <button onClick={() => dispatch({ type: "decrement", payload: 5 })}>
-          减5
-        </button>
+        <button onClick={() => dispatch({ type: "increment", payload: 5 })}>加5</button>
+        <button onClick={() => dispatch({ type: "decrement", payload: 5 })}>减5</button>
       </p>
     </div>
   );
@@ -56,18 +52,10 @@ const App = () => {
       <p>app</p>
       <p>count:{state.count}</p>
       <p>
-        <button onClick={() => dispatch({ type: "increment", payload: 1 })}>
-          加1
-        </button>
-        <button onClick={() => dispatch({ type: "increment", payload: 2 })}>
-          加2
-        </button>
-        <button onClick={() => dispatch({ type: "decrement", payload: 1 })}>
-          减1
-        </button>
-        <button onClick={() => dispatch({ type: "decrement", payload: 2 })}>
-          减2
-        </button>
+        <button onClick={() => dispatch({ type: "increment", payload: 1 })}>加1</button>
+        <button onClick={() => dispatch({ type: "increment", payload: 2 })}>加2</button>
+        <button onClick={() => dispatch({ type: "decrement", payload: 1 })}>减1</button>
+        <button onClick={() => dispatch({ type: "decrement", payload: 2 })}>减2</button>
       </p>
       <hr />
       <Home />

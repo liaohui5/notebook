@@ -4,7 +4,6 @@
 
 ## 主要实现 API
 
-
 ## vue 是如何实现响应式的?
 
 1. 在获取值的时候收集依赖(所谓的依赖其实就是一个函数)
@@ -13,13 +12,8 @@
 ## 为何要在 proxyHandler 对象的 set 中使用 Reflect API?
 
 ```js
-
 Reflect.set(target, key, value, receiver);
 
 // why?
 target[key] = value;
 ```
-
-
-
-

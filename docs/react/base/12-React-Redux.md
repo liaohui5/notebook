@@ -195,9 +195,7 @@ class Todos extends React.PureComponent {
             return (
               <li key={item.id}>
                 <span>{item.content}</span>
-                <button onClick={() => this.props.removeTodoById(item.id)}>
-                  删除
-                </button>
+                <button onClick={() => this.props.removeTodoById(item.id)}>删除</button>
               </li>
             );
           })
@@ -229,7 +227,7 @@ import reducer from "./reducer.js";
 const store = createStore(
   reducer,
   // 检查是否安装调试工具, 开启调试
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
 );
 
 export default store;
@@ -358,7 +356,7 @@ render(
       <App />
     </Provider>
   </React.StrictMode>,
-  document.getElementById("root")
+  document.getElementById("root"),
 );
 ```
 
@@ -421,9 +419,7 @@ class App extends React.Component {
     return (
       <div>
         <div>
-          <button onClick={() => this.props.getRecomPlayList()}>
-            获取网易云音乐推荐歌单
-          </button>
+          <button onClick={() => this.props.getRecomPlayList()}>获取网易云音乐推荐歌单</button>
         </div>
 
         {/* 获取到的数据: */}

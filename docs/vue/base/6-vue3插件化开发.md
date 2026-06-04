@@ -117,7 +117,6 @@ export default Message;
 
 ![](https://raw.githubusercontent.com/liaohui5/images/main/images/202207151905199.png)
 
-
 ### 源码实现
 
 ```html
@@ -138,77 +137,77 @@ export default Message;
 </template>
 
 <script setup>
-import { reactive, ref, defineExpose } from "vue";
+  import { reactive, ref, defineExpose } from "vue";
 
-const visible = ref(true);
-const data = reactive({
-  title: "",
-  content: "",
-});
+  const visible = ref(true);
+  const data = reactive({
+    title: "",
+    content: "",
+  });
 
-// onConfirm(resolve), onCancel(reject), onClose(ConfirmMsg.close)
-let onConfirm, onCancel, onClose;
+  // onConfirm(resolve), onCancel(reject), onClose(ConfirmMsg.close)
+  let onConfirm, onCancel, onClose;
 
-function init({ resolve, reject, close, options }) {
-  onConfirm = resolve;
-  onCancel = reject;
-  onClose = close;
-  data.title = options.title;
-  data.content = options.content;
-}
-defineExpose({ init });
+  function init({ resolve, reject, close, options }) {
+    onConfirm = resolve;
+    onCancel = reject;
+    onClose = close;
+    data.title = options.title;
+    data.content = options.content;
+  }
+  defineExpose({ init });
 
-const cancel = () => exec(onCancel);
-const confirm = () => exec(onConfirm);
-function exec(fn) {
-  visible.value = false;
-  typeof fn === "function" && fn.call(this);
-  typeof onClose === "function" && onClose(this);
-}
+  const cancel = () => exec(onCancel);
+  const confirm = () => exec(onConfirm);
+  function exec(fn) {
+    visible.value = false;
+    typeof fn === "function" && fn.call(this);
+    typeof onClose === "function" && onClose(this);
+  }
 </script>
 
 <style lang="scss" scoped>
-.layer-mask {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 100%;
-  right: 100%;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  .layer-main {
-    min-width: 300px;
-    background: #fff;
-    padding: 10px 20px;
-    .layer-header {
-      font-weight: 500;
-    }
-    .layer-content {
-      padding: 30px 0;
-      text-align: center;
-    }
-    .layer-footer {
-      display: flex;
-      justify-content: flex-end;
-      .btn {
-        border: none;
-        color: #fff;
-        padding: 5px 15px;
-        &.confirm {
-          background: #3f9eff;
-        }
-        &.cancel {
-          margin-right: 20px;
-          background: #f42c2e;
+  .layer-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 100%;
+    right: 100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .layer-main {
+      min-width: 300px;
+      background: #fff;
+      padding: 10px 20px;
+      .layer-header {
+        font-weight: 500;
+      }
+      .layer-content {
+        padding: 30px 0;
+        text-align: center;
+      }
+      .layer-footer {
+        display: flex;
+        justify-content: flex-end;
+        .btn {
+          border: none;
+          color: #fff;
+          padding: 5px 15px;
+          &.confirm {
+            background: #3f9eff;
+          }
+          &.cancel {
+            margin-right: 20px;
+            background: #f42c2e;
+          }
         }
       }
     }
   }
-}
 </style>
 ```
 
@@ -220,16 +219,16 @@ import { createApp } from "vue";
 import ConfirmMsgVue from "./index.vue";
 
 let instance; // ConfirmMsg 实例, 一个 Proxy 对象
-let appCtx;   // 应用实例可以理解为 getCurrentInstnace() 返回的结果, 
-              // 注意这个 appCtx 和 setup(ctx) 这个参数是不同的
-              // appCtx 是组件的执行上下文, 而 setup(ctx) 只是 setup 函数
-              // 执行是时的上下文
+let appCtx; // 应用实例可以理解为 getCurrentInstnace() 返回的结果,
+// 注意这个 appCtx 和 setup(ctx) 这个参数是不同的
+// appCtx 是组件的执行上下文, 而 setup(ctx) 只是 setup 函数
+// 执行是时的上下文
 
 function ConfirmMsg(options = { title, content }) {
   return new Promise((resolve, reject) => {
     const frag = document.createDocumentFragment();
-    appCtx     = createApp(ConfirmMsgVue);
-    instance   = appCtx.mount(frag);
+    appCtx = createApp(ConfirmMsgVue);
+    instance = appCtx.mount(frag);
     instance.init({
       resolve,
       reject,

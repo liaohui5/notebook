@@ -3,7 +3,6 @@
 Symbol 是一种原始的数据类型, 会返回一个 Symbol 类型的值, 注意它不是一个包装类,
 因此不能使用 `new` 操作符来创建实例
 
-
 Symbol 类型的值都是唯一的, 每个 Symbol 值都是不相等的
 
 ```js
@@ -16,7 +15,6 @@ const s3 = Symbol("s3");
 const s4 = Symbol("s3");
 console.log(s3 === s4); // false
 ```
-
 
 ## 静态方法学习
 
@@ -37,7 +35,6 @@ console.log(k1); // symbol-1 获取到了 s1 的 key
 1. 可以用来进行元编程
 2. 在不使用 ES6 `#` 符号的情况下, 定义一些私有变量
 
-
 ::: code-group
 
 ```js [元编程]
@@ -45,9 +42,9 @@ console.log(k1); // symbol-1 获取到了 s1 的 key
 // 1.使用 Symbol 为对象实现迭代器协议
 const obj = {
   id: 1,
-  name: 'tom',
+  name: "tom",
   age: 10,
-}
+};
 
 Object.defineProperty(obj, Symbol.iterator, {
   value: function () {
@@ -75,7 +72,7 @@ for (let [k, v] of obj) {
 
 // 2.使用 Symbol 判断一个函数是否是 async 修饰的异步函数
 const f1 = () => console.log(1);
-const f2 = async () => Promise.resolve(1)
+const f2 = async () => Promise.resolve(1);
 function isAsyncFunc(fn) {
   if (typeof fn !== "function") {
     throw new TypeError("paramter is not a funciton");
@@ -94,14 +91,14 @@ function isAsyncFunc(fn) {
 class Cat {
   #name;
   constructor() {
-    this.#name = "xiaoguai"
+    this.#name = "xiaoguai";
   }
 }
 
 class Dog {
   constructor() {
     const nameKey = Symbol();
-    this[nameKey] = "xiaoqi"
+    this[nameKey] = "xiaoqi";
   }
 }
 
@@ -116,12 +113,12 @@ console.log(d);
 
 :::
 
-
 ## 手动实现一个简单版本 Symbol
 
 像元编程的功能肯定是做不到的, 但是可以实现每次返回不同值的功能
 
 ::: code-group
+
 ```js [symbol.js 极简实现]
 const symbols = [];
 
@@ -133,7 +130,7 @@ function createSymbolItem(uuid) {
 
 export function $Symbol() {
   const uuid = window.crypto.randomUUID();
-  const symbolItem = createSymbolItem(uuid)
+  const symbolItem = createSymbolItem(uuid);
   symbols.push(symbolItem);
   return symbolItem;
 }
@@ -154,21 +151,21 @@ function $keyFor(symbol) {
   }
 }
 
-Object.defineProperty($Symbol, 'for', {
+Object.defineProperty($Symbol, "for", {
   value: $for,
 });
 
-Object.defineProperty($Symbol, 'keyFor', {
+Object.defineProperty($Symbol, "keyFor", {
   value: $keyFor,
 });
 
 $Symbol.prototype.toString = function () {
-  return 'Symbol()'
-}
+  return "Symbol()";
+};
 
 $Symbol.prototype.valueOf = function () {
   return this.key;
-}
+};
 ```
 
 ```js [symbol.spec.js 单元测试]
@@ -196,7 +193,6 @@ describe("Symbol", () => {
     const k = $Symbol.keyFor(sym);
     expect(k).toBe(key);
   });
-
 });
 ```
 

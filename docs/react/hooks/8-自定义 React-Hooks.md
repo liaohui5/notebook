@@ -38,9 +38,7 @@ const App = () => {
   return (
     <div>
       <UserCtx.Provider value={{ id: 1001, name: "tom" }}>
-        <InfoCtx.Provider
-          value={{ email: "xxx@qq.com", github: "https://github.com/xxx" }}
-        >
+        <InfoCtx.Provider value={{ email: "xxx@qq.com", github: "https://github.com/xxx" }}>
           <Home />
           <About />
         </InfoCtx.Provider>
@@ -93,9 +91,7 @@ const App = () => {
   return (
     <div>
       <UserCtx.Provider value={{ id: 1001, name: "tom" }}>
-        <InfoCtx.Provider
-          value={{ email: "xxx@qq.com", github: "https://github.com/xxx" }}
-        >
+        <InfoCtx.Provider value={{ email: "xxx@qq.com", github: "https://github.com/xxx" }}>
           <Home />
           <About />
         </InfoCtx.Provider>

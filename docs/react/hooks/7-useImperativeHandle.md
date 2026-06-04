@@ -76,12 +76,7 @@ const Home = React.forwardRef((props, appRef) => {
   const inputChange = (val) => /^\d{0,}$/.test(val) && setNum(val);
   return (
     <div>
-      <input
-        type="text"
-        ref={inputRef}
-        value={num}
-        onChange={(e) => inputChange(e.target.value)}
-      />
+      <input type="text" ref={inputRef} value={num} onChange={(e) => inputChange(e.target.value)} />
     </div>
   );
 });

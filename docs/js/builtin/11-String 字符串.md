@@ -125,8 +125,7 @@ String.prototype.$slice = function () {
   var len = str.length >>> 0;
   // startIndex 和 end 必须是正整数
   var startIndex = arguments[0] >> 0;
-  startIndex =
-    startIndex < 0 ? Math.max(len + startIndex, 0) : Math.min(len, startIndex);
+  startIndex = startIndex < 0 ? Math.max(len + startIndex, 0) : Math.min(len, startIndex);
   var endIndex = arguments.length > 1 ? arguments[1] >> 0 : Infinity;
   endIndex = endIndex < 0 ? Math.max(len + endIndex) : Math.min(endIndex, len);
 

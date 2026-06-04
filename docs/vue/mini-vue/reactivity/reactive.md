@@ -6,13 +6,13 @@
 ::: code-group
 
 ```ts [reactive]
-import { isObject } from '@mini-vue/shared';
+import { isObject } from "@mini-vue/shared";
 
 // 响应式标志
 export const enum ReactiveFlags {
-  IS_READONLY = '__v_isReadonly',
-  IS_REACTIVE = '__v_isReactive',
-  IS_SHALLOE = '__v_isShallow',
+  IS_READONLY = "__v_isReadonly",
+  IS_REACTIVE = "__v_isReactive",
+  IS_SHALLOE = "__v_isShallow",
 }
 
 // 带有响应式标志的类型接口
@@ -66,7 +66,7 @@ export function readonly<T extends object>(raw: T): T {
       return value;
     },
     set: () => {
-      throw new TypeError('can not modify readonly property');
+      throw new TypeError("can not modify readonly property");
     },
   });
 }
@@ -98,7 +98,7 @@ export function isProxy(value: any): boolean {
  * @returns {boolean}
  */
 export function isObject(value: unknown): boolean {
-  return value !== null && typeof value === 'object';
+  return value !== null && typeof value === "object";
 }
 ```
 
@@ -117,13 +117,13 @@ export function isObject(value: unknown): boolean {
 ::: code-group
 
 ```ts [reactive.ts]
-import { isObject } from '@mini-vue/shared';
-import { reactiveHandler, readonlyHandler } from './baseHandlers';
+import { isObject } from "@mini-vue/shared";
+import { reactiveHandler, readonlyHandler } from "./baseHandlers";
 
 export const enum ReactiveFlags {
-  IS_READONLY = '__v_isReadonly',
-  IS_REACTIVE = '__v_isReactive',
-  IS_SHALLOE = '__v_isShallow',
+  IS_READONLY = "__v_isReadonly",
+  IS_REACTIVE = "__v_isReactive",
+  IS_SHALLOE = "__v_isShallow",
 }
 
 export interface Target {
@@ -179,8 +179,8 @@ export function isProxy(value: any): boolean {
 ```
 
 ```ts [baseHandlers.ts]
-import { isObject } from '@mini-vue/shared';
-import { type Target, type TargetKey, ReactiveFlags, readonly, reactive } from './reactive';
+import { isObject } from "@mini-vue/shared";
+import { type Target, type TargetKey, ReactiveFlags, readonly, reactive } from "./reactive";
 
 export const reactiveHandler = {
   get: (target: Target, key: TargetKey, receiver: object): any => {
@@ -212,16 +212,15 @@ export const readonlyHandler = {
     return value;
   },
   set: (): boolean => {
-    throw new TypeError('can not modify readonly property');
+    throw new TypeError("can not modify readonly property");
   },
 };
 ```
 
 ```ts [再次重构 baseHandlers.ts]
-// 不难发现, baseHandlers.ts 导出的文件,  都是类型结构相同的对象, 
+// 不难发现, baseHandlers.ts 导出的文件,  都是类型结构相同的对象,
 // 那么我们可以再一次高阶函数来封装创建这些对象的方法
 // 注意: 重构要一步一步来, 上一次重构通过单元测试后, 再重构 baseHandlers
-
 ```
 
 :::

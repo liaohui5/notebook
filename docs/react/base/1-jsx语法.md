@@ -100,7 +100,7 @@ export default class App extends Component {
 默认情况下, 是异步代码, 但是可以通过传递一个 callback 来监听状态修改完成后执行的操作
 
 ```jsx
-setState({count: 10}, () => {
+setState({ count: 10 }, () => {
   console.log("此时count值已经被修改了", this.state.count);
 });
 ```

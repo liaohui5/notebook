@@ -1,5 +1,3 @@
-
-
 ## 项目介绍
 
 这个 `mini-vue` 是根据开源项目 [mini-vue](https://github.com/cuixiaorui/mini-vue) 及其作者提供的视频教程, 自己实现了一遍做的笔记
@@ -39,7 +37,7 @@ function sum(nums: Array<number>): number {
 }
 
 // 无法通过编译器检查, 在写代码的时候就可以直接知道错误
-sum(['1', '2']);
+sum(["1", "2"]);
 
 // 必须是这样的才可以
 sum([1, 2]);
@@ -129,7 +127,6 @@ sum([1, 2]);
 主要实现 3 大模块就可以了, 按照这个套路就可以理清楚 vuejs 所有的主线逻辑了
 
 - reactivity
-
   - reactive 的实现
   - ref 的实现
   - readonly 的实现
@@ -147,7 +144,6 @@ sum([1, 2]);
   - 支持 proxyRefs
 
 - compiler-core
-
   - 解析插值
   - 解析 element
   - 解析 text
@@ -172,4 +168,3 @@ Monorepos 提供了一个统一的地方来存储所有相关的代码和资源,
 > 为什么使用这种方式来管理源码?
 
 因为 `vue/core` 就是这么做的, 尽可能和 vue 源码的结构保持一致
-

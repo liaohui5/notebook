@@ -270,7 +270,7 @@ var abacReg = /([\u4e00-\u9fa5])[\u4e00-\u9fa5]\1[\u4e00-\u9fa5]/g;
     <script type="text/tpl" id="tpl">
       <h2>my name is {{name}}, I'm {{age}} years old.</h2>
     </script>
-    
+
     <script type="text/javascript">
       var tpl = document.getElementById("tpl");
       var data = {

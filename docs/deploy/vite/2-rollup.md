@@ -482,10 +482,7 @@ export default defineConfig({
   output: {
     file: "./dist/index.js",
     format: "esm",
-    plugins: [
-      getBabelOutputPlugin({ presets: ["@babel/preset-env"] }),
-      terser(),
-    ],
+    plugins: [getBabelOutputPlugin({ presets: ["@babel/preset-env"] }), terser()],
   },
 
   plugins: [
@@ -512,12 +509,12 @@ export default defineConfig({
     "esModuleInterop": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
     },
     "declaration": true, // 是否生成 .d.ts 类型声明文件
     "outDir": "./dist/",
-    "skipLibCheck": true
-  }
+    "skipLibCheck": true,
+  },
 }
 ```
 
@@ -546,10 +543,7 @@ export default defineConfig({
   output: {
     file: "./dist/index.js",
     format: "esm",
-    plugins: [
-      getBabelOutputPlugin({ presets: ["@babel/preset-env"] }),
-      terser(),
-    ],
+    plugins: [getBabelOutputPlugin({ presets: ["@babel/preset-env"] }), terser()],
   },
 
   plugins: [json(), commonjs(), nodeResolve(), babel(), typescript()],
@@ -565,8 +559,8 @@ export default defineConfig({
   "type": "module",
   "scripts": {
     "dev": "rollup -w -c rollup.config.ts --configPlugin rollup-plugin-typescript2",
-    "build": "rollup -c rollup.config.ts --configPlugin rollup-plugin-typescript2"
-  }
+    "build": "rollup -c rollup.config.ts --configPlugin rollup-plugin-typescript2",
+  },
   // ...
 }
 ```

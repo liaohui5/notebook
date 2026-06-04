@@ -58,8 +58,7 @@ console.log(ast);
 // 将 html 分析为一个 dom 树
 function html2ast(html) {
   // 属性名=属性值: name="value" name='value' name=value
-  const attribute =
-    /^\s*([^\s"'<>\/=]+)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>`]+)))?/;
+  const attribute = /^\s*([^\s"'<>\/=]+)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>`]+)))?/;
   const ncname = `[a-zA-Z_][\\-\\.0-9_a-zA-Z]*`;
   const qnameCapture = `((?:${ncname}\\:)?${ncname})`;
   const startTagOpen = new RegExp(`^<${qnameCapture}`);
@@ -123,10 +122,7 @@ function html2ast(html) {
 
     // 是否匹配到了 > 或者 />, 就结束循环, 如果没有就解析属性
     let end, attr;
-    while (
-      !(end = html.match(startTagClose)) &&
-      (attr = html.match(attribute))
-    ) {
+    while (!(end = html.match(startTagClose)) && (attr = html.match(attribute))) {
       // attr[1]: 匹配到的属性名
       // 3: class="box", 4: class='box', 5: class=box
       matched.attrs.push({
@@ -379,7 +375,7 @@ function generate(element) {
       _c(
         "p",
         { id: "mid", style: { color: "#0f0", " font-size": "20px" } },
-        _c("span", { class: "text" }, _v("这是span的内容"))
+        _c("span", { class: "text" }, _v("这是span的内容")),
       ),
       _c(
         "selection",
@@ -387,8 +383,8 @@ function generate(element) {
         _c("img", {
           src: "https://game.gtimg.cn/images/lol/act/img/skin/big1000.jpg",
           style: { "max-width": "100px" },
-        })
-      )
+        }),
+      ),
     );
   }
 });

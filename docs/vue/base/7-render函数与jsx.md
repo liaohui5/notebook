@@ -27,25 +27,13 @@ template 是直接使用模板, 在模板中可以通过 this 来访问组件实
   </div>
   <form :action="actionUrl" class="card-content">
     <div class="form-item">
-      <input
-        type="text"
-        v-model="loginForm.email"
-        name="email"
-        placeholder="请输入邮箱"
-      />
+      <input type="text" v-model="loginForm.email" name="email" placeholder="请输入邮箱" />
     </div>
     <div class="form-item">
-      <input
-        type="password"
-        v-model="loginForm.password"
-        name="password"
-        placeholder="请输入密码"
-      />
+      <input type="password" v-model="loginForm.password" name="password" placeholder="请输入密码" />
     </div>
     <div class="form-item">
-      <button class="submit-btn" type="button" @click="onSubmit">
-        {{btnText}}
-      </button>
+      <button class="submit-btn" type="button" @click="onSubmit">{{btnText}}</button>
     </div>
   </form>
 </div>
@@ -90,7 +78,7 @@ export default {
       h(
         "div",
         { class: "card-title" },
-        this.$slots.title // 插槽
+        this.$slots.title, // 插槽
       ),
       h(
         "form",
@@ -136,10 +124,10 @@ export default {
                   click: this.onSubmit,
                 },
               },
-              this.btnText
+              this.btnText,
             ),
           ]),
-        ]
+        ],
       ),
     ]);
   },
@@ -195,7 +183,7 @@ export default {
             placeholder: "请输入邮箱",
             value: this.loginForm.email,
             onInput: ($event) => (this.loginForm.email = $event.target.value),
-          })
+          }),
         ),
         h(
           "div",
@@ -207,7 +195,7 @@ export default {
             // 处理: v-model
             value: this.loginForm.password,
             onInput: (e) => (this.loginForm.password = e.target.value),
-          })
+          }),
         ),
         h(
           "div",
@@ -220,8 +208,8 @@ export default {
               // 处理事件
               onClick: () => this.onSubmit(),
             },
-            this.btnText
-          )
+            this.btnText,
+          ),
         ),
       ]),
     ]);

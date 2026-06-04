@@ -27,6 +27,7 @@ npm run dev
 ```
 
 ## virtual DOM & real DOM
+
 ```
 vDOM         : virtual DOM          - 虚拟DOM(描述真实DOM的一个对象)
 vNode        : virtual Node         - 虚拟节点(描述真实节点的一个对象)
@@ -41,8 +42,8 @@ patchPackMap : virtual Node patch   - 虚拟节点补丁Map
 
 [https://github.com/liaohui5/vue-diff-demo](https://github.com/liaohui5/vue-diff-demo)
 
-
 > 测试步骤
+
 1. createVNode(h) 函数类似 Vue 的 h 函数, 传入3个参数(标签名, 属性集合, 子节点)
 2. createVNode(h) 函数执行后返回一个 VirtualDOM
 3. createRNode 函数可以把 VirtualDOM 转化为真实的 DOM 元素
@@ -72,7 +73,6 @@ patchPackMap : virtual Node patch   - 虚拟节点补丁Map
     <script type="module" src="./js/index.js"></script>
   </body>
 </html>
-
 ```
 
 ```js
@@ -89,16 +89,12 @@ const oldVDom = h(
     style: "width: 300px; height: 300px; border: 1px solid #f00; color: #555;",
   },
   [
-    h("li", { "data-index": 0, class: "item " }, [
-      h("p", { class: "text" }, ["第一个列表项"]),
-    ]),
+    h("li", { "data-index": 0, class: "item " }, [h("p", { class: "text" }, ["第一个列表项"])]),
     h("li", { "data-index": 1, class: "item" }, [
-      h("p", { class: "text" }, [
-        h("span", { class: "title" }, ["第二个列表项"]),
-      ]),
+      h("p", { class: "text" }, [h("span", { class: "title" }, ["第二个列表项"])]),
     ]),
     h("li", { "data-index": 2, class: "item" }, ["第三个列表项"]),
-  ]
+  ],
 );
 
 // 模拟修改内容后的 virtualDOM
@@ -109,16 +105,10 @@ const newVDom = h(
     style: "width: 300px; height: 300px; border: 1px solid #555; color:#f00;",
   },
   [
-    h("li", { "data-index": 0, class: "item active" }, [
-      h("p", { class: "text" }, ["第一个列表项"]),
-    ]),
-    h("li", { "data-index": 1, class: "item" }, [
-      h("p", { class: "text" }, ["这是第二个li, 内容被替换了"]),
-    ]),
-    h("li", { "data-index": 2, class: "item" }, [
-      "这是第3个被修改后的列表项内容",
-    ]),
-  ]
+    h("li", { "data-index": 0, class: "item active" }, [h("p", { class: "text" }, ["第一个列表项"])]),
+    h("li", { "data-index": 1, class: "item" }, [h("p", { class: "text" }, ["这是第二个li, 内容被替换了"])]),
+    h("li", { "data-index": 2, class: "item" }, ["这是第3个被修改后的列表项内容"]),
+  ],
 );
 
 // 根据老节点渲染出真实的DOM
@@ -129,7 +119,7 @@ mount(realDOM, document.getElementById("app"));
 
 // newVDom模拟数据更新的过程 -> 对比新老VDom -> 获得补丁包
 const patchMap = diff(oldVDom, newVDom);
-console.log('🥧[patchMap]:', patchMap);
+console.log("🥧[patchMap]:", patchMap);
 
 // 给真实节点打补丁
 patch(realDOM, patchMap);
@@ -144,8 +134,8 @@ patch(realDOM, patchMap);
  */
 export class VNode {
   constructor(type, props, children = []) {
-    this.type     = type;
-    this.props    = props;
+    this.type = type;
+    this.props = props;
     this.children = children;
   }
 }
@@ -343,10 +333,10 @@ import { VNode, setAttrs } from "./vnode";
  * 补丁包
  */
 export class PatchPack {
-  static ATTR    = "ATTR";
-  static TEXT    = "TEXT";
+  static ATTR = "ATTR";
+  static TEXT = "TEXT";
   static REPLACE = "REPLACE";
-  static REMOVE  = "REMOVE";
+  static REMOVE = "REMOVE";
 
   constructor(type, value) {
     if (!PatchPack[type]) {
@@ -406,9 +396,7 @@ function patchAction(rNode, patches) {
         break;
       case PatchPack.REPLACE:
         // 新的节点是文本节点还是元素节点
-        const newRNode = rNode instanceof VNode
-              ? document.createElement(value.type)
-              : document.createTextNode(value);
+        const newRNode = rNode instanceof VNode ? document.createElement(value.type) : document.createTextNode(value);
         rNode.parentNode.replaceChild(newRNode, rNode);
         break;
       case PatchPack.REMOVE:
@@ -421,5 +409,3 @@ function patchAction(rNode, patches) {
   }
 }
 ```
-
-

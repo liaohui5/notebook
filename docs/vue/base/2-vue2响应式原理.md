@@ -42,13 +42,13 @@ class Publisher {
 
   // 通知所有定订阅者: 执行 update 方法
   // 反过来说, 订阅者必须有 update 方法
-  notify(){
-    this.subs.forEach(item => item.update());
+  notify() {
+    this.subs.forEach((item) => item.update());
   }
 }
 
 // 订阅者
-class Subscriber{
+class Subscriber {
   constructor() {
     // 第一次执行做一些操作
   }
@@ -70,7 +70,7 @@ class Subscriber{
 
 有些改变数组本身的方法无法被 Object.defineProperty 监听到: `sort,reverse,push,pop,shift,unshift,splice`
 
-+ 重写数组上的改变数组本身的方法, 类似代理模式, 在自己实现的方法中收集依赖
+- 重写数组上的改变数组本身的方法, 类似代理模式, 在自己实现的方法中收集依赖
 
 ```js
 // 代理数组方法: 因为这些方法会改变原数组,

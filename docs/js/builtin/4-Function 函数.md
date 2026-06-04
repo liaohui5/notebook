@@ -14,14 +14,11 @@ function sayHi() {
 }
 
 // 赋值
-var sayHello = function () {
-  
-}
+var sayHello = function () {};
 
 // 内置函数: JS 自带的函数, 可以直接使用
 var r = Math.random();
 console.log("随机数:", r);
-
 ```
 
 ## arguments 详解(了解)
@@ -56,7 +53,6 @@ function test(a, b, c) {
 }
 
 test(1, 2, 3);
-
 ```
 
 ### arguments 转数组的问题
@@ -68,31 +64,29 @@ test(1, 2, 3);
 ```javascript
 // 不推荐!!!
 function f1() {
- var args = [].slice.call(arguments);
+  var args = [].slice.call(arguments);
 }
 
 // 推荐
 function f2() {
- var args = [];
-  for (var key in arguments){
-   args.push(arguments[key]);
+  var args = [];
+  for (var key in arguments) {
+    args.push(arguments[key]);
   }
 }
 
 // 推荐(这种方式, 并没去修改 arguments 区别于f1, 而是直接把值全部取出来, 当做参数去使用)
 function f3() {
- var args = arguments.length === 1 ? [arguments[0]] : Array.apply(null, arguments);
+  var args = arguments.length === 1 ? [arguments[0]] : Array.apply(null, arguments);
 }
 
 // !!! 推荐es6 !!!
-function f4(...args){
-}
+function f4(...args) {}
 
 f1();
 f2();
 f3();
 f4();
-
 ```
 
 ### 什么时候使用arguments?
@@ -111,7 +105,6 @@ function sum() {
 }
 
 console.log(sum(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
-
 ```
 
 ### arguments 和形参的有对应关系的情况
@@ -126,7 +119,7 @@ function f1(a) {
   console.log(a); // 1
 }
 
-function f2 (b) {
+function f2(b) {
   console.log(b); // "b"
   a = 2;
   console.log(arguments[0]); // 2
@@ -134,7 +127,6 @@ function f2 (b) {
 
 f1("a");
 f2("b");
-
 ```
 
 ### arguments 和形参的没有对应关系的情况
@@ -166,7 +158,7 @@ function f3(a, b, c = 3) {
   arguments[0] = 100;
   arguments[1] = 200;
   arguments[2] = 300;
- 
+
   // 但凡有一个参数有默认值, arguments 就不会跟踪形参最终的值
   console.log(a, arguments[0]); // 1, 100
   console.log(b, arguments[1]); // 2, 200
@@ -177,7 +169,7 @@ function f4(a, b, c) {
   arguments[0] = 100;
   arguments[1] = 200;
   arguments[2] = 300;
- 
+
   // 所有参数都没有默认值的情况就会跟踪形参最终的值
   console.log(a, arguments[0]); // 100, 100
   console.log(b, arguments[1]); // 200, 200
@@ -195,11 +187,9 @@ function f5(...args) {
   console.log(args[2], arguments[2]); // 3, 300
 }
 
-
 f3(1, 2, 3);
 f4(1, 2, 3);
 f5(1, 2, 3);
-
 ```
 
 ### 关于 arguments 的建议
@@ -272,7 +262,6 @@ console.log(add(1, 2, 3, 4)); // 10
 console.log(add(1, 2, 3, 4)); // 10, "计算结果来自缓存"
 console.log(add(1, 2)); // 3
 console.log(add(1, 2)); // 3, "计算结果来自缓存"
-
 ```
 
 ### 纯函数
@@ -281,12 +270,12 @@ console.log(add(1, 2)); // 3, "计算结果来自缓存"
 2. 不依赖也不影响外部的环境, 也不会产生的副作用(发送请求,改变外部数据,console,DOM操作,存储数据)
 3. 可移植性和可测试性
 4. 拿数组的函数举例:
-    1. slice 就是一个纯函数
-    2. splice 就不是一个纯函数, 因为他会改变原数组
+   1. slice 就是一个纯函数
+   2. splice 就不是一个纯函数, 因为他会改变原数组
 
 ```javascript
-function sum(a, b){
-  if(typeof a !== "number" || typeof b !== "number") {
+function sum(a, b) {
+  if (typeof a !== "number" || typeof b !== "number") {
     throw new TypeError("sum paramaters must be number");
   }
   return a + b;
@@ -302,21 +291,21 @@ function sum(a, b){
 // 2. composeReturnedFn 执行(x 是通过 composeReturnedFn 这个管道函数来传递的)
 // 3. f(g(x)) 执行
 function compose(f, g) {
-  return function(x) { // composeReturnedFn
+  return function (x) {
+    // composeReturnedFn
     return f(g(x)); // 左倾
-  }
+  };
 }
 
-function toUpperCase(str){
+function toUpperCase(str) {
   return str.toUpperCase();
 }
 function exclaim(str) {
-  return str + '!!!';
+  return str + "!!!";
 }
 
 var f = compose(exclaim, toUpperCase);
-console.log(f('look out'));
-
+console.log(f("look out"));
 
 // 组合任意多个函数(就类似于 react-redux 中的中间件)
 function mutilCompose() {
@@ -339,7 +328,6 @@ function mutilCompose() {
 }
 */
 
-
 function split(str) {
   return str.split("");
 }
@@ -356,7 +344,6 @@ var str = "hello";
 var handler = mutilCompose(exclaim, toUpperCase, join, reverse, split);
 var res = handler(str);
 console.log(res);
-
 ```
 
 ### 结合律 associativity
@@ -379,7 +366,6 @@ var f2 = compose(join, compose(reverse, split));
 
 console.log("f1:", f1("hello")); // f1: o-l-l-e-h
 console.log("f2:", f2("hello")); // f2: o-l-l-e-h
-
 ```
 
 ### point-free style
@@ -436,8 +422,8 @@ var menus = [
     path: "/test",
     hidden: true,
     level: 2,
-    pid: 5 
-  }
+    pid: 5,
+  },
 ];
 
 // 赛选出所有的二级菜单(level==1), 赛选出所有的二级菜单中的隐藏菜单(hidden === true)
@@ -469,10 +455,9 @@ console.log(res);
     }
 ]
 */
-
 ```
 
-以上代码看起来好像是把一个简单的赛选功能复杂化了, 但是, 如果  `subMenuFilter` 和 `hiddenMenuFilter`中的逻辑非常复杂, 那这种组合的方式, 显然是更好维护
+以上代码看起来好像是把一个简单的赛选功能复杂化了, 但是, 如果 `subMenuFilter` 和 `hiddenMenuFilter`中的逻辑非常复杂, 那这种组合的方式, 显然是更好维护
 
 ### 高阶函数
 
@@ -504,7 +489,6 @@ function debounce(fn, delay) {
     }, delay);
   };
 }
-
 ```
 
 ### 函数科里化
@@ -512,7 +496,6 @@ function debounce(fn, delay) {
 <font style="color:#E8323C;">所谓的函数科里化就是用闭包将函数的参数保存起来, 当函数的个数达到指定个数的时候, 才会执行</font>
 
 > 为什么要科里化
->
 
 1. 简化代码
 2. 提高维护性
@@ -554,11 +537,10 @@ function sum(a, b, c) {
 
 var add = curry(sum);
 
-console.log(add(1,2,3)); // 这个不会递归, 直接走35行
+console.log(add(1, 2, 3)); // 这个不会递归, 直接走35行
 console.log(add(1)(2)(3));
 console.log(add(1, 2)(3));
-console.log(add(1)(2,3));
-
+console.log(add(1)(2, 3));
 ```
 
 ### 偏函数 partial Application
@@ -568,7 +550,6 @@ console.log(add(1)(2,3));
 所谓元的意思就是: 一个函数的参数有几个, 就是几元函数
 
 > 偏函数与科里化的区别(虽然他们看起来功能可能有点像)
->
 
 1. 科里化: 将一个n个参数的函数,转换为n个函数并且参数只有一个, 也就是说,科里化是可以传多次, 直到参数传完才执行
 2. 偏函数: 先传一部分参数, 然后返回一个新的函数, 然后执行这个新的函数的时候, 会把之前的arguments 带上, 但是他只能传两次
@@ -584,7 +565,6 @@ var sum = (a, b, c) => a + b + c;
 var add = sum.partial(1);
 
 console.log(add(2, 3)); // 6
-
 ```
 
 ### 惰性函数
@@ -622,9 +602,8 @@ function addEventLazy(el, type, handler, captcha) {
       el["on" + type] = handler;
     };
   }
-  
+
   // 只有这一次执行会判断, 在这一次执行后, addEvent 就被重写了
   return addEventLazy(el, type, handler, captcha);
 }
-
 ```

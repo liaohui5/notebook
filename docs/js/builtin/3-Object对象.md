@@ -13,8 +13,8 @@
 // 字面量创建
 const user = {
   id: 1,
-  name: 'tom'
-}
+  name: "tom",
+};
 
 // new 关键字创建
 const obj = new Object();
@@ -27,11 +27,11 @@ const reg = new RegExp("\d");
 ```js
 const user = {
   id: 1,
-  name: 'tom'
-}
+  name: "tom",
+};
 
 for (let key in user) {
-  if(user.hasOwnProperty(key)) {
+  if (user.hasOwnProperty(key)) {
     console.log(key, user[key]);
   }
 }

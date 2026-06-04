@@ -1,5 +1,3 @@
-
-
 ## 什么是模块化
 
 所谓的模块化,就是按照一定的规则(比如功能)来将一个js文件分成多个, 在互相独立的情况下, 可以暴露指定的 API 让其他模块去执行
@@ -38,18 +36,18 @@
 ```js [header.js]
 (function () {
   var initDom = function () {
-    const headerDOM = document.createElement('header');
-    headerDOM.id = 'header';
-    headerDOM.textContent = 'header dom inited';
+    const headerDOM = document.createElement("header");
+    headerDOM.id = "header";
+    headerDOM.textContent = "header dom inited";
     document.append(headerDOM);
   };
   var bindEvents = function () {
-    var headerDOM = document.getElementById('header');
+    var headerDOM = document.getElementById("header");
     if (!headerDOM) {
       return;
     }
-    headerDOM.addEventListener('click', function () {
-      console.log('header on click');
+    headerDOM.addEventListener("click", function () {
+      console.log("header on click");
     });
   };
 
@@ -63,18 +61,18 @@
 ```js [footer.js]
 (function () {
   var initDom = function () {
-    const footerDOM = document.createElement('footer');
-    footerDOM.id = 'footer';
-    footerDOM.textContent = 'footer dom inited';
+    const footerDOM = document.createElement("footer");
+    footerDOM.id = "footer";
+    footerDOM.textContent = "footer dom inited";
     document.append(footerDOM);
   };
   var bindEvents = function () {
-    var footerDOM = document.getElementById('footer');
+    var footerDOM = document.getElementById("footer");
     if (!footerDOM) {
       return;
     }
-    footerDOM.addEventListener('mouseenter', function () {
-      console.log('footer on mouseenter');
+    footerDOM.addEventListener("mouseenter", function () {
+      console.log("footer on mouseenter");
     });
   };
 
@@ -110,13 +108,13 @@
 ```js [定义模块]
 // module.exports 暴露什么, require 这个文件时就会拿到什么
 module.exports = {
-  static_path: './public/assets',
+  static_path: "./public/assets",
 };
 ```
 
 ```js [使用模块]
-const fs = require('fs'); // 使用内置模块
-const config = require('./config.js'); // 使用自定义模块
+const fs = require("fs"); // 使用内置模块
+const config = require("./config.js"); // 使用自定义模块
 ```
 
 :::
@@ -130,7 +128,7 @@ AMD: Asynchronous Module Definition
 ::: code-group
 
 ```js [定义模块]
-define('header', [], function () {
+define("header", [], function () {
   var initDOM = function () {};
   var bindEvents = function () {};
   return {
@@ -139,7 +137,7 @@ define('header', [], function () {
   };
 });
 
-define('footer', [], function (require, exports, module) {
+define("footer", [], function (require, exports, module) {
   var initDOM = function () {};
   var bindEvents = function () {};
   return {
@@ -151,7 +149,7 @@ define('footer', [], function (require, exports, module) {
 
 ```js [使用模块]
 // init.js
-define(['header', 'footer'], function (header, footer) {
+define(["header", "footer"], function (header, footer) {
   return {
     init() {
       header.initDom();

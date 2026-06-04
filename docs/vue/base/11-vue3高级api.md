@@ -17,11 +17,11 @@
 </template>
 
 <script setup>
-  import { shallowRef, effect } from 'vue';
+  import { shallowRef, effect } from "vue";
   const simpleRef = shallowRef({ count: 0 });
 
   effect(() => {
-    console.log('simpleRef.value.count:', simpleRef.value.count);
+    console.log("simpleRef.value.count:", simpleRef.value.count);
   });
 
   function increment() {
@@ -56,11 +56,11 @@
 </template>
 
 <script setup>
-  import { shallowRef, effect, triggerRef } from 'vue';
+  import { shallowRef, effect, triggerRef } from "vue";
   const simpleRef = shallowRef({ count: 0 });
 
   effect(() => {
-    console.log('simpleRef.value.count:', simpleRef.value.count);
+    console.log("simpleRef.value.count:", simpleRef.value.count);
   });
 
   function increment() {
@@ -94,22 +94,22 @@
 </template>
 
 <script setup>
-  import { customRef, effect } from 'vue';
+  import { customRef, effect } from "vue";
 
   function useEvenRef(value, delay = 2000) {
     return customRef((track, trigger) => {
       return {
         get() {
           // 自定义如何收集依赖
-          console.log('getter', value);
+          console.log("getter", value);
           track();
           return value;
         },
         set(newValue) {
           // 自定义如何触发依赖
           value = newValue;
-          console.log('setter', value);
-          if (typeof value === 'number' && value % 2 === 0) {
+          console.log("setter", value);
+          if (typeof value === "number" && value % 2 === 0) {
             trigger();
           }
         },
@@ -120,7 +120,7 @@
   const evenRef = useEvenRef(0);
 
   effect(() => {
-    console.log('---effect---', evenRef.value);
+    console.log("---effect---", evenRef.value);
   });
 
   function increment(step) {
@@ -147,7 +147,7 @@
   <button @click="scopeStop">stopScope</button>
 </template>
 <script setup>
-  import { effectScope, reactive, effect, watchEffect, getCurrentScope } from 'vue';
+  import { effectScope, reactive, effect, watchEffect, getCurrentScope } from "vue";
   const effectScope1 = effectScope();
 
   const state = reactive({
@@ -156,11 +156,11 @@
 
   // 1.1 获取外界的顶层的 scope 上下文对象
   const topScope = getCurrentScope();
-  topScope.__mark = 'topScope';
-  console.log('setup topScope:', topScope);
+  topScope.__mark = "topScope";
+  console.log("setup topScope:", topScope);
 
   effect(() => {
-    console.info('[outside-effect]', state.count);
+    console.info("[outside-effect]", state.count);
   });
 
   // setup 顶层的 effectScope 作用域不用手动调用 run, effect 会生效
@@ -168,16 +168,16 @@
   effectScope1.run(() => {
     // 1.2 获取 effectScope1 里面的 scope 上下文对象
     const effectScope1 = getCurrentScope();
-    effectScope1.__mark = 'effectScope1';
-    console.log('effectScope1:', effectScope1);
+    effectScope1.__mark = "effectScope1";
+    console.log("effectScope1:", effectScope1);
 
     // 在作用域内部创建响应式数据和副作用函数
     effect(() => {
-      console.log('[scope-run-effect]:', state.count);
+      console.log("[scope-run-effect]:", state.count);
     });
 
     watchEffect(() => {
-      console.log('[scope-run-watchEffect]:', state.count);
+      console.log("[scope-run-watchEffect]:", state.count);
     });
   });
 

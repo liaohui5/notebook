@@ -1,5 +1,3 @@
-
-
 ## 介绍 WSL
 
 Windows Subsystem for Linux (WSL) 是微软为Windows 10及更高版本操作系统开发的一个功能组件，它允许用户在Windows环境中直接运行原生的Linux命令行工具、应用程序和服务，而无需使用传统的虚拟机或双启动环境。WSL通过在Windows内核上实现一个轻量级Linux内核接口层，使得Linux ELF64二进制文件能够在Windows上无缝运行。

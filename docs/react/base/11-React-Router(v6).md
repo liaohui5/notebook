@@ -10,12 +10,7 @@
 ```jsx
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import {
-  RouterProvider,
-  createHashRouter,
-  Link,
-  Outlet,
-} from "react-router-dom";
+import { RouterProvider, createHashRouter, Link, Outlet } from "react-router-dom";
 
 // --- components
 const App = () => {
@@ -58,7 +53,7 @@ const router = createHashRouter([
 createRoot(document.querySelector("#app")).render(
   <StrictMode>
     <RouterProvider router={router} />
-  </StrictMode>
+  </StrictMode>,
 );
 ```
 
@@ -96,7 +91,7 @@ createRoot(document.querySelector("#app")).render(
     <Router>
       <App />
     </Router>
-  </StrictMode>
+  </StrictMode>,
 );
 ```
 
@@ -144,9 +139,7 @@ const router = createHashRouter([
 ]);
 
 // 使用时: 拼接 path 路径
-const aboutLink = (
-  <Link to={"/about/" + Math.ceil(Math.random() * 10)}>about</Link>
-);
+const aboutLink = <Link to={"/about/" + Math.ceil(Math.random() * 10)}>about</Link>;
 
 // 获取参数, 如果是 ?a=b 可以用 useSearchParams()
 const About = () => {
@@ -181,12 +174,7 @@ const Home = () => {
 import { StrictMode, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import { useRoutesWithMiddleware } from "react-router-middleware-plus";
-import {
-  HashRouter as Router,
-  Link,
-  useOutlet,
-  useNavigate,
-} from "react-router-dom";
+import { HashRouter as Router, Link, useOutlet, useNavigate } from "react-router-dom";
 
 // --- components
 const App = () => {
@@ -205,14 +193,10 @@ const Home = () => (
   <div>
     home page
     <div>
-      <button onClick={() => window.localStorage.setItem("isLogin", true)}>
-        模拟登录
-      </button>
+      <button onClick={() => window.localStorage.setItem("isLogin", true)}>模拟登录</button>
     </div>
     <div>
-      <button onClick={() => window.localStorage.setItem("isLogin", "")}>
-        退出登录
-      </button>
+      <button onClick={() => window.localStorage.setItem("isLogin", "")}>退出登录</button>
     </div>
   </div>
 );
@@ -259,6 +243,6 @@ createRoot(document.querySelector("#app")).render(
     <Router>
       <AppRouter />
     </Router>
-  </StrictMode>
+  </StrictMode>,
 );
 ```

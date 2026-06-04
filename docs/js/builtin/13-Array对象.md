@@ -18,13 +18,13 @@ const week = new Array(5);
 ```js
 // for/while遍历
 const nums = [1, 3, 5, 7];
-for (let i = 0; i<items.length; i++) {
+for (let i = 0; i < items.length; i++) {
   const item = items[i];
   console.log(item);
 }
 
 // for of 遍历
-const strs = ['a', 'b', 'c', 'd'];
+const strs = ["a", "b", "c", "d"];
 for (let item of strs) {
   console.log(item);
 }

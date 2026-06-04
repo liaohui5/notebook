@@ -23,16 +23,16 @@ const values = [
   // falsy
   NaN,
   0,
-  '',
+  "",
   false,
   null,
   undefined,
 
   // all other value is truthy
-  '0',
-  'false',
+  "0",
+  "false",
   {},
-  []
+  [],
 ];
 
 const bool_values = values.map(Boolean);
