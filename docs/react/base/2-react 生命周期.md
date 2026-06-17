@@ -10,4 +10,4 @@
 
 - componentWillUnmount () 组件卸载前, 可移除一些事件监听
 
-![react-all-lifecycle](https://raw.githubusercontent.com/liaohui5/images/main/images/202206131702156.jpg)
+![react-all-lifecycle](https://notebook-imgbed.s3.bitiful.net/notebook-imgbed/2026_06_18_892e9ecb36ef34fe72023cfdda99b6ef.jpg)
