@@ -442,7 +442,7 @@ vite + vitest
 
 ## 2.1 Promise状态
 
-![](https://raw.githubusercontent.com/liaohui5/images/main/images/20240512180438.png)
+![](https://notebook-imgbed.s3.bitiful.net/notebook-imgbed/2026_06_18_e386fe6ba4536927240e56e6a5a787d1.png)
 
 ::: code-group
 
@@ -558,7 +558,7 @@ export const isCallable = (value) => typeof value === "function";
 
 ### 2.2.1 then 方法:初步实现
 
-![](https://raw.githubusercontent.com/liaohui5/images/main/images/20240512185105.png)
+![](https://notebook-imgbed.s3.bitiful.net/notebook-imgbed/2026_06_18_823e85b275e04c48399859cbbe8e4275.png)
 
 初步实现可以在 then 的 onFulilled 和 onRejected 中拿到调用 resolve/reject 的传入值
 
