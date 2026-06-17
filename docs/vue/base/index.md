@@ -28,7 +28,7 @@
 - MVC: M(model)-V(view)-C(controller) 典型的指令式编程
 - MVVM: M(model)-V(view)-VM(ViewModel) 响应式编程, 数据改变会自动修改视图, 视图数据修改 model 中的数据也会自动修改(也就是`双向绑定`)
 
-![mvvm.png](https://raw.githubusercontent.com/liaohui5/images/main/images/202206081605132.png)
+![mvvm.png](https://notebook-imgbed.s3.bitiful.net/notebook-imgbed/2026_06_18_6329e96832c40cd470adc3ab97913a18.png)
 
 注: Vue.js 并没有完全遵守 MVVM 模型,只能说非常相似([官方文档](https://cn.vuejs.org/v2/guide/instance.html#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA-Vue-%E5%AE%9E%E4%BE%8B))
 
@@ -41,7 +41,7 @@
 
 所谓组件化就是把图形,非图形的各种逻辑均抽象为一个统一的概念（组件）来实现开发的模式,在 Vue 中每一个.vue 文件都可以视为一个组件
 
-![components.png](https://raw.githubusercontent.com/liaohui5/images/main/images/202206081559023.png)
+![components.png](https://notebook-imgbed.s3.bitiful.net/notebook-imgbed/2026_06_18_b5c08269dfc26ae6d7db3801e9efd296.png)
 
 组件化的优势:
 

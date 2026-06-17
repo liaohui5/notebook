@@ -54,7 +54,7 @@ patchPackMap : virtual Node patch   - 虚拟节点补丁Map
 1. diff: 比较新老VirtualDOM差异获得 patches
 2. patch: 根据获得的 patches 去更新 realDOM, 更新UI
 
-![diff-preview](https://raw.githubusercontent.com/liaohui5/images/main/images/202207181657589.png)
+![diff-preview](https://notebook-imgbed.s3.bitiful.net/notebook-imgbed/2026_06_18_04d7bdb9e8d17f5c24c5cc7c78bfe15b.png)
 
 ```html
 <!-- index.html -->

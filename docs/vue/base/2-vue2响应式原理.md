@@ -64,7 +64,7 @@ class Subscriber {
 1. new Vue 时, 用 Object.defineProperty 给 data 中所有的数据定义 getter/setter
 2. 利用发布/订阅模式, 在 getter 中收集依赖, 在 setter 通知依赖的订阅者更新, 走到setter中证明数据更新了
 
-![reactive](https://raw.githubusercontent.com/DMQ/mvvm/master/img/2.png)
+![reactive](https://notebook-imgbed.s3.bitiful.net/notebook-imgbed/2026_06_18_6f62d0db78d11931923862716a8f1577.png)
 
 ## vue 如何监听数组变化
 

@@ -137,7 +137,7 @@
 
 <details>
 <summary>什么是 effectScope </summary>
-<img src="https://raw.githubusercontent.com/liaohui5/images/main/images/20230521005935.png">
+<img src="https://notebook-imgbed.s3.bitiful.net/notebook-imgbed/2026_06_18_1537fae3d8feb465c2f0678e46749a24.png">
 </details>
 
 ```html
@@ -197,4 +197,4 @@
 </script>
 ```
 
-![preview](https://raw.githubusercontent.com/liaohui5/images/main/images/20230521011443.png)
+![preview](https://notebook-imgbed.s3.bitiful.net/notebook-imgbed/2026_06_18_6a6c606790afb03125a1c22f97d474a2.png)

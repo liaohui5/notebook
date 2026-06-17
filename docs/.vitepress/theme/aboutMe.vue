@@ -6,7 +6,7 @@
         <div class="w-18 h-18 overflow-hidden rounded-full">
           <img
             class="!border-none"
-            src="https://raw.githubusercontent.com/liaohui5/images/main/images/20260102053322825.png"
+            src="https://notebook-imgbed.s3.bitiful.net/notebook-imgbed/2026_06_18_2d7ebf4b9ea2f13099e9bfb7a5fbadbd.jpg"
           />
         </div>
         <div class="text-white p-2 text-start">
@@ -41,6 +41,7 @@
 </template>
 
 <script lang="ts" setup>
+// @ts-ignore
 import { ref, watchEffect } from "vue";
 import { init } from "./canvas.ts";
 

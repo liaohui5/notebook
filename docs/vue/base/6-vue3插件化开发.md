@@ -4,7 +4,7 @@
 
 ### 目录结构
 
-![](https://raw.githubusercontent.com/liaohui5/images/main/images/202207151414261.png)
+![](https://notebook-imgbed.s3.bitiful.net/notebook-imgbed/2026_06_18_d910a754e680aa42f157c3364ef699ec.png)
 
 ### 代码实现
 
@@ -115,7 +115,7 @@ export default Message;
 
 ### 目录结构
 
-![](https://raw.githubusercontent.com/liaohui5/images/main/images/202207151905199.png)
+![](https://notebook-imgbed.s3.bitiful.net/notebook-imgbed/2026_06_18_cc7e9e88db5ca4b0f3bc4faee88233f6.png)
 
 ### 源码实现
 
