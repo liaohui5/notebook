@@ -31,7 +31,7 @@ CICD 其实是以下几个单词组合, 翻译成中文就是: 持续集成, 持
 3. 通过 Runner (它是独立于代码管理库的软件)来读取配置文件
 4. 执行相应的步骤
 
-![](https://raw.githubusercontent.com/liaohui5/images/main/images/202312120222606.png)
+![](https://notebook-imgbed.s3.bitiful.net/notebook-imgbed/2026_06_18_7f9b80741156767d369d0a3953d42278.png)
 
 ## ssh 远程链接的两种方式
 

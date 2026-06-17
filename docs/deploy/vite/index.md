@@ -6,7 +6,7 @@
 
 ## 打包工具分类
 
-![compiler](https://raw.githubusercontent.com/liaohui5/images/main/images/202507171707881.png)
+![compiler](https://notebook-imgbed.s3.bitiful.net/notebook-imgbed/2026_06_18_c77848f28adee7f153b24f990d848252.png)
 
 - TS编译层: 主要用于将 ts/js 高级语法转译为 js
 - JS处理层: 主要用来处理 js 文件, 无法处理其他文件(如:css/img/font)

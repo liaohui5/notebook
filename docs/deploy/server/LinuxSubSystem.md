@@ -38,7 +38,7 @@ wsl --set-default-version 2
 
 1. 查看可以安装的 linux 版本 `wsl --list --online`
 
-![](https://raw.githubusercontent.com/liaohui5/images/main/images/20240411190715.png)
+![](https://notebook-imgbed.s3.bitiful.net/notebook-imgbed/2026_06_18_13447d3597b33d100a6c20aee594e8c5.png)
 
 2. 安装(以 Ubuntu-20.04 为例)
 
@@ -48,7 +48,7 @@ wsl --install -d Ubuntu-20.04
 
 3. 初始化用户名和密码
 
-![](https://raw.githubusercontent.com/liaohui5/images/main/images/20240411191108.png)
+![](https://notebook-imgbed.s3.bitiful.net/notebook-imgbed/2026_06_18_28b8424a12cd7a955a704891d894a5aa.png)
 
 ### 启动/停止/删除/查看运行状态
 
