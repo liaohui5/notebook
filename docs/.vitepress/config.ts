@@ -13,16 +13,16 @@ export default defineConfig({
   titleTemplate: "个人学习笔记",
   description: "notebook for myself",
   head: [
-    ["link", { rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
-    ["link", { rel: "icon", type: "image/png", href: "/logo.png" }],
-    ["link", { rel: "icon", type: "image/svg+xml", href: "/logo.svg" }],
+    ["link", { rel: "icon", type: "image/x-icon", href: "https://notebook-imgbed.s3.bitiful.net/notebook-imgbed/favicon.ico?no-wait=on" }],
+    ["link", { rel: "icon", type: "image/png", href: "https://notebook-imgbed.s3.bitiful.net/notebook-imgbed/logo.png?no-wait=on" }],
+    ["link", { rel: "icon", type: "image/svg+xml", href: "https://notebook-imgbed.s3.bitiful.net/notebook-imgbed/logo.svg?no-wait=on" }],
     ["meta", { name: "og:type", content: "website" }],
     ["meta", { name: "og:locale", content: "zh-CN" }],
     ["meta", { name: "og:site_name", content: "notebook" }],
   ],
   themeConfig: {
     nav,
-    logo: "/logo.svg",
+    logo: "https://notebook-imgbed.s3.bitiful.net/notebook-imgbed/logo.svg?no-wait=on",
     sidebar,
     outline: "deep",
 

@@ -7,7 +7,7 @@ hero:
   text: 好记性不如烂笔头
   tagline: 个人的学习笔记总结, 记录学习过的知识输出成文档
   image:
-    src: /logo.svg
+    src: https://notebook-imgbed.s3.bitiful.net/notebook-imgbed/logo.svg?no-wait=on
     alt: notebook
   actions:
     - theme: brand
