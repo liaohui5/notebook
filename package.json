@@ -10,8 +10,8 @@
     "docs:preview": "vitepress preview docs"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.3.0",
-    "tailwindcss": "^4.3.0"
+    "@tailwindcss/vite": "^4.3.1",
+    "tailwindcss": "^4.3.1"
   },
   "devDependencies": {
     "@nolebase/vitepress-plugin-enhanced-readabilities": "^2.18.2",
