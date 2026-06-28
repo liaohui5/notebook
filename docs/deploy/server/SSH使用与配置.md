@@ -106,7 +106,7 @@ UsePAM yes                 # 是否启用 PAM 认证,账户管理及会话处理
 #KbdInteractiveAuthentication no # 是否启用键盘交互认证(默认:no, yes: 开启后可以启用 pam_google_authenticator 认证插件)
 PubkeyAuthentication yes         # 是否允许公钥认证
 #PermitEmptyPasswords no         # 是否允许空密码登录(默认:no)
-AuthenticationMethods password,publickey # 认证方式,可组合(password:默认密码认证,publickey:密钥认证,keyboard-interactive:键盘交互认证)
+AuthenticationMethods publickey  # 认证方式,可组合(password:默认密码认证,publickey:密钥认证,keyboard-interactive:键盘交互认证)
 AuthorizedKeysFile .ssh/authorized_keys  # 授权密钥文件路径(登录用户目录下的 ~/.ssh/authorized_keys 文件)
 #AuthorizedPrincipalsFile none           # 授权主体文件
 #AuthorizedKeysCommand none              # 用于获取授权密钥的外部命令
@@ -196,7 +196,7 @@ UsePAM yes
 #KbdInteractiveAuthentication no
 PubkeyAuthentication yes
 #PermitEmptyPasswords no
-AuthenticationMethods password
+AuthenticationMethods publickey
 AuthorizedKeysFile .ssh/authorized_keys
 #AuthorizedPrincipalsFile none
 #AuthorizedKeysCommand none
