@@ -10,23 +10,23 @@ importers:
     dependencies:
       '@tailwindcss/vite':
         specifier: ^4.3.3
-        version: 4.3.3(vite@7.3.6(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.78.0))
+        version: 4.3.3(vite@7.3.6(jiti@2.7.0)(less@4.9.1)(lightningcss@1.32.0)(sass@1.78.0))
       tailwindcss:
         specifier: ^4.3.3
         version: 4.3.3
     devDependencies:
       '@nolebase/vitepress-plugin-enhanced-readabilities':
         specifier: ^2.18.2
-        version: 2.18.2(vitepress@2.0.0-alpha.17(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.78.0))(vue@3.5.43)
+        version: 2.18.2(vitepress@2.0.0-alpha.17(jiti@2.7.0)(less@4.9.1)(lightningcss@1.32.0)(postcss@8.5.28)(sass@1.78.0))(vue@3.5.43)
       markdown-it-todo-lists:
         specifier: ^0.1.8
-        version: 0.1.8(markdown-it@14.3.2)
+        version: 0.1.8(markdown-it@14.3.3)
       sass:
         specifier: 1.78.0
         version: 1.78.0
       vitepress:
         specifier: 2.0.0-alpha.17
-        version: 2.0.0-alpha.17(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.78.0)
+        version: 2.0.0-alpha.17(jiti@2.7.0)(less@4.9.1)(lightningcss@1.32.0)(postcss@8.5.28)(sass@1.78.0)
 
 packages:
 
@@ -912,8 +912,8 @@ packages:
     peerDependencies:
       markdown-it: ^14.0.0
 
-  markdown-it@14.3.2:
-    resolution: {integrity: sha512-sHHjZ5fJKlgrG4qns2YwVcdNep35h5fERrfkD2YNsb9UFk0UIHarbiTaHKVMlPuWAoiilyK8Fv/jAm11slsY7Q==}
+  markdown-it@14.3.3:
+    resolution: {integrity: sha512-L//tDAkjTjJCU6pBUSBTgs3Kg4InVaZuUZog/b6V12UKhcDQ7S78877ibbCanRExwPuYP1CZD7Gd2dxSy1GXRg==}
     hasBin: true
 
   mdast-util-to-hast@13.2.1:
@@ -1311,22 +1311,22 @@ snapshots:
   '@napi-rs/lzma-linux-x64-gnu@1.5.1':
     optional: true
 
-  '@nolebase/ui@2.18.2(vitepress@2.0.0-alpha.17(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.78.0))(vue@3.5.43)':
+  '@nolebase/ui@2.18.2(vitepress@2.0.0-alpha.17(jiti@2.7.0)(less@4.9.1)(lightningcss@1.32.0)(postcss@8.5.28)(sass@1.78.0))(vue@3.5.43)':
     dependencies:
       '@iconify-json/octicon': 1.2.35
       less: 4.9.1
-      vitepress: 2.0.0-alpha.17(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.78.0)
+      vitepress: 2.0.0-alpha.17(jiti@2.7.0)(less@4.9.1)(lightningcss@1.32.0)(postcss@8.5.28)(sass@1.78.0)
       vue: 3.5.43
     transitivePeerDependencies:
       - supports-color
 
-  '@nolebase/vitepress-plugin-enhanced-readabilities@2.18.2(vitepress@2.0.0-alpha.17(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.78.0))(vue@3.5.43)':
+  '@nolebase/vitepress-plugin-enhanced-readabilities@2.18.2(vitepress@2.0.0-alpha.17(jiti@2.7.0)(less@4.9.1)(lightningcss@1.32.0)(postcss@8.5.28)(sass@1.78.0))(vue@3.5.43)':
     dependencies:
       '@iconify-json/carbon': 1.2.27
       '@iconify-json/icon-park-outline': 1.2.4
-      '@nolebase/ui': 2.18.2(vitepress@2.0.0-alpha.17(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.78.0))(vue@3.5.43)
+      '@nolebase/ui': 2.18.2(vitepress@2.0.0-alpha.17(jiti@2.7.0)(less@4.9.1)(lightningcss@1.32.0)(postcss@8.5.28)(sass@1.78.0))(vue@3.5.43)
       less: 4.9.1
-      vitepress: 2.0.0-alpha.17(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.78.0)
+      vitepress: 2.0.0-alpha.17(jiti@2.7.0)(less@4.9.1)(lightningcss@1.32.0)(postcss@8.5.28)(sass@1.78.0)
     transitivePeerDependencies:
       - supports-color
       - vue
@@ -1507,12 +1507,12 @@ snapshots:
       '@tailwindcss/oxide-win32-arm64-msvc': 4.3.3
       '@tailwindcss/oxide-win32-x64-msvc': 4.3.3
 
-  '@tailwindcss/vite@4.3.3(vite@7.3.6(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.78.0))':
+  '@tailwindcss/vite@4.3.3(vite@7.3.6(jiti@2.7.0)(less@4.9.1)(lightningcss@1.32.0)(sass@1.78.0))':
     dependencies:
       '@tailwindcss/node': 4.3.3
       '@tailwindcss/oxide': 4.3.3
       tailwindcss: 4.3.3
-      vite: 7.3.6(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.78.0)
+      vite: 7.3.6(jiti@2.7.0)(less@4.9.1)(lightningcss@1.32.0)(sass@1.78.0)
 
   '@types/estree@1.0.9': {}
 
@@ -1539,10 +1539,10 @@ snapshots:
 
   '@ungap/structured-clone@1.4.0': {}
 
-  '@vitejs/plugin-vue@6.0.9(vite@7.3.6(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.78.0))(vue@3.5.43)':
+  '@vitejs/plugin-vue@6.0.9(vite@7.3.6(jiti@2.7.0)(less@4.9.1)(lightningcss@1.32.0)(sass@1.78.0))(vue@3.5.43)':
     dependencies:
       '@rolldown/pluginutils': 1.0.1
-      vite: 7.3.6(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.78.0)
+      vite: 7.3.6(jiti@2.7.0)(less@4.9.1)(lightningcss@1.32.0)(sass@1.78.0)
       vue: 3.5.43
 
   '@vue/compiler-core@3.5.43':
@@ -1888,11 +1888,11 @@ snapshots:
 
   mark.js@8.11.1: {}
 
-  markdown-it-todo-lists@0.1.8(markdown-it@14.3.2):
+  markdown-it-todo-lists@0.1.8(markdown-it@14.3.3):
     dependencies:
-      markdown-it: 14.3.2
+      markdown-it: 14.3.3
 
-  markdown-it@14.3.2:
+  markdown-it@14.3.3:
     dependencies:
       argparse: 2.0.1
       entities: 4.5.0
@@ -2142,7 +2142,7 @@ snapshots:
       '@types/unist': 3.0.3
       vfile-message: 4.0.3
 
-  vite@7.3.6(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.78.0):
+  vite@7.3.6(jiti@2.7.0)(less@4.9.1)(lightningcss@1.32.0)(sass@1.78.0):
     dependencies:
       esbuild: 0.28.2
       fdir: 6.5.0(picomatch@4.0.7)
@@ -2153,10 +2153,11 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
       jiti: 2.7.0
+      less: 4.9.1
       lightningcss: 1.32.0
       sass: 1.78.0
 
-  vitepress@2.0.0-alpha.17(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.78.0):
+  vitepress@2.0.0-alpha.17(jiti@2.7.0)(less@4.9.1)(lightningcss@1.32.0)(postcss@8.5.28)(sass@1.78.0):
     dependencies:
       '@docsearch/css': 4.7.0
       '@docsearch/js': 4.7.0
@@ -2166,7 +2167,7 @@ snapshots:
       '@shikijs/transformers': 3.23.0
       '@shikijs/types': 3.23.0
       '@types/markdown-it': 14.2.0
-      '@vitejs/plugin-vue': 6.0.9(vite@7.3.6(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.78.0))(vue@3.5.43)
+      '@vitejs/plugin-vue': 6.0.9(vite@7.3.6(jiti@2.7.0)(less@4.9.1)(lightningcss@1.32.0)(sass@1.78.0))(vue@3.5.43)
       '@vue/devtools-api': 8.2.1
       '@vue/shared': 3.5.43
       '@vueuse/core': 14.4.0(vue@3.5.43)
@@ -2175,8 +2176,10 @@ snapshots:
       mark.js: 8.11.1
       minisearch: 7.2.0
       shiki: 3.23.0
-      vite: 7.3.6(jiti@2.7.0)(lightningcss@1.32.0)(sass@1.78.0)
+      vite: 7.3.6(jiti@2.7.0)(less@4.9.1)(lightningcss@1.32.0)(sass@1.78.0)
       vue: 3.5.43
+    optionalDependencies:
+      postcss: 8.5.28
     transitivePeerDependencies:
       - '@types/node'
       - async-validator
